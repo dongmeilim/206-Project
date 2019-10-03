@@ -81,3 +81,5 @@ if audio in the creation does not contain the search term should it be discourag
 We should clarify in the Search bar with a label: `What would you like to learn about today?`
 
 Should we force the user to explictly save the audio? Requiring the kid to do too much steps would be a pain in the neck.
+
+Should we split up the text into pages?
