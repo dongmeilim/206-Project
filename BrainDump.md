@@ -83,3 +83,5 @@ We should clarify in the Search bar with a label: `What would you like to learn 
 Should we force the user to explictly save the audio? Requiring the kid to do too much steps would be a pain in the neck.
 
 Should we split up the text into pages?
+
+Should we list videos as thumbnails?
