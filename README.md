@@ -10,7 +10,7 @@
 
 Before I begin, I'd like to point out that this project builds upon the foundations of our [third assignment](https://github.com/dongmeilim/Assignment_3_206).
 
-Compared to last time we have a [hefty brief](project_brief.pdf) as we are now developing for a stakeholder - a child user 7-10 years - so along the process of design we will strive to envision their user story.
+Compared to last time we have a [hefty brief](Misc/project_brief.pdf) as we are now developing for a stakeholder - a child user 7-10 years - so along the process of design we will strive to envision their user story.
 
 **Functionality**
 
