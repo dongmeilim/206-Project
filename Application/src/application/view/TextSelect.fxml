@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="700.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.TextSelect">
+   <center>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="607.0" prefWidth="443.0" spacing="10.0">
+               <children>
+                  <Label text="Please select text you wish to save">
+                     <font>
+                        <Font size="22.0" />
+                     </font></Label>
+                  <TextArea fx:id="_text" prefHeight="538.0" prefWidth="413.0" wrapText="true" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+            <VBox fx:id="_rightVBox" prefHeight="607.0" prefWidth="307.0" spacing="10.0">
+               <children>
+                  <Label text="Select a voice:">
+                     <font>
+                        <Font size="22.0" />
+                     </font></Label>
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="253.0" prefWidth="277.0">
+                     <content>
+                        <VBox fx:id="_radioButtons" prefHeight="82.0" prefWidth="230.0" spacing="5.0">
+                           <padding>
+                              <Insets left="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+                  <ProgressBar fx:id="_pb" prefHeight="18.0" prefWidth="277.0" progress="0.0">
+                     <padding>
+                        <Insets top="50.0" />
+                     </padding></ProgressBar>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <HBox prefHeight="50.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="_back" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="50.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/back.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <HBox alignment="TOP_RIGHT" spacing="5.0">
+               <children>
+                  <HBox fx:id="_prevAndAudio" prefHeight="40.0" prefWidth="380.0" spacing="5.0">
+                     <children>
+                        <Button fx:id="_preview" mnemonicParsing="false" onAction="#preview" prefHeight="40.0" prefWidth="367.0" text="Preview" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="307.0" spacing="10.0">
+                     <children>
+                        <Button fx:id="_save" mnemonicParsing="false" onAction="#saveAudio" prefHeight="40.0" prefWidth="229.0" text="Save" />
+                        <Button fx:id="_next" disable="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="50.0" prefWidth="50.0">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/next.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </bottom>
+   <top>
+      <HBox prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="_menu" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Label alignment="CENTER" prefHeight="35.0" prefWidth="646.0" text="Step 2: Text Parsing">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

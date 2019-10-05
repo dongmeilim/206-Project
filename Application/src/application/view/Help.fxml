@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="700.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.Help">
+   <top>
+      <HBox prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets left="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </top>
+   <center>
+      <ScrollPane hbarPolicy="NEVER" prefWidth="750.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox alignment="CENTER" prefHeight="601.0" prefWidth="750.0" spacing="5.0">
+               <children>
+                  <Label text="Help" underline="true">
+                     <font>
+                        <Font size="50.0" />
+                     </font>
+                  </Label>
+                  <Label lineSpacing="10.0" prefHeight="492.0" prefWidth="700.0" text="The Creation Process&#10;&#10;1. Searching - Get text information on your query&#10;2. Text Parsing - Select text to save into audio clips&#10;3. Audio&#10;   a. Selection - Select the audio clips to be included in the video&#10;   b. Ordering - Configure the order of audio appearance in the video&#10;4. Images&#10;   a. Fetching - Choose number of images (taken from Flickr) you want in the video&#10;   b. Selection - Select images to be included&#10;   c. Ordering - Configure the order of image appeaeance in the video&#10;5. Save video" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font></Label>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </center>
+   <bottom>
+      <HBox prefHeight="50.0" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="_back" mnemonicParsing="false" onAction="#goBack" prefHeight="50.0" prefWidth="50.0">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/back.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

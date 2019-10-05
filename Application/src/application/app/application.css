@@ -1,0 +1,50 @@
+/* Stylesheet for JavaFX windows */
+
+/* JavaFX CSS
+.button {
+    -fx-background-color:
+        linear-gradient(to right, indigo , red);
+    -fx-background-radius: 20, 20;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: white;
+}
+* blue colour: #315F83
+*/
+.button{
+    -fx-background-color:
+    linear-gradient( #b2d8d8, #66b2b2),
+    radial-gradient(center 50% -40%, radius 200%, #006666 45%, #004c4c 50%);
+    -fx-background-radius: 20, 20;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: white;
+}
+.root {
+    -fx-background-image: url("/background.jpg");
+    -fx-background-size: cover;
+    -fx-focus-color: transparent;
+}
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+.scroll-pane {
+   -fx-background-color: transparent;
+   -fx-focus-color: transparent;
+}
+
+#_noVideos {
+	/*Default values */
+	-fx-text-fill: black;
+	-fx-effect: dropshadow( one-pass-box , black , 0 , 0.0 , 0 , 0 )
+} 
+
+.label {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 )
+}
+
+.check-box {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 )
+}
