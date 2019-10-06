@@ -15,20 +15,8 @@ public class Menu extends Controller {
 	@FXML private Button _create;
 	@FXML private Button _videos;
 	
-	
-	@FXML
-	private void openHelp() {
-		switchNonSkippableWindow(_help.getScene(), getClass().getResource(_PATH+"Help.fxml"));
-	}
-	
-	@FXML
-	private void openSearch() {
-		switchNonSkippableWindow(_help.getScene(), getClass().getResource(_PATH+"Search.fxml"));
-	}
-	
-	@FXML
-	private void videoList() {
-		switchNonSkippableWindow(_help.getScene(), getClass().getResource(_PATH+"VideoList.fxml"));
-	}
+	@FXML private void openHelp() {System.out.println("Deprecated: To be replaced by Quiz");}
+	@FXML private void openSearch() {switchTo(_help.getScene(), getClass().getResource(_PATH+"ImageFetch2.fxml"));}
+	@FXML private void videoList() {System.out.println("Under construction");}
 	
 }

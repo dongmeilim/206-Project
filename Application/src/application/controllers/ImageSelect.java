@@ -35,16 +35,16 @@ public class ImageSelect extends Controller implements Initializable {
 	
 	private double _WIDTH = 540;
 	private double _HEIGHT = 700;
-	private List<String> _savedImageNames;
+	//private List<String> _savedImageNames;
 	private List<CheckBox> _checkBoxes = new ArrayList<CheckBox>();
 	
-	@FXML private void handleBack() {switchNonSkippableWindow(_content.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));};
+	@FXML private void handleBack() {System.out.println("deprecated");};
 	
 	@FXML 
 	public void handleHome() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");
 		if (decision == true) {
-			switchNonSkippableWindow(_content.getScene(), getClass().getResource(_PATH+"Menu.fxml"));
+			toMenu(_content.getScene());
 		} else {
 			;
 		}
@@ -52,6 +52,7 @@ public class ImageSelect extends Controller implements Initializable {
 	}
 	@FXML 
 	public void handleNext() {
+		/*
 		_savedImageNames = new ArrayList<String>();
 		boolean canProgress = false;
 		
@@ -66,7 +67,8 @@ public class ImageSelect extends Controller implements Initializable {
 			switchSkippableWindow(_next, "image", getClass().getResource(_PATH));
 		} else {
 			_warning.setText("Error: No image(s) selected");
-		}
+		}*/
+		System.out.println("not needed");
 	}
 	
 	@Override

@@ -18,9 +18,9 @@ import javafx.scene.layout.VBox;
 
 public class ImageFetch extends Controller {
 	
-	@FXML private VBox _content;
-	
 	@FXML private Button _back;
+	@FXML private Button _home;
+	@FXML private Button _help;
 	@FXML private Button _next;
 	@FXML private Button _search;
 	@FXML private Label _imageAmountDisplay;
@@ -28,22 +28,27 @@ public class ImageFetch extends Controller {
 	@FXML private ProgressBar _progress;
 	@FXML private Slider _slider;
 	
-	@FXML private void handleBack() {switchSkippableWindow(_back, "audio", getClass().getResource(_PATH));};
+	@FXML private void handleBack() {handleHome();};
 	@FXML 
 	public void handleHome() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");
 		if (decision == true) {
-			switchNonSkippableWindow(_content.getScene(), getClass().getResource(_PATH+"Menu.fxml"));
+			toMenu(_home.getScene());
 		} else {
 			;
 		}
 
 	}
-	@FXML private void handleNext() {switchNonSkippableWindow(_content.getScene(), getClass().getResource(_PATH+"ImageSelect.fxml"));};
+	
+	@FXML private void handleHelp() {
+		System.out.println("Under construction");
+	}
+	
+	@FXML private void handleNext() {System.out.println("Go next");};
 	
 	@FXML
 	private void handleSearch() {
-		double number = _slider.getValue();
+		/*double number = _slider.getValue();
 		String enteredText = Double.toString(number);
 		//Trim off the .0
 		enteredText = enteredText.substring(0,enteredText.length()-2);
@@ -51,7 +56,8 @@ public class ImageFetch extends Controller {
 		_search.setDisable(true);
 		_slider.setDisable(true);
 		_warning.setText("");
-		downloadImages(enteredNumber);
+		downloadImages(enteredNumber);*/
+		System.out.println("Under construction");
 	}
 
 	@FXML

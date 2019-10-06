@@ -5,23 +5,25 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.Menu">
+<BorderPane prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.Menu">
    <top>
       <HBox prefHeight="42.0" prefWidth="750.0" BorderPane.alignment="CENTER" />
    </top>
    <center>
-      <ScrollPane hbarPolicy="NEVER" prefWidth="750.0" BorderPane.alignment="TOP_CENTER">
+      <ScrollPane hbarPolicy="NEVER" prefHeight="538.0" prefWidth="750.0" BorderPane.alignment="TOP_CENTER">
          <content>
-            <VBox alignment="CENTER" prefHeight="600.0" prefWidth="750.0" spacing="15.0">
+            <VBox alignment="CENTER" prefHeight="506.0" prefWidth="749.0" spacing="15.0">
                <children>
                   <Label text="VARpedia" underline="true">
                      <font>
                         <Font size="91.0" />
                      </font>
                   </Label>
+                  <Region prefHeight="55.0" prefWidth="749.0" />
                   <Button fx:id="_create" mnemonicParsing="false" onAction="#openSearch" prefHeight="60.0" prefWidth="400.0" text="Create">
                      <font>
                         <Font size="22.0" />

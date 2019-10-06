@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -17,10 +16,8 @@ import javafx.fxml.FXMLLoader;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
 
 /**
  * Abstract class from which all other controllers extend.
@@ -78,12 +75,12 @@ protected final String _PATH = "/application/view/";
 	}
 	
 	/**
-	 * Navigates windows that can NOT be skipped
+	 * Navigates windows
 	 * @param button
 	 * @param nextWindow
 	 */
 	
-	protected void switchNonSkippableWindow(Scene scene, URL nextWindowURL) {
+	protected void switchTo(Scene scene, URL nextWindowURL) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(nextWindowURL);
@@ -92,6 +89,10 @@ protected final String _PATH = "/application/view/";
 			e.printStackTrace();
 		}
 	}
+	/**Shortcut method to the Menu**/
+	protected void toMenu(Scene scene) {switchTo(scene, getClass().getResource(_PATH+"Menu.fxml"));};
+
+
 	
 	/**
 	 * Stores file order
@@ -154,102 +155,6 @@ protected final String _PATH = "/application/view/";
 		List<File> images = listDirectory(directory);
 		for (File image: images) {
 			image.delete();
-		}
-	}
-	
-	
-	/**
-	 * Navigates windows that CAN be skipped
-	 * The skipping is determined by how many savedItems are in the tmp/text/audioOrder and/or tmp/text/imageOrder
-	 * @param button
-	 * @param savedItems
-	 * @throws MalformedURLException 
-	 */
-	
-	protected void switchSkippableWindow(Button button, String filetype, URL currentURL) {
-		try {
-			String windowName = button.getParent().getId();
-			String buttonName = button.getText();
-			String nextWindow = currentURL.toString();
-			int itemAmount = 0;
-			
-			BorderPane root = null;
-			URL nextWindowURL;
-			Scene scene = button.getScene();
-			FXMLLoader loader = new FXMLLoader();
-			
-			List<String> savedItems = retrieveFileType(filetype);
-			itemAmount = savedItems.size();
-			
-			if (windowName.equals("_AudioSelect") && buttonName.equals("next")) {
-				if (itemAmount == 1) {
-					nextWindow = nextWindow+"ImageFetch.fxml";
-					nextWindowURL = new URL(nextWindow);
-					loader.setLocation(nextWindowURL);
-					root = loader.load();
-					
-				} else {
-					nextWindow = nextWindow+"AudioOrder.fxml";
-					nextWindowURL = new URL(nextWindow);
-					loader.setLocation(nextWindowURL);
-					root = loader.load();
-					AudioOrder audioOrder = loader.getController();
-					audioOrder.setSavedAudio(savedItems); //Load audio order into window
-				}
-				
-				
-			} else if (windowName.equals("_ImageSelect") && buttonName.equals("next")) {
-				if (itemAmount == 1) {
-					nextWindow = nextWindow+"Save.fxml";
-					nextWindowURL = new URL(nextWindow);
-					loader.setLocation(nextWindowURL);
-					root = loader.load();
-				} else {
-					nextWindow = nextWindow+"ImageOrder.fxml";
-					nextWindowURL = new URL(nextWindow);
-					loader.setLocation(nextWindowURL);
-					root = loader.load();
-					ImageOrder imageOrder = loader.getController();
-					imageOrder.setSavedImages(savedItems); //Load image order into window
-				}
-				
-			} else if (windowName.equals("_ImageFetch") && buttonName.equals("back")) {
-				if (itemAmount == 1) {
-					nextWindow = nextWindow+"AudioSelect.fxml";
-					nextWindowURL = new URL(nextWindow);
-					loader.setLocation(nextWindowURL);
-					root = loader.load();
-				} else {
-					nextWindow = nextWindow+"AudioOrder.fxml";
-					nextWindowURL = new URL(nextWindow);
-					loader.setLocation(nextWindowURL);
-					root = loader.load();
-					AudioOrder audioOrder = loader.getController();
-					audioOrder.setSavedAudio(savedItems); //Load audio order into window
-				}
-				
-			} else if (windowName.equals("_Save") && buttonName.equals("back")) {
-				if (itemAmount == 1) {
-					nextWindow = nextWindow+"ImageSelect.fxml";
-					nextWindowURL = new URL(nextWindow);
-					loader.setLocation(nextWindowURL);
-					root = loader.load();
-				} else {
-					nextWindow = nextWindow+"ImageOrder.fxml";
-					nextWindowURL = new URL(nextWindow);
-					loader.setLocation(nextWindowURL);
-					root = loader.load();
-					ImageOrder imageOrder = loader.getController();
-					imageOrder.setSavedImages(savedItems); //Load image order into window
-				}
-			} else {
-				;
-			}
-			scene.setRoot(root);
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 }
