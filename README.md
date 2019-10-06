@@ -2,6 +2,33 @@
 
 ## Discussion Wiki
 
+### 06/10/2019 @ 2015 - The Branch Less Traveled
+
+Today I branched off from `master` into `MirlingtonWindows`. When I finally dug my hands into some code, I noticed there were things we could improve on from last time:
+
+1. We've proposed to make a `quiz` branch off `master` so upon which we can work on together.
+2. Simplified the Controller Class, no more `switchNonSkippableWindow` among other things.
+3. We switched to a `750x550` resolution to get a better landscape look and feel.
+
+Other things:
+
+* We agreed on one-liner methods, so long as they're simple and commonly used.
+
+**The Simplified Creation Cycle**
+
+1. Search Word.
+2. Create Audio.
+3. Fetch Images.
+4. Save Video.
+
+Today I was able to get step 3 done, take a look.
+
+![imagefetch](Concepts/screenshots_PRE_CSS/ImageFetch.png)
+
+I can't believe it looks that great and we're still using the old design!
+
+\- Mirlington
+
 ---
 
 ### 06/10/2019 @ 1034 - Hauling Over and Under
