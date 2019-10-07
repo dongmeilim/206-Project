@@ -13,83 +13,87 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.ImageFetch">
-   <center>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="138.0" prefWidth="562.0" BorderPane.alignment="CENTER">
-         <content>
-            <VBox fx:id="_content" alignment="CENTER" prefHeight="595.0" prefWidth="750.0" spacing="20.0">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.ImageFetch">
+   <children>
+      <BorderPane prefHeight="550.0" prefWidth="750.0">
+         <bottom>
+            <HBox fx:id="_ImageFetch" prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="31.0" prefWidth="388.0" text="Choose amount of images to fetch:">
+                  <Button fx:id="_back" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="50.0" text="back" HBox.hgrow="NEVER">
+                     <graphic>
+                        <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/back.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Label fx:id="_warning" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="650.0" />
+                  <Button fx:id="_next" contentDisplay="GRAPHIC_ONLY" disable="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="50.0" prefWidth="50.0" text="next" HBox.hgrow="NEVER">
+                     <graphic>
+                        <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/next.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox fx:id="_ImageFetch1" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="_home" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0" text="home">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/home.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Region prefHeight="50.0" prefWidth="140.0" />
+                  <Label text="Step 3: Fetch Images">
                      <font>
-                        <Font size="21.0" />
-                     </font></Label>
-                  <HBox alignment="CENTER" prefHeight="152.0" prefWidth="750.0" spacing="15.0">
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <Region prefHeight="50.0" prefWidth="128.0" />
+                  <Button fx:id="_help" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/helpwhite.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </top>
+         <center>
+            <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="450.0" prefWidth="750.0" spacing="10.0" BorderPane.alignment="TOP_CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="44.0" prefWidth="750.0" spacing="10.0">
                      <children>
-                        <Slider fx:id="_slider" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" onMouseReleased="#handleValueChange" prefHeight="29.0" prefWidth="373.0" showTickMarks="true" snapToTicks="true" value="1.0" />
-                        <Button fx:id="_search" mnemonicParsing="false" onAction="#handleSearch" prefHeight="18.0" prefWidth="23.0">
-                           <graphic>
-                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@/search.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
+                        <Slider fx:id="_slider" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" onMouseReleased="#handleValueChange" prefHeight="44.0" prefWidth="293.0" showTickMarks="true" snapToTicks="true" value="1.0" />
+                        <Button fx:id="_fetch" mnemonicParsing="false" onAction="#handleFetch" prefHeight="44.0" prefWidth="69.0" text="Fetch" />
                      </children>
                   </HBox>
-                  <Label fx:id="_imageAmountDisplay" text="1 image">
+                  <Label fx:id="_imageAmountDisplay" prefHeight="19.0" prefWidth="134.0" text="1 image">
                      <font>
                         <Font size="15.0" />
-                     </font></Label>
-                  <Label fx:id="_warning" />
+                     </font>
+                  </Label>
                   <ProgressBar fx:id="_progress" prefHeight="24.0" prefWidth="394.0" progress="0.0" />
-               </children>
-            </VBox>
-         </content>
-      </ScrollPane>
-   </center>
-   <bottom>
-      <HBox fx:id="_ImageFetch" prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="_back" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="50.0" text="back" HBox.hgrow="NEVER">
-               <graphic>
-                  <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@/back.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Button>
-            <Region prefHeight="50.0" prefWidth="651.0" />
-            <Button fx:id="_next" contentDisplay="GRAPHIC_ONLY" disable="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="50.0" prefWidth="50.0" text="next" HBox.hgrow="NEVER">
-               <graphic>
-                  <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@/next.png" />
-                     </image>
-                  </ImageView>
-               </graphic></Button>
-         </children>
-      </HBox>
-   </bottom>
-   <top>
-      <HBox fx:id="_ImageFetch" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="_home" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0" text="home">
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@/home.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Region prefHeight="53.0" prefWidth="135.0" />
-            <Label text="Step 4a: Image Fetching">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-   </top>
-</BorderPane>
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="368.0" prefWidth="750.0">
+                     <content>
+                        <VBox fx:id="_imageContent" prefHeight="350.0" prefWidth="750.0" spacing="10.0" />
+                     </content>
+                  </ScrollPane>
+               </children></VBox>
+         </center>
+      </BorderPane>
+   </children>
+</HBox>

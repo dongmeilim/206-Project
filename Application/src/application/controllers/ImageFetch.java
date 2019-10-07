@@ -6,14 +6,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javafx.fxml.FXML;
 
 import javafx.geometry.Pos;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;
@@ -56,14 +54,13 @@ public class ImageFetch extends Controller {
 		if (decision == true) {
 			toMenu(_home.getScene());
 		}
-
 	}
 	
 	@FXML private void handleHelp() {
 		System.out.println("Under construction");
 	}
 	
-	@FXML private void handleNext() {System.out.println("Go next");};
+	@FXML private void handleNext() {switchTo(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));};
 	
 	@FXML
 	private void handleFetch() {
