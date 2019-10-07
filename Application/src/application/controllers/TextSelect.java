@@ -98,7 +98,13 @@ public class TextSelect extends Controller implements Initializable{
 
 		//make a button for every voice
 		for(File voice:_voices) {
-			RadioButton rb = new RadioButton(voice.getName());
+			String name = voice.getName();
+			if ( name.equals("kal_diphone")) {
+				name = "default man";
+			}else if(name.equals("akl_nz_jdt_diphone")) {
+				name = "NZ man";
+			}
+			RadioButton rb = new RadioButton(name);
 			rb.setToggleGroup(_rbGroup);
 			_rbList.add(rb);
 		}
@@ -220,8 +226,9 @@ public class TextSelect extends Controller implements Initializable{
 		String text = _text.getSelectedText();
 		if (text.trim().length() > 0) {
 			//get the user's desired inputs
+			
 			RadioButton rb = (RadioButton)_rbGroup.getSelectedToggle();
-			String voice = rb.getText();
+			String voice = getVoiceName(rb.getText());
 
 			// Check that the text is within the word limit
 			boolean hasunderOrOverflow = underOverflow(text.trim());
@@ -289,7 +296,14 @@ public class TextSelect extends Controller implements Initializable{
 		}
 
 	}
-
+	private String getVoiceName(String voice) {
+		if ( voice.equals("default man")) {
+			voice = "kal_diphone";
+		}else if(voice.equals("NZ man")) {
+			voice = "akl_nz_jdt_diphone";
+		}
+		return voice;
+	}
 	private boolean underOverflow(String text) {
 		String[] words = text.split("\\s+"); //Split on whitespace
 		boolean hasAWord=false;
@@ -432,7 +446,7 @@ public class TextSelect extends Controller implements Initializable{
 		if (text.trim().length() > 0) {
 			//get the user's desired inputs
 			RadioButton rb = (RadioButton)_rbGroup.getSelectedToggle();
-			String voice = rb.getText();
+			String voice = getVoiceName(rb.getText());
 
 			//create preview.wav in bg thread
 			TextToAudio saveBG = new TextToAudio(text,voice, name);

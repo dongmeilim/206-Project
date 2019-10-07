@@ -11,18 +11,18 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-      <MediaView fx:id="_player" fitHeight="500.0" fitWidth="750.0" BorderPane.alignment="BOTTOM_CENTER" />
+      <MediaView fx:id="_player" fitHeight="450.0" fitWidth="750.0" BorderPane.alignment="BOTTOM_CENTER" />
    </center>
    <bottom>
-      <HBox alignment="TOP_CENTER" prefHeight="140.0" prefWidth="750.0" spacing="5.0" BorderPane.alignment="CENTER">
+      <HBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="750.0" spacing="5.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="_back" mnemonicParsing="false" onAction="#handleBack" prefHeight="40.0" prefWidth="40.0">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/back.png" />
+                        <Image url="@../../../assets/back.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -30,7 +30,7 @@
                <graphic>
                   <ImageView fitHeight="26.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/play.png" />
+                        <Image url="@../../../assets/play.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -45,9 +45,9 @@
       </HBox>
    </bottom>
    <top>
-      <Label fx:id="_title" alignment="CENTER" prefHeight="60.0" text="Title" BorderPane.alignment="CENTER">
+      <Label fx:id="_title" alignment="CENTER" prefHeight="42.0" prefWidth="59.0" text="Title" BorderPane.alignment="CENTER">
          <font>
-            <Font size="39.0" />
+            <Font size="27.0" />
          </font>
       </Label>
    </top>

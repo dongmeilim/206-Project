@@ -32,7 +32,7 @@ public class Main extends Application {
 			loader.setLocation(getClass().getResource("/application/view/Menu.fxml"));
 			BorderPane root = (BorderPane)loader.load();
 			
-			Scene scene = new Scene(root,750,700);
+			Scene scene = new Scene(root,750,550);
 			scene.getStylesheets().add("/application/app/application.css");
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);

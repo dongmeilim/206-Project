@@ -14,6 +14,7 @@ public class Menu extends Controller {
 	@FXML private Button _help;
 	@FXML private Button _create;
 	@FXML private Button _videos;
+	@FXML private Button _quiz;
 	
 	
 	@FXML
@@ -29,6 +30,11 @@ public class Menu extends Controller {
 	@FXML
 	private void videoList() {
 		switchNonSkippableWindow(_help.getScene(), getClass().getResource(_PATH+"VideoList.fxml"));
+	}
+	
+	@FXML
+	private void openQuiz() {
+		// TODO implement openQuiz
 	}
 	
 }

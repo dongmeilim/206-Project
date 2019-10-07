@@ -13,41 +13,54 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="700.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.TextSelect">
+<BorderPane prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.TextSelect">
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="607.0" prefWidth="443.0" spacing="10.0">
+            <VBox prefHeight="450.0" prefWidth="443.0" spacing="10.0">
                <children>
-                  <Label text="Please select text you wish to save">
+                  <Label text="1. Select text you wish to use">
                      <font>
-                        <Font size="22.0" />
+                        <Font size="16.0" />
                      </font></Label>
-                  <TextArea fx:id="_text" prefHeight="538.0" prefWidth="413.0" wrapText="true" />
+                  <TextArea fx:id="_text" prefHeight="371.0" prefWidth="413.0" wrapText="true" />
+                  <Label text="3. Preview and Save your files">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                     <padding>
+                        <Insets left="90.0" />
+                     </padding>
+                  </Label>
                </children>
                <padding>
                   <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
                </padding>
             </VBox>
-            <VBox fx:id="_rightVBox" prefHeight="607.0" prefWidth="307.0" spacing="10.0">
+            <VBox fx:id="_rightVBox" prefHeight="450.0" prefWidth="307.0" spacing="10.0">
                <children>
-                  <Label text="Select a voice:">
+                  <Label text="2. Select a voice:">
                      <font>
-                        <Font size="22.0" />
+                        <Font size="17.0" />
                      </font></Label>
-                  <ScrollPane hbarPolicy="NEVER" prefHeight="253.0" prefWidth="277.0">
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="95.0" prefWidth="277.0">
                      <content>
-                        <VBox fx:id="_radioButtons" prefHeight="82.0" prefWidth="230.0" spacing="5.0">
+                        <VBox fx:id="_radioButtons" prefHeight="91.0" prefWidth="275.0" spacing="5.0">
                            <padding>
                               <Insets left="5.0" top="5.0" />
                            </padding>
                         </VBox>
                      </content>
                   </ScrollPane>
-                  <ProgressBar fx:id="_pb" prefHeight="18.0" prefWidth="277.0" progress="0.0">
-                     <padding>
-                        <Insets top="50.0" />
-                     </padding></ProgressBar>
+                  <Label text="4. Select your sound files">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <ScrollPane hbarPolicy="NEVER" prefWidth="277.0">
+                     <content>
+                        <VBox prefHeight="202.0" prefWidth="275.0" />
+                     </content></ScrollPane>
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
@@ -63,25 +76,26 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/back.png" />
+                        <Image url="@back.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
             <HBox alignment="TOP_RIGHT" spacing="5.0">
                <children>
-                  <HBox fx:id="_prevAndAudio" prefHeight="40.0" prefWidth="380.0" spacing="5.0">
+                  <HBox fx:id="_prevAndAudio" prefHeight="50.0" prefWidth="302.0" spacing="5.0">
                      <children>
-                        <Button fx:id="_preview" mnemonicParsing="false" onAction="#preview" prefHeight="40.0" prefWidth="367.0" text="Preview" />
+                        <Button fx:id="_preview" mnemonicParsing="false" onAction="#preview" prefHeight="40.0" prefWidth="338.0" text="Preview" />
                      </children>
                   </HBox>
-                  <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="307.0" spacing="10.0">
+                  <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="407.0" spacing="10.0">
                      <children>
-                        <Button fx:id="_save" mnemonicParsing="false" onAction="#saveAudio" prefHeight="40.0" prefWidth="229.0" text="Save" />
+                        <Button fx:id="_save" mnemonicParsing="false" onAction="#saveAudio" prefHeight="40.0" prefWidth="81.0" text="Save" />
+                        <ProgressBar fx:id="_pb" prefHeight="20.0" prefWidth="245.0" progress="0.0" />
                         <Button fx:id="_next" disable="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="50.0" prefWidth="50.0">
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@/next.png" />
+                                    <Image url="@../../../assets/next.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -100,11 +114,11 @@
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/home.png" />
+                        <Image url="@home.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Label alignment="CENTER" prefHeight="35.0" prefWidth="646.0" text="Step 2: Text Parsing">
+            <Label alignment="CENTER" prefHeight="35.0" prefWidth="646.0" text="Step 2: Create the sound">
                <font>
                   <Font size="36.0" />
                </font>
