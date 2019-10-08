@@ -9,6 +9,13 @@ import javafx.scene.control.Button;
  * The first window that is seen by the user.
  */
 
+// TODO key bindings
+// Add key bindings where possible. This will help reduce time taken to make video etc.
+// Enter for save
+// Space for play/pause
+// ??? for next
+// Esc for back
+
 public class Menu extends Controller {
 	
 	@FXML private Button _help;
