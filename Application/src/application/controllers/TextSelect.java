@@ -89,6 +89,7 @@ public class TextSelect extends Controller implements Initializable{
 	//TODO show saved files
 	//TODO make saved files previews
 	//TODO implements reset button
+	//TODO Warn the user preemptively that the NZ voice cant pronounce a lot of words.
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_dir = System.getProperty("user.dir");
