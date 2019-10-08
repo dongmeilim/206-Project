@@ -11,7 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 
 /**
  * Controller that handles the ImageFetch.fxml view.
@@ -28,7 +31,11 @@ public class QuizSettings extends Controller implements Initializable {
 	@FXML private Label _questionAmountDisplay;
 	@FXML private Label _warning;
 	@FXML private ProgressBar _progress;
+	@FXML private RadioButton _audioRadio;
+	@FXML private RadioButton _imageRadio;
+	@FXML private RadioButton _bothRadio;
 	@FXML private Slider _slider;
+	@FXML private ToggleGroup _mode;
 	
 	@FXML private void handleBack() {handleHome();}
 	@FXML public void handleHome() {toMenu(_home.getScene());}
@@ -37,7 +44,19 @@ public class QuizSettings extends Controller implements Initializable {
 		System.out.println("Under construction");
 	}
 	
-	@FXML private void handleNext() {System.out.println("Under construction");}
+	@FXML private void handleNext() {
+		Toggle selectedMode = _mode.getSelectedToggle();
+		
+		if (selectedMode.equals(_audioRadio)) {
+			switchTo(_next.getScene(), getClass().getResource(_PATH+"AudioMatch.fxml"));
+		} else if (selectedMode.equals(_imageRadio)) {
+			System.out.println("Image quiz");
+		} else {
+			System.out.println("Video quiz");
+		}
+		
+		
+	}
 	
 	@FXML
 	private void handleValueChange() {

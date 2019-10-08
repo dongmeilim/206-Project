@@ -88,7 +88,7 @@
                                  </font>
                               </Label>
                               <Region prefHeight="78.0" prefWidth="339.0" />
-                              <RadioButton mnemonicParsing="false" selected="true" text="Audio Only">
+                              <RadioButton fx:id="_audioRadio" mnemonicParsing="false" selected="true" text="Audio Only">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -96,12 +96,12 @@
                                     <ToggleGroup fx:id="_mode" />
                                  </toggleGroup>
                               </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="Images Only" toggleGroup="$_mode">
+                              <RadioButton fx:id="_imageRadio" mnemonicParsing="false" text="Images Only" toggleGroup="$_mode">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </RadioButton>
-                              <RadioButton mnemonicParsing="false" text="Both" toggleGroup="$_mode">
+                              <RadioButton fx:id="_bothAudio" mnemonicParsing="false" text="Both" toggleGroup="$_mode">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
