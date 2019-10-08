@@ -62,6 +62,9 @@
                   <ScrollPane hbarPolicy="NEVER" prefWidth="277.0">
                      <content>
                         <TableView prefHeight="200.0" prefWidth="275.0">
+                       	 	<placeholder>
+            					<Label id="_blackText" text="There is no audio" />
+            				</placeholder>
                           <columns>
                               <TableColumn prefWidth="35.0" />
                             <TableColumn prefWidth="194.0" text="Files" />
@@ -90,14 +93,15 @@
                </graphic></Button>
             <HBox alignment="TOP_RIGHT" spacing="5.0">
                <children>
-                  <HBox fx:id="_prevAndAudio" prefHeight="50.0" prefWidth="302.0" spacing="5.0">
+                  <HBox fx:id="_prevAndAudio" prefHeight="50.0" prefWidth="172.0" spacing="5.0">
                      <children>
-                        <Button fx:id="_preview" mnemonicParsing="false" onAction="#preview" prefHeight="40.0" prefWidth="338.0" text="Preview" />
+                        <Button fx:id="_preview" mnemonicParsing="false" onAction="#preview" prefHeight="40.0" prefWidth="189.0" text="Preview" />
                      </children>
                   </HBox>
-                  <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="407.0" spacing="10.0">
+                  <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="513.0" spacing="10.0">
                      <children>
-                        <Button fx:id="_save" mnemonicParsing="false" onAction="#saveAudio" prefHeight="40.0" prefWidth="81.0" text="Save" />
+                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Reset Text" />
+                        <Button fx:id="_save" mnemonicParsing="false" onAction="#saveAudio" prefHeight="40.0" prefWidth="90.0" text="Save" />
                         <ProgressBar fx:id="_pb" prefHeight="20.0" prefWidth="245.0" progress="0.0" />
                         <Button fx:id="_next" disable="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="50.0" prefWidth="50.0">
                            <graphic>

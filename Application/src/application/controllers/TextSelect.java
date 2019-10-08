@@ -71,7 +71,6 @@ public class TextSelect extends Controller implements Initializable{
 	@FXML private ProgressBar _pb;
 
 	private Button _stop;
-	private Slider _audioSlider;
 	private Button _play;
 	private Media _sound; 
 	private MediaPlayer _mediaPlayer; 
@@ -139,10 +138,11 @@ public class TextSelect extends Controller implements Initializable{
 		_prevAndAudio.getChildren().add(_preview);
 
 		_stop = new Button("Stop");
+		_stop.setPrefWidth(80);
+		_stop.setPrefHeight(40);
 		_play = new Button ("Play");
-		_play.setPrefWidth(50);
-		_audioSlider = new Slider();
-		_audioSlider.setPrefWidth(180);
+		_play.setPrefWidth(80);
+		_play.setPrefHeight(40);
 
 		_stop.setOnAction(new EventHandler<ActionEvent>() {
 			@Override 
@@ -251,32 +251,13 @@ public class TextSelect extends Controller implements Initializable{
 				//replace preview button with audio controls
 				_play.setText("Play");
 				try {
-					_prevAndAudio.getChildren().addAll(_stop, _play, _audioSlider);
+					_prevAndAudio.getChildren().addAll(_stop, _play);
 					_sound = new Media(new File(_dir+"/tmp/audio/preview/preview.wav").toURI().toString());
 					_mediaPlayer = new MediaPlayer(_sound);
 					_mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 					_mediaPlayer.setOnEndOfMedia(() -> {
 						_mediaPlayer.stop();
 						_play.setText("Play");
-					});
-
-					//set up slider
-					//The following code is adapted from https://docs.oracle.com/javase/8/javafx/media-tutorial/playercontrol.htm
-					_audioSlider.valueProperty().addListener(new InvalidationListener() {
-						@Override
-						public void invalidated(Observable ov) {
-							if (_audioSlider.isValueChanging()) {
-								// multiply duration by percentage calculated by slider position
-								_mediaPlayer.seek(_mediaPlayer.getMedia().getDuration().multiply(_audioSlider.getValue() / 100.0));
-							}
-							updateValues();
-						}
-					});
-					_mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-						@Override
-						public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-							updateValues();
-						}
 					});
 
 				}catch(MediaException e) {
@@ -339,30 +320,6 @@ public class TextSelect extends Controller implements Initializable{
 			_overflowLabel.setText("Selected text contained no words.");
 			_rightVBox.getChildren().add(_overflowLabel);
 			return true;
-		}
-	}
-
-	/**
-	 * Author: Oracle
-	 * Original: https://docs.oracle.com/javase/8/javafx/media-tutorial/playercontrol.htm
-	 * Modified by: dongmeilim
-	 * */
-	protected void updateValues() {
-
-		if (_audioSlider != null) {
-			Platform.runLater(new Runnable() {
-				public void run() {
-					// update the slider to the media player time
-					Duration currentTime = _mediaPlayer.getCurrentTime();
-					Duration duration =_mediaPlayer.getMedia().getDuration();
-
-					_audioSlider.setDisable(duration.isUnknown());
-					if (!_audioSlider.isDisabled() && duration.greaterThan(Duration.ZERO) 
-							&& !_audioSlider.isValueChanging()) {
-						_audioSlider.setValue(currentTime.divide(duration.toMillis()).toMillis()* 100.0);
-					}
-				}
-			});
 		}
 	}
 

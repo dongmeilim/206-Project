@@ -36,7 +36,7 @@
    -fx-focus-color: transparent;
 }
 
-#_noVideos {
+#_blackText {
 	/*Default values */
 	-fx-text-fill: black;
 	-fx-effect: dropshadow( one-pass-box , black , 0 , 0.0 , 0 , 0 )

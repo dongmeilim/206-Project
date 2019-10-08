@@ -32,7 +32,7 @@
          <content>
             <TableView fx:id="_table" prefHeight="457.0" prefWidth="732.0">
             	<placeholder>
-            		<Label id="_noVideos" text="There are no videos to display" />
+            		<Label id="_blackText" text="There are no videos to display" />
             	</placeholder>
               	<columns>
                 	<TableColumn fx:id="_videos" editable="false" prefWidth="457.0" sortable="false" text="Videos" />

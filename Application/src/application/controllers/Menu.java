@@ -18,7 +18,7 @@ public class Menu extends Controller {
 	
 	@FXML private void openHelp() {System.out.println("Deprecated: To be replaced by Quiz");}
 	@FXML private void openSearch() {switchTo(_help.getScene(), getClass().getResource(_PATH+"Search.fxml"));}
-	@FXML private void videoList() {System.out.println("Under construction");}
+	@FXML private void videoList() {switchTo(_help.getScene(), getClass().getResource(_PATH+"VideoList.fxml"));}
 	
 	@FXML
 	private void openQuiz() {
