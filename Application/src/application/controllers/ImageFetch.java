@@ -60,6 +60,7 @@ public class ImageFetch extends Controller {
 		System.out.println("Under construction");
 	}
 	
+	//TODO add loading icon (circular) and label "Loading Video. . ." before moving on to PreviewSave.fxml
 	@FXML private void handleNext() {switchTo(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));};
 	
 	@FXML
