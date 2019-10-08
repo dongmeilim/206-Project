@@ -26,7 +26,7 @@ import javafx.scene.control.TextField;
  * After user types in an appropriate query,
  * the application.app.SearchWiki Task is called.
  */
-//TODO implement safe search
+//TODO implement safe searcha
 public class Search extends Controller implements Initializable{
 	@FXML private Button _menu;
 	@FXML private Button _back;
