@@ -179,7 +179,7 @@ public class TextSelect extends Controller implements Initializable{
 			_mediaPlayer.stop();
 			_mediaPlayer.dispose();
 		}
-		switchNonSkippableWindow(_back.getScene(), getClass().getResource(_PATH+"AudioSelect.fxml"));
+		switchTo(_back.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));
 	}
 
 	@FXML
@@ -194,7 +194,7 @@ public class TextSelect extends Controller implements Initializable{
 			if (_mediaPlayer != null) {
 				_mediaPlayer.dispose();
 			}
-			switchNonSkippableWindow(_back.getScene(), getClass().getResource(_PATH+"Menu.fxml"));
+			switchTo(_back.getScene(), getClass().getResource(_PATH+"Menu.fxml"));
 		} else {
 			;
 		}
@@ -212,7 +212,7 @@ public class TextSelect extends Controller implements Initializable{
 			if (_mediaPlayer != null) {
 				_mediaPlayer.dispose();
 			}
-			switchNonSkippableWindow(_back.getScene(), getClass().getResource(_PATH+"Search.fxml"));
+			switchTo(_back.getScene(), getClass().getResource(_PATH+"Search.fxml"));
 		} else {
 			;
 		}

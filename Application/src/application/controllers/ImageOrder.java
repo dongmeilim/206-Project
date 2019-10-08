@@ -39,12 +39,12 @@ public class ImageOrder extends Controller {
 	private ObservableList<Image> _observableImages = FXCollections.observableArrayList(); //method used to instantiate
 	private ListView<String> _imageList;
 	private final int _HEIGHT = 550;
-	@FXML private void handleBack() {switchNonSkippableWindow(_content.getScene(), getClass().getResource(_PATH+"ImageSelect.fxml"));};	
+	@FXML private void handleBack() {switchTo(_content.getScene(), getClass().getResource(_PATH+"ImageSelect.fxml"));};	
 	@FXML 
 	public void handleHome() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");
 		if (decision == true) {
-			switchNonSkippableWindow(_content.getScene(), getClass().getResource(_PATH+"Menu.fxml"));
+			switchTo(_content.getScene(), getClass().getResource(_PATH+"Menu.fxml"));
 		} else {
 			;
 		}
@@ -52,7 +52,7 @@ public class ImageOrder extends Controller {
 	}
 	@FXML private void handleNext() {
 		storeFileType("image", _imageList.getItems());
-		switchNonSkippableWindow(_content.getScene(),getClass().getResource(_PATH+"Save.fxml"));	
+		switchTo(_content.getScene(),getClass().getResource(_PATH+"Save.fxml"));	
 	}
 	
 	public void setSavedImages(List<String> savedImages) {
