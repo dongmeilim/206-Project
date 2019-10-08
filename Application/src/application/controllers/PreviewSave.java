@@ -79,7 +79,8 @@ public class PreviewSave extends Controller implements Initializable {
 	@FXML private void handleSave() {
 		System.out.println("Under construction");
 	}
-	
+	// TODO smooth playback
+	// When you pause the video - save the time, when you play the video, load the time
 	@FXML private void playPause() {
 		System.out.println("Under construction");
 	}
