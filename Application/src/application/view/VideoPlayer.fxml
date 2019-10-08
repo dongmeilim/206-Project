@@ -45,7 +45,7 @@
       </HBox>
    </bottom>
    <top>
-      <Label fx:id="_title" alignment="CENTER" prefHeight="42.0" prefWidth="59.0" text="Title" BorderPane.alignment="CENTER">
+      <Label fx:id="_title" alignment="CENTER" prefHeight="42.0" text="Title" BorderPane.alignment="CENTER">
          <font>
             <Font size="27.0" />
          </font>
