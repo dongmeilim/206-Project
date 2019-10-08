@@ -2,6 +2,23 @@
 
 ## Discussion Wiki
 
+### 08/10/2019 @ 1553 - Rain Cloud Under The Honey Tree
+
+`MirlingtonWindows` was finished sooner than I expected. Here's a look at the Save Video step:
+
+![savevideo](Concepts/screenshots_PRE_CSS/PreviewSave.png)
+
+Here are some other things we agreed on while coding:
+
+1. A loading icon is needed before navigating to the Save Video step.
+2. We need to download a blacklist file of inappropriate words so that we can prevent the child from searching up them. This should be done by a simple `for` loop with `BufferedReader`.
+3. A `quiz` branch will be made while we work on the quiz together
+4. Decided on some fresh icons for the Menu screen, see below:
+
+![menu](Concepts/screenshots_PRE_CSS/Menu.png)
+
+\- Mirlington
+
 ### 06/10/2019 @ 2015 - The Branch Less Traveled
 
 Today I branched off from `master` into `MirlingtonWindows`. When I finally dug my hands into some code, I noticed there were things we could improve on from last time:
