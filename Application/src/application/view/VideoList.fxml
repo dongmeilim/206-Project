@@ -35,9 +35,10 @@
             		<Label id="_blackText" text="There are no videos to display" />
             	</placeholder>
               	<columns>
-                	<TableColumn fx:id="_videos" editable="false" prefWidth="457.0" sortable="false" text="Videos" />
-                	<TableColumn fx:id="_play" editable="false" minWidth="0.0" prefWidth="138.0" sortable="false" text="Play" />
-                  	<TableColumn fx:id="_delete" editable="false" prefWidth="134.0" sortable="false" text="Delete" />
+                  <TableColumn fx:id="_thumbnails" prefWidth="152.0" />
+                	<TableColumn fx:id="_videos" editable="false" prefWidth="364.0" sortable="false" text="Videos" />
+                	<TableColumn fx:id="_play" editable="false" minWidth="0.0" prefWidth="116.0" sortable="false" text="Play" />
+                  	<TableColumn fx:id="_delete" editable="false" prefWidth="99.0" sortable="false" text="Delete" />
               	</columns>
             </TableView>
          </content>

@@ -47,7 +47,7 @@ public class ImageFetch extends Controller {
 	@FXML private VBox _imageContent;
 	@FXML private Slider _slider;
 	
-	@FXML private void handleBack() {toMenu(_home.getScene());}
+	@FXML private void handleBack() {switchTo(_next.getScene(), getClass().getResource(_PATH+"TextSelect.fxml"));}
 	@FXML 
 	public void handleHome() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");

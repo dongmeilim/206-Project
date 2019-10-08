@@ -4,6 +4,7 @@ import application.app.TextToAudio;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -84,7 +85,10 @@ public class TextSelect extends Controller implements Initializable{
 	private String _dir;
 	private String _blueBar = "-fx-accent: #315F83";
 	private String _purpleBar = "-fx-accent: #896A89";
-
+	//TODO stop naming audio files
+	//TODO show saved files
+	//TODO make saved files previews
+	//TODO implements reset button
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_dir = System.getProperty("user.dir");
@@ -99,9 +103,9 @@ public class TextSelect extends Controller implements Initializable{
 		for(File voice:_voices) {
 			String name = voice.getName();
 			if ( name.equals("kal_diphone")) {
-				name = "default man";
+				name = "Man";
 			}else if(name.equals("akl_nz_jdt_diphone")) {
-				name = "NZ man";
+				name = "NZ Man";
 			}
 			RadioButton rb = new RadioButton(name);
 			rb.setToggleGroup(_rbGroup);
@@ -162,7 +166,7 @@ public class TextSelect extends Controller implements Initializable{
 					_mediaPlayer.pause();
 					_play.setText("play");
 				}else {
-					
+
 					_mediaPlayer.play();
 					_play.setText("||");
 
@@ -226,7 +230,7 @@ public class TextSelect extends Controller implements Initializable{
 		String text = _text.getSelectedText();
 		if (text.trim().length() > 0) {
 			//get the user's desired inputs
-			
+
 			RadioButton rb = (RadioButton)_rbGroup.getSelectedToggle();
 			String voice = getVoiceName(rb.getText());
 
@@ -278,9 +282,9 @@ public class TextSelect extends Controller implements Initializable{
 
 	}
 	private String getVoiceName(String voice) {
-		if ( voice.equals("default man")) {
+		if ( voice.equals("Man")) {
 			voice = "kal_diphone";
-		}else if(voice.equals("NZ man")) {
+		}else if(voice.equals("NZ Man")) {
 			voice = "akl_nz_jdt_diphone";
 		}
 		return voice;
@@ -288,14 +292,14 @@ public class TextSelect extends Controller implements Initializable{
 	private boolean underOverflow(String text) {
 		String[] words = text.split("\\s+"); //Split on whitespace
 		boolean hasAWord=false;
-		
+
 		if (text.isEmpty() == true) {
 			_overflowLabel.setText("Please select a chunk of text.");
 			_rightVBox.getChildren().add(_overflowLabel);
 			return true;
 		}
-		
-		
+
+
 		for (String word: words) {
 			boolean isAllLetters = word.chars().allMatch(Character::isLetter);
 			if (isAllLetters == true) {
@@ -303,7 +307,7 @@ public class TextSelect extends Controller implements Initializable{
 				break; //Only one word needs to be there
 			}
 		}
-		
+
 		if (hasAWord == true) {
 			if (words.length > 40) {
 				_overflowLabel.setText("Chunk is too large. Please select a smaller chunk.");
@@ -324,14 +328,21 @@ public class TextSelect extends Controller implements Initializable{
 	}
 
 	@FXML
-	private void saveAudio() {
+	private void saveAudio() throws IOException {
 		_rightVBox.getChildren().remove(_errorLabel);
 		_rightVBox.getChildren().remove(_overflowLabel);
 		boolean hasunderOrOverflow = underOverflow(_text.getSelectedText().trim());
 		if (hasunderOrOverflow == true) {
 			return;
 		}
-		saveDialog(false);
+		int fileNum = numFiles();
+		
+		File file = new File(System.getProperty("user.dir")+"/tmp/text/query"); 
+		BufferedReader br = new BufferedReader(new FileReader(file)); 
+		String name = br.readLine()+fileNum; 
+		br.close();
+		
+		saveInBG(name);
 	}
 
 	/**
@@ -398,7 +409,7 @@ public class TextSelect extends Controller implements Initializable{
 	 * Save the selected text as an audio file
 	 * */
 	private void saveInBG( String name ) {
-		
+
 		String text = _text.getSelectedText();
 		if (text.trim().length() > 0) {
 			//get the user's desired inputs
@@ -424,7 +435,7 @@ public class TextSelect extends Controller implements Initializable{
 				// Check that the audio was created properly
 				File file = new File(_dir+"/tmp/audio/"+name+".wav");
 				try {
-				/* 	Notes: certain Festival voices will create empty wav files if certain words are used.
+					/* 	Notes: certain Festival voices will create empty wav files if certain words are used.
 					The bash command will still finish without error, but the wav file cannot be used.
 					To check if this has happened, a Media object has been made with the said wav file.
 					If the wav file has no errors, the Media object is created, otherwise it will throw a
@@ -473,6 +484,22 @@ public class TextSelect extends Controller implements Initializable{
 			return false;
 		}
 		return true;
+	}
+	/**
+	 * Returns number of saved audio files
+	 * */
+	private int numFiles() {
+		String[] existingFiles = new File (_dir+"/tmp/audio").list();
+
+		// Check for invalid files
+		int phantomCount = 0;
+		for (String filename: existingFiles) {
+			if (filename.contains(".__")) {
+				phantomCount++;
+			}
+		}
+		int filecount = existingFiles.length - phantomCount;
+		return filecount;
 	}
 
 }
