@@ -2,6 +2,17 @@
 
 ## Discussion Wiki
 
+### 09/10/2019 @ 1739 - Let the Games Begin
+
+Finally have the TextSelect step (now renamed to Create the Sound) implemented. It has been redone to remove the need to the child user to name their audio files (kids don't have that kind of patience), as well as add the ability to play and delete saved audio files. The audio slider has been removed as it took up too much precious space in the window. The play/pause/stop controls should be enough for the child. The voices have also been given more descriptive(?) names.
+
+Here's how the window looks currently:
+![textselect](Concepts/screenshots_PRE_CSS/TextSelect.png)
+
+With this done, more of my focus can be put on the game component now :D
+
+\- dongmeilim
+
 ### 08/10/2019 @ 1553 - Rain Cloud Under The Honey Tree
 
 `MirlingtonWindows` was finished sooner than I expected. Here's a look at the Save Video step:
