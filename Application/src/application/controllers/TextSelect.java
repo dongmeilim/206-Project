@@ -93,10 +93,6 @@ public class TextSelect extends Controller implements Initializable{
 	private String _blueBar = "-fx-accent: #315F83";
 	private String _purpleBar = "-fx-accent: #896A89";
 
-	//TODO stop naming audio files
-	//TODO show saved files
-	//TODO make saved files previews
-	//TODO implements reset button
 	//TODO Warn the user preemptively that the NZ voice cant pronounce a lot of words.
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -525,7 +521,15 @@ public class TextSelect extends Controller implements Initializable{
 								_savedPlayer.setOnEndOfMedia(() -> {
 									_savedPlayer.stop();
 									_savedPlayer.dispose();
-									_play.setText("Play");
+									playBtn.setText("Play");
+									
+									//enable other buttons
+									for (Button button : _playBtns) {
+										button.setDisable(false);
+									}
+									for (Button button: _delBtns) {
+										button.setDisable(false);
+									}
 								});
 								_savedPlayer.play();
 								playBtn.setText("Stop");
