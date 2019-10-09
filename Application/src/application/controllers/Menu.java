@@ -32,7 +32,7 @@ public class Menu extends Controller implements Initializable {
 	@FXML private Label _warning;
 	
 	@FXML private void openHelp() {System.out.println("Deprecated: To be replaced by Quiz");}
-	@FXML private void openSearch() {switchTo(_help.getScene(), getClass().getResource(_PATH+"Search.fxml"));}
+	@FXML private void openSearch() {switchTo(_help.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));}
 	@FXML private void openVideos() {switchTo(_help.getScene(), getClass().getResource(_PATH+"VideoList.fxml"));}
 	@FXML private void openQuiz() {switchTo(_quiz.getScene(), getClass().getResource(_PATH+"QuizSettings.fxml"));}
 	

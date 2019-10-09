@@ -102,7 +102,7 @@ protected final String _PATH = "/application/view/";
 	
 	protected void storeFileType(String type, List<String> savedItems) {
 		//File location
-		File storedOrder = new File("tmp/text/"+type+"Order");
+		File storedOrder = new File("tmp/text/"+type+"FilesForVideo");
 		//Store order as string;
 		String typeOrderString = "";
 		for (String item: savedItems) {

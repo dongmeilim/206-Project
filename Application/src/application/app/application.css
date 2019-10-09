@@ -37,6 +37,10 @@
    -fx-focus-color: transparent;
 }
 
+.progress-indicator .percentage {
+    -fx-fill:null;
+}
+
 #_blackText {
 	/*Default values */
 	-fx-text-fill: black;

@@ -1,5 +1,6 @@
 package application.controllers;
 
+import application.app.CreatePreview;
 import application.app.DownloadImages;
 
 import java.io.File;
@@ -17,6 +18,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Slider;
 
 import javafx.scene.image.Image;
@@ -43,11 +45,12 @@ public class ImageFetch extends Controller {
 	@FXML private Button _fetch;
 	@FXML private Label _imageAmountDisplay;
 	@FXML private Label _warning;
-	@FXML private ProgressBar _progress;
+	@FXML private ProgressBar _imageProgress;
+	@FXML private ProgressIndicator _videoProgress;
 	@FXML private VBox _imageContent;
 	@FXML private Slider _slider;
 	
-	@FXML private void handleBack() {switchTo(_next.getScene(), getClass().getResource(_PATH+"TextSelect.fxml"));}
+	@FXML private void handleBack() {switchTo(_back.getScene(), getClass().getResource(_PATH+"TextSelect.fxml"));}
 	@FXML 
 	public void handleHome() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");
@@ -61,7 +64,13 @@ public class ImageFetch extends Controller {
 	}
 	
 	//TODO add loading icon (circular) and label "Loading Video. . ." before moving on to PreviewSave.fxml
-	@FXML private void handleNext() {switchTo(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));};
+	@FXML private void handleNext() {
+		_warning.setText("");
+		_next.setDisable(true);
+		_videoProgress.setVisible(true);
+		createPreview();
+		//switchTo(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));
+	}
 	
 	@FXML
 	private void handleFetch() {
@@ -95,11 +104,11 @@ public class ImageFetch extends Controller {
 		Thread thread = new Thread(downloadImages);
 		thread.start();
 		
-		_progress.progressProperty().bind(downloadImages.progressProperty());
-		_progress.setStyle("-fx-accent: #315F83;");
+		_imageProgress.progressProperty().bind(downloadImages.progressProperty());
+		_imageProgress.setStyle("-fx-accent: #315F83;");
 		
 		downloadImages.setOnSucceeded(e-> {
-			_progress.progressProperty().unbind();
+			_imageProgress.progressProperty().unbind();
 			loadImages(imageAmount);
 			_warning.setText("Please select at least one image.");
 		});
@@ -175,5 +184,20 @@ public class ImageFetch extends Controller {
 			_warning.setText("Please select at least one image.");
 			_next.setDisable(true);
 		}
+	}
+	
+	private void createPreview() {
+		CreatePreview createPreview = new CreatePreview();
+		Thread thread = new Thread(createPreview);
+		thread.start();
+		
+		_videoProgress.progressProperty().bind(createPreview.progressProperty());
+		_videoProgress.setStyle("-fx-accent: #315F83;");
+		
+		createPreview.setOnSucceeded(e-> {
+			_imageProgress.progressProperty().unbind();
+			switchTo(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));
+			
+		});	
 	}
 }
