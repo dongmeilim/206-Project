@@ -44,24 +44,16 @@ public class Search extends Controller implements Initializable{
 		//clean the directory to prepare for a new creation
 
 		//delete all files in tmp/audio
-		File audioFolder = new File (_dir+"/tmp/audio");
-		File[] files = audioFolder.listFiles();
-		if(files!=null) { 
-			for(File file: files) {
-				file.delete();
-			}
-		}
-		//create preview folder if it does not exist
-		File preview = new File (_dir+"/tmp/audio/preview");
-		preview.mkdir();
-
-		//clear the preview folder
-		files = preview.listFiles();
-		if(files!=null) { 
-			for(File file: files) {
-				file.delete();
-			}
-		}
+		clearDir("/tmp/audio");
+		
+		//create and clear preview folder
+		clearDir("/tmp/audio/preview");
+		
+		//create and clear text/transcript
+		clearDir("/tmp/text/transcript");
+		
+		//create and clear audio/transcript
+		clearDir("/tmp/audio/transcript");
 		
 		// create a file to keep track of the number of audio files created by the user
 		try {	
@@ -152,11 +144,21 @@ public class Search extends Controller implements Initializable{
 					_back.setDisable(false);
 					_searchbar.clear();
 				}
-
 			});
-
 		}
+	}
+	
+	private void clearDir(String dirName) {
+		//create folder if it does not exist
+		File dir = new File (_dir+dirName);
+		dir.mkdir();
 
-
+		//clear the folder
+		File[] files = dir.listFiles();
+		if(files!=null) { 
+			for(File file: files) {
+				file.delete();
+			}
+		}
 	}
 }

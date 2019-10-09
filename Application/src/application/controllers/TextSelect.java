@@ -104,7 +104,7 @@ public class TextSelect extends Controller implements Initializable{
 		_rbList = new ArrayList<RadioButton>();
 		_rbGroup = new ToggleGroup();
 		_voices = new File("/usr/share/festival/voices/english").listFiles();
-		
+
 		//make a button for every voice
 		for(File voice:_voices) {
 			String name = voice.getName();
@@ -189,10 +189,10 @@ public class TextSelect extends Controller implements Initializable{
 			}
 		}
 		files.removeAll(toRemove);
-		
+
 		File[] arrayOfFiles = new File[files.size()];
 		files.toArray(arrayOfFiles);
-		
+
 		for (int i = 0; i < arrayOfFiles.length; i++) {
 			fileNamesToStore.add(arrayOfFiles[i].getName()); //Storing in file for ffmpeg video
 		}
@@ -249,7 +249,7 @@ public class TextSelect extends Controller implements Initializable{
 			;
 		}
 	}
-	
+
 	@FXML
 	private void handleHelp() {
 		//TODO implement help screen for TextSelect
@@ -314,7 +314,7 @@ public class TextSelect extends Controller implements Initializable{
 		}
 
 	}
-	
+
 	@FXML
 	private void resetText() {
 		String text = "";
@@ -333,7 +333,7 @@ public class TextSelect extends Controller implements Initializable{
 		_text.setWrapText(true);
 		_text.setText(text);
 	}
-	
+
 	private String getVoiceName(String voice) {
 		if ( voice.equals("Man")) {
 			voice = "kal_diphone";
@@ -342,7 +342,7 @@ public class TextSelect extends Controller implements Initializable{
 		}
 		return voice;
 	}
-	
+
 	private boolean underOverflow(String text) {
 		String[] words = text.split("\\s+"); //Split on whitespace
 		boolean hasAWord=false;
@@ -389,18 +389,18 @@ public class TextSelect extends Controller implements Initializable{
 		if (hasunderOrOverflow == true) {
 			return;
 		}
-		
+
 		File file = new File(System.getProperty("user.dir")+"/tmp/text/audioCount"); 
 		BufferedReader br = new BufferedReader(new FileReader(file)); 
 		int fileNum = Integer.parseInt(br.readLine()) + 1 ;
 		br.close();
-		
+
 		// update the number of audio files that have been created
-		
+
 		BufferedWriter writer = new BufferedWriter(new FileWriter(_dir + "/tmp/text/audioCount"));
 		writer.write(fileNum+"");	
 		writer.close();
-		
+
 		file = new File(System.getProperty("user.dir")+"/tmp/text/query"); 
 		br = new BufferedReader(new FileReader(file)); 
 		String name = br.readLine()+fileNum; 
@@ -454,6 +454,8 @@ public class TextSelect extends Controller implements Initializable{
 					// display an error message and remove the erroneous wav file.
 					_rightVBox.getChildren().add(_errorLabel);
 					file.delete();
+					new File(_dir+"/tmp/audio/transcript/"+name+".wav").delete(); //delete censored audio
+					
 					if (!filesAreValid()) {
 						_next.setDisable(true);
 					}
@@ -537,7 +539,7 @@ public class TextSelect extends Controller implements Initializable{
 									_savedPlayer.stop();
 									_savedPlayer.dispose();
 									playBtn.setText("Play");
-									
+
 									//enable other buttons
 									for (Button button : _playBtns) {
 										button.setDisable(false);
@@ -548,7 +550,7 @@ public class TextSelect extends Controller implements Initializable{
 								});
 								_savedPlayer.play();
 								playBtn.setText("Stop");
-								
+
 								//diasble other buttons
 								for (Button button : _playBtns) {
 									if(button != playBtn) {
@@ -564,7 +566,7 @@ public class TextSelect extends Controller implements Initializable{
 								_savedPlayer.stop();
 								_savedPlayer.dispose();
 								playBtn.setText("Play");
-								
+
 								//enable other buttons
 								for (Button button : _playBtns) {
 									button.setDisable(false);
@@ -594,7 +596,7 @@ public class TextSelect extends Controller implements Initializable{
 		_playCol.setCellFactory(cellFactory);
 
 	}
-	
+
 	/**
 	 * Author: Rip Tutorial
 	 * Original: https://riptutorial.com/javafx/example/27946/add-button-to-tableview
@@ -625,6 +627,9 @@ public class TextSelect extends Controller implements Initializable{
 									file.delete();
 									updateFileList();
 								}
+								//delete the censored audio file
+								new File("tmp/audio/transcript/"+file.getName()).delete();
+
 							}
 
 						});
