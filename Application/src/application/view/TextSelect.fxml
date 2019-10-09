@@ -67,8 +67,8 @@
             				</placeholder>
                           <columns>
                             <TableColumn fx:id="_playCol" editable="false" minWidth="0.0" prefWidth="69.0" sortable="false" text="Play" />
-                            <TableColumn fx:id="_audioCol" editable="false" prefWidth="143.0" sortable="false" text="Files" />
-                              <TableColumn fx:id="_deleteCol" editable="false" prefWidth="62.0" sortable="false" />
+                            <TableColumn fx:id="_audioCol" editable="false" prefWidth="125.0" sortable="false" text="Files" />
+                              <TableColumn fx:id="_deleteCol" editable="false" sortable="false" text="Delete" />
                           </columns>
                         </TableView>
                      </content></ScrollPane>
@@ -100,7 +100,7 @@
                   </HBox>
                   <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="513.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Reset Text" />
+                        <Button fx:id="_reset" mnemonicParsing="false" onAction="#resetText" prefHeight="40.0" prefWidth="90.0" text="Reset Text" />
                         <Button fx:id="_save" mnemonicParsing="false" onAction="#saveAudio" prefHeight="40.0" prefWidth="90.0" text="Save" />
                         <ProgressBar fx:id="_pb" prefHeight="20.0" prefWidth="245.0" progress="0.0" />
                         <Button fx:id="_next" disable="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="50.0" prefWidth="50.0">

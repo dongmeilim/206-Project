@@ -60,6 +60,7 @@ public class TextSelect extends Controller implements Initializable{
 	@FXML private Button _next;
 	@FXML private Button _preview;
 	@FXML private Button _save;
+	@FXML private Button _reset;
 
 	@FXML private VBox _radioButtons;
 	@FXML private VBox _rightVBox;
@@ -123,21 +124,7 @@ public class TextSelect extends Controller implements Initializable{
 		_rbList.get(0).setSelected(true);
 
 		//set up text area with text for wikit
-		String text = "";
-		//read the text file
-		try (BufferedReader reader = new BufferedReader(new FileReader(new File(_dir+"/tmp/text/wikitext.txt")))) {
-
-			String line;
-			while ((line = reader.readLine()) != null) {
-				text = text+line+"\n";
-			}
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//add the text to the text area
-		_text.setWrapText(true);
-		_text.setText(text);
+		resetText();
 
 		//prevent users from going to next view if there are no saved files
 		if (filesAreValid() == true) {
@@ -316,6 +303,26 @@ public class TextSelect extends Controller implements Initializable{
 		}
 
 	}
+	
+	@FXML
+	private void resetText() {
+		String text = "";
+		//read the text file
+		try (BufferedReader reader = new BufferedReader(new FileReader(new File(_dir+"/tmp/text/wikitext.txt")))) {
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				text = text+line+"\n";
+			}
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//add the text to the text area
+		_text.setWrapText(true);
+		_text.setText(text);
+	}
+	
 	private String getVoiceName(String voice) {
 		if ( voice.equals("Man")) {
 			voice = "kal_diphone";
@@ -324,6 +331,7 @@ public class TextSelect extends Controller implements Initializable{
 		}
 		return voice;
 	}
+	
 	private boolean underOverflow(String text) {
 		String[] words = text.split("\\s+"); //Split on whitespace
 		boolean hasAWord=false;

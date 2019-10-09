@@ -21,7 +21,8 @@
     -fx-text-fill: white;
 }
 .radio-button{
-	-fx-text-fill: white;
+	-fx-text-fill: white;	
+    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 1 , 1 )
 }
 .root {
     -fx-background-image: url("/background.jpg");
