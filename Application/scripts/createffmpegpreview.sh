@@ -4,6 +4,7 @@ query=`cat ../tmp/text/query`
 
 rm ../tmp/audio/concatenatedAudio.wav &> /dev/null
 rm ../tmp/text/ffmpegAudioFiles &> /dev/null
+rm ../tmp/text/ffmepgImageFiles &> /dev/null
 
 mkdir -p ../tmp/images/saved/ #Won't show up when directory is listed as it is a directory
 
@@ -21,7 +22,7 @@ echo "25" #Percentage
 counter=1
 for i in `cat ../tmp/text/imageFilesForVideo`
 do
-	#echo "file '../images/$i'" >>  ../tmp/text/ffmpegImageFiles
+	echo "file '../images/$i'" >>  ../tmp/text/ffmpegImageFiles
 	if [ $counter -eq 10 ]
 	then
 		cp ../tmp/images/$i ../tmp/images/saved/img0$counter.jpg &> /dev/null

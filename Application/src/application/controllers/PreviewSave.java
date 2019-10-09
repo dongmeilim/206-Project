@@ -193,7 +193,6 @@ public class PreviewSave extends Controller implements Initializable {
 		saveVideo.setOnSucceeded(e-> {
 			_videoHasBeenMade = true;
 			_progress.progressProperty().unbind();
-			_back.setDisable(true);
 			_home.requestFocus(); //Tell users to go home, job done
 		});
 	}

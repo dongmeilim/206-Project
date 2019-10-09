@@ -178,6 +178,7 @@ public class TextSelect extends Controller implements Initializable{
 	 * Refreshes the list of files
 	 */
 	private void updateFileList() {
+		List<String> fileNamesToStore = new ArrayList<String>();
 		List<File> files = listDirectory("tmp/audio");
 		// Record all the files that are invalid in another list then remove them all at once.
 		// This is to avoid the ConcurrentModificationException when using the for-loop.
@@ -191,6 +192,14 @@ public class TextSelect extends Controller implements Initializable{
 		
 		File[] arrayOfFiles = new File[files.size()];
 		files.toArray(arrayOfFiles);
+		
+		for (int i = 0; i < arrayOfFiles.length; i++) {
+			fileNamesToStore.add(arrayOfFiles[i].getName()); //Storing in file for ffmpeg video
+		}
+		if (fileNamesToStore.isEmpty() == false) {
+			storeFileType("audio",fileNamesToStore); //Null check
+		}
+		System.out.println(fileNamesToStore);
 		_fileList.clear();
 		_fileList.addAll(arrayOfFiles);
 	}
