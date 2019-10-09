@@ -7,6 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -33,7 +34,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="_videos" alignment="CENTER" graphicTextGap="30.0" mnemonicParsing="false" onAction="#videoList" prefHeight="60.0" prefWidth="400.0" text="Videos">
+                  <Button fx:id="_videos" alignment="CENTER" graphicTextGap="30.0" mnemonicParsing="false" onAction="#openVideos" prefHeight="60.0" prefWidth="400.0" text="Videos">
                      <font>
                         <Font size="22.0" />
                      </font>
@@ -77,4 +78,11 @@
          </content>
       </ScrollPane>
    </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="60.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="_warning" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

@@ -23,6 +23,8 @@ public class Main extends Application {
 		new File(dir+"/tmp/audio").mkdirs();
 		new File(dir+"/tmp/images").mkdirs();
 		new File(dir+"/tmp/video").mkdirs();
+		// TODO proper file-hierarchy
+		// quiz/creationname/file1
 		
 		try {
 			primaryStage.setTitle("VARpedia");

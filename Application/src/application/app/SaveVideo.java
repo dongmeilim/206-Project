@@ -14,12 +14,12 @@ import javafx.concurrent.Task;
  * into a slideshow.
  */
 
-public class CreateVideo extends Task<Void> {
+public class SaveVideo extends Task<Void> {
 
 	private final File _NULL = new File("/dev/null");
 	private String _fileName;
 	
-	public CreateVideo(String fileName) {
+	public SaveVideo(String fileName) {
 		_fileName = fileName;
 	}
 	
@@ -30,7 +30,7 @@ public class CreateVideo extends Task<Void> {
 			ProcessBuilder pb = new ProcessBuilder();
 			pb.redirectError(_NULL);
 			pb.directory(new File("scripts/"));
-			pb.command("bash","ffmpegify.sh", _fileName);
+			pb.command("bash","saveCreation.sh", _fileName);
 			pb.start().waitFor();
 			Process process = pb.start();
 	        InputStream stdout = process.getInputStream();

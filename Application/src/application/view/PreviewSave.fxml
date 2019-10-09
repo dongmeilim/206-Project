@@ -91,8 +91,8 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="36.0" prefWidth="751.0">
                      <children>
-                        <TextField alignment="CENTER" prefHeight="36.0" prefWidth="289.0" promptText="Please enter a name for your video..." />
-                        <Button mnemonicParsing="false" onAction="#handleSave" prefHeight="36.0" prefWidth="70.0" text="Save" />
+                        <TextField fx:id="_field" alignment="CENTER" prefHeight="36.0" prefWidth="289.0" promptText="Please enter a name for your video..." />
+                        <Button fx:id="_save" mnemonicParsing="false" onAction="#handleSave" prefHeight="36.0" prefWidth="70.0" text="Save" />
                      </children>
                   </HBox>
                   <ProgressBar fx:id="_progress" prefHeight="24.0" prefWidth="424.0" progress="0.0" />

@@ -21,8 +21,8 @@
     -fx-text-fill: white;
 }
 .radio-button{
-	-fx-text-fill: white;	
-    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 1 , 1 )
+	-fx-text-fill: white;
+	-fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 );
 }
 .root {
     -fx-background-image: url("/background.jpg");
@@ -37,18 +37,22 @@
    -fx-focus-color: transparent;
 }
 
+.progress-indicator .percentage {
+    -fx-fill:null;
+}
+
 #_blackText {
 	/*Default values */
 	-fx-text-fill: black;
-	-fx-effect: dropshadow( one-pass-box , black , 0 , 0.0 , 0 , 0 )
+	-fx-effect: dropshadow( one-pass-box , black , 0 , 0.0 , 0 , 0 );
 } 
 
 .label {
     -fx-text-fill: white;
-    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 )
+    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 );
 }
 
 .check-box {
     -fx-text-fill: white;
-    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 )
+    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 );
 }
