@@ -26,7 +26,7 @@ import javafx.scene.control.TextField;
  * After user types in an appropriate query,
  * the application.app.SearchWiki Task is called.
  */
-//TODO implement safe searcha
+//TODO implement safe search
 public class Search extends Controller implements Initializable{
 	@FXML private Button _menu;
 	@FXML private Button _back;
@@ -61,6 +61,17 @@ public class Search extends Controller implements Initializable{
 				file.delete();
 			}
 		}
+		
+		// create a file to keep track of the number of audio files created by the user
+		try {	
+			BufferedWriter writer = new BufferedWriter(new FileWriter(_dir + "/tmp/text/audioCount"));
+			writer.write("0");	
+			writer.close();
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+	
+		
 		//read the text file
 		String query = "";
 

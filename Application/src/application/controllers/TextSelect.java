@@ -3,9 +3,10 @@ package application.controllers;
 import application.app.TextToAudio;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import java.net.URL;
@@ -14,37 +15,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
-import javafx.application.Platform;
-
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Slider;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
-
-import javafx.util.Duration;
+import javafx.util.Callback;
 
 /**
  * Controller that handles the TextSelect.fxml view.
@@ -71,10 +67,20 @@ public class TextSelect extends Controller implements Initializable{
 	@FXML private TextArea _text;
 	@FXML private ProgressBar _pb;
 
+	@FXML private TableView<File> _table;
+	@FXML private TableColumn<File, String> _audioCol;
+	@FXML private TableColumn<File, Void> _playCol;
+	@FXML private TableColumn<File, Void> _deleteCol;
+	private final ObservableList<File> _fileList= FXCollections.observableArrayList();;
+
 	private Button _stop;
 	private Button _play;
 	private Media _sound; 
-	private MediaPlayer _mediaPlayer; 
+	private MediaPlayer _mediaPlayer;
+	private MediaPlayer _savedPlayer; 
+	private ArrayList<Button> _playBtns = new ArrayList<Button>();
+	private ArrayList<Button> _delBtns = new ArrayList<Button>();
+
 	private Label _errorLabel = new Label("Sorry, this text contains a word that can't be pronounced.");
 	private Label _overflowLabel = new Label();
 
@@ -85,6 +91,7 @@ public class TextSelect extends Controller implements Initializable{
 	private String _dir;
 	private String _blueBar = "-fx-accent: #315F83";
 	private String _purpleBar = "-fx-accent: #896A89";
+
 	//TODO stop naming audio files
 	//TODO show saved files
 	//TODO make saved files previews
@@ -174,7 +181,34 @@ public class TextSelect extends Controller implements Initializable{
 				}
 			}
 		});
+		updateFileList();
+		_table.setSelectionModel(null);
+		_table.setItems(_fileList);
+		_audioCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+		addPlayButtonToTable();
+		addDeleteButtonToTable();
 
+	}
+
+	/**
+	 * Refreshes the list of files
+	 */
+	private void updateFileList() {
+		List<File> files = listDirectory("tmp/audio");
+		// Record all the files that are invalid in another list then remove them all at once.
+		// This is to avoid the ConcurrentModificationException when using the for-loop.
+		List<File> toRemove = new ArrayList<File>();		
+		for (File file : files) {
+			if (file.getName().contains(".__")) {
+				toRemove.add(file);
+			}
+		}
+		files.removeAll(toRemove);
+		
+		File[] arrayOfFiles = new File[files.size()];
+		files.toArray(arrayOfFiles);
+		_fileList.clear();
+		_fileList.addAll(arrayOfFiles);
 	}
 
 	@FXML
@@ -336,74 +370,25 @@ public class TextSelect extends Controller implements Initializable{
 		if (hasunderOrOverflow == true) {
 			return;
 		}
-		int fileNum = numFiles();
 		
-		File file = new File(System.getProperty("user.dir")+"/tmp/text/query"); 
+		File file = new File(System.getProperty("user.dir")+"/tmp/text/audioCount"); 
 		BufferedReader br = new BufferedReader(new FileReader(file)); 
-		String name = br.readLine()+fileNum; 
+		int fileNum = Integer.parseInt(br.readLine()) + 1 ;
 		br.close();
 		
+		// update the number of audio files that have been created
+		
+		BufferedWriter writer = new BufferedWriter(new FileWriter(_dir + "/tmp/text/audioCount"));
+		writer.write(fileNum+"");	
+		writer.close();
+		
+		file = new File(System.getProperty("user.dir")+"/tmp/text/query"); 
+		br = new BufferedReader(new FileReader(file)); 
+		String name = br.readLine()+fileNum; 
+		br.close();
+
 		saveInBG(name);
-	}
 
-	/**
-	 * create a save dialog
-	 * @param invalidInput true if the user has input an empty string
-	 * */
-	private void saveDialog (boolean invalidInput) {
-		//stop sound from playing
-		if(_mediaPlayer != null) {
-			_mediaPlayer.stop();
-		}
-
-		//create save pop-up
-		TextInputDialog dialog = new TextInputDialog();
-		dialog.setTitle("Save");
-		dialog.setHeaderText("Save file");
-
-		//check if the last input was invalid
-		if(!invalidInput) {
-			dialog.setContentText("Please enter a new name for your file");
-		}else {
-			dialog.setContentText("Please enter a valid name for your file");
-		}
-
-		//change "ok" button to "save"
-		Button okBtn = (Button)dialog.getDialogPane().lookupButton(ButtonType.OK);
-		okBtn.setText("Save");
-
-		Optional<String> result = dialog.showAndWait();
-
-		if (result.isPresent()){
-			String name = result.get();
-			File file = new File(_dir+"/tmp/audio/"+name+".wav");
-
-			if (name.isEmpty()|| name.contains(".")) {
-				//show another dialog if empty input
-				saveDialog(true);
-			} else if ((Pattern.matches("^[a-zA-Z0-9_-]+$", name) == false)) {
-				//show another dialog if there are invalid characters
-				saveDialog(true);
-			}else if(file.exists()){
-				//show overwrite dialogue
-				overwriteDialog(file, name);
-			}else {
-				//save the file
-				saveInBG(name);
-				//next button is undisabled onSuccess
-			}
-		}
-
-	}
-	/**
-	 * create a dialog for overwriting audio files
-	 * */
-	private void overwriteDialog(File file, String name) {
-		boolean decision = displayAlert("This file already exists", "Would you like to overwrite it?");
-		if (decision == true) {
-			file.delete();
-			saveInBG(name);
-		}
 	}
 
 	/**
@@ -454,7 +439,7 @@ public class TextSelect extends Controller implements Initializable{
 						_next.setDisable(true);
 					}
 				}
-
+				updateFileList();
 				List<File> audioClips = listDirectory("tmp/audio");
 				int numberOfAudioClips = audioClips.size();
 				if (_next.isDisabled() && numberOfAudioClips >= 1) {
@@ -501,6 +486,140 @@ public class TextSelect extends Controller implements Initializable{
 		}
 		int filecount = existingFiles.length - phantomCount;
 		return filecount;
+	}
+	/**
+	 * Author: Rip Tutorial
+	 * Original: https://riptutorial.com/javafx/example/27946/add-button-to-tableview
+	 * Modified: dongmeilim
+	 * Comments: dongmeilim
+	 */
+	private void addPlayButtonToTable() {
+
+		Callback<TableColumn<File, Void>, TableCell<File, Void>> cellFactory = new Callback<TableColumn<File, Void>, TableCell<File, Void>>() {
+			@Override
+			public TableCell<File, Void> call(final TableColumn<File, Void> param) {
+				final TableCell<File, Void> cell = new TableCell<File, Void>() {
+					// set up the play buttons
+					private final Button playBtn = new Button("Play");
+
+
+					{
+						_playBtns.add(playBtn);
+						playBtn.setOnAction((ActionEvent event) -> {
+							// Get the Audio in the same row as the button
+							File audio = getTableView().getItems().get(getIndex());
+							Media media = new Media(audio.toURI().toString());
+							//Play or top the selected audio
+							if(_savedPlayer == null || !(_savedPlayer.getStatus()== MediaPlayer.Status.PLAYING)) {
+
+								//set up a new media player
+								_savedPlayer = new MediaPlayer(media);
+								_savedPlayer.setOnEndOfMedia(() -> {
+									_savedPlayer.stop();
+									_savedPlayer.dispose();
+									_play.setText("Play");
+								});
+								_savedPlayer.play();
+								playBtn.setText("Stop");
+								
+								//diasble other buttons
+								for (Button button : _playBtns) {
+									if(button != playBtn) {
+										button.setDisable(true);
+									}
+								}
+								for (Button button: _delBtns) {
+									button.setDisable(true);
+								}
+
+							}else {
+								//stop playing
+								_savedPlayer.stop();
+								_savedPlayer.dispose();
+								playBtn.setText("Play");
+								
+								//enable other buttons
+								for (Button button : _playBtns) {
+									button.setDisable(false);
+								}
+								for (Button button: _delBtns) {
+									button.setDisable(false);
+								}
+							}
+						});
+					}
+
+					@Override
+					public void updateItem(Void item, boolean empty) {
+						// insert the play buttons into the table column
+						super.updateItem(item, empty);
+						if (empty) {
+							setGraphic(null);
+						} else {
+							setGraphic(playBtn);
+						}
+					}
+				};
+				return cell;
+			}
+		};
+
+		_playCol.setCellFactory(cellFactory);
+
+	}
+	
+	/**
+	 * Author: Rip Tutorial
+	 * Original: https://riptutorial.com/javafx/example/27946/add-button-to-tableview
+	 * Modified: dongmeilim
+	 * Comments: dongmeilim
+	 */
+	private void addDeleteButtonToTable() {
+		Callback<TableColumn<File, Void>, TableCell<File, Void>> cellFactory = new Callback<TableColumn<File, Void>, TableCell<File, Void>>() {
+			@Override
+			public TableCell<File, Void> call(final TableColumn<File, Void> param) {
+				final TableCell<File, Void> cell = new TableCell<File, Void>() {
+					// set up the delete button
+					private final Button delBtn = new Button("Delete");
+
+					{
+						_delBtns.add(delBtn);
+						delBtn.setOnAction((ActionEvent event) -> {
+							// get the file in the same row as the button
+							File file = getTableView().getItems().get(getIndex());
+
+							// Confirm the user wants to delete the file
+							Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+							alert.setHeaderText("Are you sure you want to delete "+ file.getName()+"?");
+							Optional<ButtonType> result = alert.showAndWait();
+							if (result.get() == ButtonType.OK){
+								if(file.exists()) {
+									//delete the video
+									file.delete();
+									updateFileList();
+								}
+							}
+
+						});
+					}
+
+					@Override
+					public void updateItem(Void item, boolean empty) {
+						// insert delete buttons into the table column
+						super.updateItem(item, empty);
+						if (empty) {
+							setGraphic(null);
+						} else {
+							setGraphic(delBtn);
+						}
+					}
+				};
+				return cell;
+			}
+		};
+
+		_deleteCol.setCellFactory(cellFactory);
+
 	}
 
 }

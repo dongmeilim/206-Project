@@ -61,14 +61,14 @@
                   </Label>
                   <ScrollPane hbarPolicy="NEVER" prefWidth="277.0">
                      <content>
-                        <TableView prefHeight="200.0" prefWidth="275.0">
+                        <TableView fx:id="_table" prefHeight="200.0" prefWidth="275.0">
                        	 	<placeholder>
             					<Label id="_blackText" text="There is no audio" />
             				</placeholder>
                           <columns>
-                              <TableColumn prefWidth="35.0" />
-                            <TableColumn prefWidth="194.0" text="Files" />
-                            <TableColumn minWidth="0.0" prefWidth="45.0" text="Play" />
+                            <TableColumn fx:id="_playCol" editable="false" minWidth="0.0" prefWidth="69.0" sortable="false" text="Play" />
+                            <TableColumn fx:id="_audioCol" editable="false" prefWidth="143.0" sortable="false" text="Files" />
+                              <TableColumn fx:id="_deleteCol" editable="false" prefWidth="62.0" sortable="false" />
                           </columns>
                         </TableView>
                      </content></ScrollPane>
@@ -87,7 +87,7 @@
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@back.png" />
+                        <Image url="@/back.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
@@ -126,7 +126,7 @@
                <graphic>
                   <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@home.png" />
+                        <Image url="@/home.png" />
                      </image>
                   </ImageView>
                </graphic></Button>
