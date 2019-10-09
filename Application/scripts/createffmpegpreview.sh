@@ -16,7 +16,7 @@ do
 	echo "file '../audio/$i'" >> ../tmp/text/ffmpegAudioFiles
 done
 
-echo "25" #Percentage
+echo "20" #Percentage
 
 #Generate formatting for Images { img001.jpg, img 002.jpg, ..., img010.jpg }
 counter=1
@@ -32,12 +32,12 @@ do
 	counter=$((counter+1))
 done
 
-echo "50" #Percentage
+echo "40" #Percentage
 
 #Concatenate the audio into one file
 ffmpeg -f concat -safe 0 -i ../tmp/text/ffmpegAudioFiles -c copy -y ../tmp/audio/concatenatedAudio.wav &> /dev/null
 
-echo "75" #Percentage
+echo "60" #Percentage
 
 #Get the duration of all the audio
 totalDuration=`soxi -D ../tmp/audio/concatenatedAudio.wav`
@@ -60,14 +60,13 @@ else
 	ffmpeg -framerate $frameRate -i ../tmp/images/saved/img%03d.jpg -i ../tmp/audio/concatenatedAudio.wav -vcodec libx264 -pix_fmt yuv420p -vf scale=750:500 -r 25 -max_muxing_queue_size 1024 -y ../tmp/video/videoNoText.mp4 #&> /dev/null
 fi
 
-echo "100" #Percentage
+echo "80" #Percentage
 
 #Overlay text
 ffmpeg -i ../tmp/video/videoNoText.mp4 -filter_complex "drawtext=text='$query':fontcolor=white:fontsize=72:shadowcolor=black:shadowx=2:shadowy=2:x=(w-text_w)/2:y=(h-text_h)/2" -max_muxing_queue_size 1024 -y ../tmp/video/videoWithText.mp4 &> /dev/null
 
-#Percentage finishes early so that user can see it
-
-
+echo "100" #Percentage
+sleep 0.5 #So user sees the 100% percent
 #================================================
 
 #Format for files in ffmpegAudioFiles:
