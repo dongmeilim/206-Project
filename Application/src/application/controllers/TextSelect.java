@@ -454,7 +454,7 @@ public class TextSelect extends Controller implements Initializable{
 					// display an error message and remove the erroneous wav file.
 					_rightVBox.getChildren().add(_errorLabel);
 					file.delete();
-					new File(_dir+"/tmp/audio/transcript/"+name+".wav").delete(); //delete censored audio
+					new File(_dir+"/tmp/audio/censored/"+name+".wav").delete(); //delete censored audio
 					
 					if (!filesAreValid()) {
 						_next.setDisable(true);
@@ -628,7 +628,7 @@ public class TextSelect extends Controller implements Initializable{
 									updateFileList();
 								}
 								//delete the censored audio file
-								new File("tmp/audio/transcript/"+file.getName()).delete();
+								new File("tmp/audio/censored/"+file.getName()).delete();
 
 							}
 

@@ -49,11 +49,11 @@ public class Search extends Controller implements Initializable{
 		//create and clear preview folder
 		clearDir("/tmp/audio/preview");
 		
-		//create and clear text/transcript
-		clearDir("/tmp/text/transcript");
+		//create and clear text/censored
+		clearDir("/tmp/text/censored");
 		
-		//create and clear audio/transcript
-		clearDir("/tmp/audio/transcript");
+		//create and clear audio/censored
+		clearDir("/tmp/audio/censored");
 		
 		// create a file to keep track of the number of audio files created by the user
 		try {	

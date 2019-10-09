@@ -42,9 +42,9 @@ public class TextToAudio extends Task<Void> {
 		}else {
 
 			// save the selected text to a transcript file
-			text = new File(_dir+"/tmp/text/transcript/"+ _name + ".txt");
+			text = new File(_dir+"/tmp/text/censored/"+ _name + ".txt");
 			text.createNewFile();
-			printWriter = new PrintWriter(_dir+"/tmp/text/transcript/"+ _name + ".txt", "UTF-8");
+			printWriter = new PrintWriter(_dir+"/tmp/text/censored/"+ _name + ".txt", "UTF-8");
 			printWriter.println(_text);
 			printWriter.close();
 
@@ -56,13 +56,13 @@ public class TextToAudio extends Task<Void> {
 			reader.close();
 			
 			// create the censored text for the quiz
-			String censorText = "sed -i 's/"+query+"/----/Ig' "+_dir+"/tmp/text/transcript/"+ _name + ".txt";
+			String censorText = "sed -i 's/"+query+"/----/Ig' "+_dir+"/tmp/text/censored/"+ _name + ".txt";
 			ProcessBuilder censor = new ProcessBuilder("bash", "-c", censorText);
 			Process process = censor.start();
 			process.waitFor();
 			
 			//create the censored audio
-			censorText = "text2wave -o "+_dir+"/tmp/audio/transcript/"+_name+".wav "+_dir+"/tmp/text/transcript/"+_name+".txt -eval \"(voice_"+_voice+")\"";
+			censorText = "text2wave -o "+_dir+"/tmp/audio/censored/"+_name+".wav "+_dir+"/tmp/text/censored/"+_name+".txt -eval \"(voice_"+_voice+")\"";
 			censor = new ProcessBuilder("bash", "-c", censorText);
 			process = censor.start();
 			process.waitFor();
