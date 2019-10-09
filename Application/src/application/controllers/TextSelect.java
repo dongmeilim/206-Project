@@ -104,7 +104,7 @@ public class TextSelect extends Controller implements Initializable{
 		_rbList = new ArrayList<RadioButton>();
 		_rbGroup = new ToggleGroup();
 		_voices = new File("/usr/share/festival/voices/english").listFiles();
-
+		
 		//make a button for every voice
 		for(File voice:_voices) {
 			String name = voice.getName();
