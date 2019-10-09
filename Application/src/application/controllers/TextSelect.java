@@ -58,6 +58,7 @@ public class TextSelect extends Controller implements Initializable{
 	@FXML private Button _menu;
 	@FXML private Button _back;
 	@FXML private Button _next;
+	@FXML private Button _help;
 	@FXML private Button _preview;
 	@FXML private Button _save;
 	@FXML private Button _reset;
@@ -238,6 +239,11 @@ public class TextSelect extends Controller implements Initializable{
 		} else {
 			;
 		}
+	}
+	
+	@FXML
+	private void handleHelp() {
+		//TODO implement help screen for TextSelect
 	}
 
 	@FXML

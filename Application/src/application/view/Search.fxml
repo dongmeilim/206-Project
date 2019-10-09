@@ -68,11 +68,20 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Label alignment="CENTER" prefHeight="35.0" prefWidth="601.0" text="Step 1: Search" textAlignment="CENTER">
+            <Label alignment="CENTER" prefHeight="44.0" prefWidth="609.0" text="Step 1: Search" textAlignment="CENTER">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
+            <Button fx:id="_help" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/helpwhite.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </HBox>
    </top>

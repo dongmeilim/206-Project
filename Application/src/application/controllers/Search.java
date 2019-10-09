@@ -31,6 +31,7 @@ public class Search extends Controller implements Initializable{
 	@FXML private Button _menu;
 	@FXML private Button _back;
 	@FXML private Button _search;
+	@FXML private Button _help;
 
 	@FXML private Label _lastTerm;
 	@FXML private Label _errorMessage;
@@ -101,6 +102,11 @@ public class Search extends Controller implements Initializable{
 			_wikitBG.cancel();
 		}
 		switchTo(_back.getScene(), getClass().getResource(_PATH+"Menu.fxml"));
+	}
+	
+	@FXML
+	private void handleHelp() {
+		// TODO implement help for Search
 	}
 
 	@FXML

@@ -130,11 +130,20 @@
                      </image>
                   </ImageView>
                </graphic></Button>
-            <Label alignment="CENTER" prefHeight="35.0" prefWidth="646.0" text="Step 2: Create the sound">
+            <Label alignment="CENTER" prefHeight="44.0" prefWidth="653.0" text="Step 2: Create the sound">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
+            <Button fx:id="_help" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/helpwhite.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </HBox>
    </top>
