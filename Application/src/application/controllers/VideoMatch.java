@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
  * the application.app.DownloadImages Task is called.
  */
 
-public class AudioMatch extends Controller {
+public class VideoMatch extends Controller {
 	
 	@FXML private Button _back;
 	@FXML private Button _home;
@@ -41,7 +41,7 @@ public class AudioMatch extends Controller {
 		
 	}
 	
-	//private void setAudio() {
+	//private void setVideos() {
 		//TODO implement setter
 	//}
 	

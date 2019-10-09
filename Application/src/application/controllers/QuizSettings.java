@@ -46,14 +46,17 @@ public class QuizSettings extends Controller implements Initializable {
 	
 	@FXML private void handleNext() {
 		Toggle selectedMode = _mode.getSelectedToggle();
-		
+		String game; //Will never end up being undefined
 		if (selectedMode.equals(_audioRadio)) {
-			switchTo(_next.getScene(), getClass().getResource(_PATH+"AudioMatch.fxml"));
+			game="AudioMatch.fxml";
 		} else if (selectedMode.equals(_imageRadio)) {
-			System.out.println("Image quiz");
+			game="ImageMatch.fxml";
 		} else {
 			System.out.println("Video quiz");
+			game="VideoMatch.fxml";
 		}
+		switchTo(_next.getScene(),getClass().getResource(_PATH+game));
+		
 		
 		
 	}
