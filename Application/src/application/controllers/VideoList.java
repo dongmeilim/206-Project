@@ -116,7 +116,6 @@ public class VideoList extends Controller implements Initializable{
 						playBtn.setOnAction((ActionEvent event) -> {
 							// Get the video in the same row as the button
 							File video = getTableView().getItems().get(getIndex());
-
 							// Open the video player with the video
 							Scene scene = playBtn.getScene();
 							FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VideoPlayer.fxml"));
@@ -170,7 +169,9 @@ public class VideoList extends Controller implements Initializable{
 						delBtn.setOnAction((ActionEvent event) -> {
 							// get the video in the same row as the button
 							File file = getTableView().getItems().get(getIndex());
-
+							String fileName = file.getName();
+							String fileNameNoExtension = fileName.substring(0,fileName.length()-4);
+							File quizDirectory = new File("quiz/"+fileNameNoExtension+"/");
 							// Confirm the user wants to delete the video
 							Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 							alert.setHeaderText("Are you sure you want to delete "+ file.getName()+"?");
@@ -179,6 +180,9 @@ public class VideoList extends Controller implements Initializable{
 								if(file.exists()) {
 									//delete the video
 									file.delete();
+									//Recursively delete quiz folder
+									clearDirectory("quiz/"+fileNameNoExtension);
+									quizDirectory.delete();
 									updateFileList();
 								}
 							}

@@ -152,9 +152,9 @@ protected final String _PATH = "/application/view/";
 	 */
 	
 	protected void clearDirectory(String directory) {
-		List<File> images = listDirectory(directory);
-		for (File image: images) {
-			image.delete();
+		List<File> files = listDirectory(directory);
+		for (File file: files) {
+			file.delete();
 		}
 	}
 }

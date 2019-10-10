@@ -150,7 +150,8 @@ public class PreviewSave extends Controller implements Initializable {
 				
 				for (File comparedFile: creationList) {
 					//Get the filename without .mp4
-					String comparedFileName = comparedFile.getName().replace(comparedFile.getName().substring(comparedFile.getName().length()-4), "");
+					String comparedFileName = comparedFile.getName().replace(comparedFile.getName().substring((comparedFile.getName().length()-4)), "");
+					System.out.println(comparedFileName);
 					if (fileName.equals(comparedFileName) == true) {
 						sameFile = true;
 						break;
