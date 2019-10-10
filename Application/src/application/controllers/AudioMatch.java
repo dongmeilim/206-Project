@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -48,7 +49,11 @@ public class AudioMatch extends Controller implements Initializable{
 	private ArrayList<Button> _playBtns = new ArrayList<Button>();
 	
 	private ArrayList<File> _allFiles;
-	private ObservableList<File> _randomList = FXCollections.observableArrayList();
+	private ObservableList<File> _audioList = FXCollections.observableArrayList();
+	private ObservableList<String> _queryList = FXCollections.observableArrayList();
+	
+	private ArrayList<File> _guessedAudio = new ArrayList<File>();
+	private ArrayList<String> _guessedQuery = new ArrayList<String>();
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -75,7 +80,9 @@ public class AudioMatch extends Controller implements Initializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
-		_audio.setItems(_randomList);
+		_audio.setItems(_audioList);
+		Collections.shuffle(_queryList);
+		_terms.setItems(_queryList);
 		
 		//add buttons to the audio list
         _audio.setCellFactory(new Callback<ListView<File>, ListCell<File>>() {
@@ -106,7 +113,18 @@ public class AudioMatch extends Controller implements Initializable{
 	}
 	
 	@FXML private void handleMatch() {
+		File selAudio = _audio.getSelectionModel().getSelectedItem();
+		String selQuery = _terms.getSelectionModel().getSelectedItem();
 		
+		_guessedAudio.add(selAudio);
+		_guessedQuery.add(selQuery);
+		
+		_audioList.remove(selAudio);
+		_queryList.remove(selQuery);
+		
+		if (_audioList.size()==0) {
+			//TODO move to scoring window and calculate scores
+		}
 	}
 	
 	private void generateRandomAudioFiles() throws NumberFormatException, IOException {
@@ -124,8 +142,9 @@ public class AudioMatch extends Controller implements Initializable{
     		br.close();
             
             audio = new File("quiz/"+_allFiles.get(index).getName()+"/"+query+".wav");
+            _audioList.add(audio); 
+            _queryList.add(query);
             
-            _randomList.add(audio); 
             _allFiles.remove(index); 
         } 
 		
