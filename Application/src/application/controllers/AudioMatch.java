@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -69,8 +68,13 @@ public class AudioMatch extends Controller implements Initializable{
 		//populate the audio list
 		File[] files = new File("quiz").listFiles(File::isDirectory);
 		_allFiles = new ArrayList<File>(Arrays.asList(files));
-		generateRandomAudioFiles();		
-		System.out.print(_randomList);
+		try {
+			generateRandomAudioFiles();
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 		_audio.setItems(_randomList);
 		
 		//add buttons to the audio list
@@ -105,14 +109,21 @@ public class AudioMatch extends Controller implements Initializable{
 		
 	}
 	
-	private void generateRandomAudioFiles() {
+	private void generateRandomAudioFiles() throws NumberFormatException, IOException {
 		Random rand = new Random();
 		File audio;
+		File queryFile;
+		String query;
 
 		for (int i = 0; i < _numQuestions; i++) { 			 
             int index = rand.nextInt(_allFiles.size()); 
+            queryFile = new File("quiz/"+_allFiles.get(index).getName()+"/query");
             
-            audio = new File("quiz/"+_allFiles.get(index).getName()+"/audioTest.wav");
+        	BufferedReader br = new BufferedReader(new FileReader(queryFile)); 
+    		query = br.readLine();
+    		br.close();
+            
+            audio = new File("quiz/"+_allFiles.get(index).getName()+"/"+query+".wav");
             
             _randomList.add(audio); 
             _allFiles.remove(index); 
@@ -164,7 +175,7 @@ public class AudioMatch extends Controller implements Initializable{
 						_mp.play();
 						playBtn.setText("Stop");
 
-						//diasble other buttons
+						//Disable other buttons
 						for (Button button : _playBtns) {
 							if(button != playBtn) {
 								button.setDisable(true);

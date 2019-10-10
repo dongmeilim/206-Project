@@ -492,22 +492,6 @@ public class TextSelect extends Controller implements Initializable{
 		return true;
 	}
 	/**
-	 * Returns number of saved audio files
-	 * */
-	private int numFiles() {
-		String[] existingFiles = new File (_dir+"/tmp/audio").list();
-
-		// Check for invalid files
-		int phantomCount = 0;
-		for (String filename: existingFiles) {
-			if (filename.contains(".__")) {
-				phantomCount++;
-			}
-		}
-		int filecount = existingFiles.length - phantomCount;
-		return filecount;
-	}
-	/**
 	 * Author: Rip Tutorial
 	 * Original: https://riptutorial.com/javafx/example/27946/add-button-to-tableview
 	 * Modified: dongmeilim
