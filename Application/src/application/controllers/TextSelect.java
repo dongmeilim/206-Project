@@ -199,7 +199,6 @@ public class TextSelect extends Controller implements Initializable{
 		if (fileNamesToStore.isEmpty() == false) {
 			storeFileType("audio",fileNamesToStore); //Null check
 		}
-		System.out.println(fileNamesToStore);
 		_fileList.clear();
 		_fileList.addAll(arrayOfFiles);
 	}
@@ -487,7 +486,7 @@ public class TextSelect extends Controller implements Initializable{
 				phantomCount++;
 			}
 		}
-		if( existingFiles.length - phantomCount <= 1) {
+		if( existingFiles.length - phantomCount <= 2) {
 			return false;
 		}
 		return true;

@@ -1,6 +1,9 @@
 package application.controllers;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -44,7 +47,15 @@ public class QuizSettings extends Controller implements Initializable {
 		System.out.println("Under construction");
 	}
 	
-	@FXML private void handleNext() {
+	@FXML private void handleNext() throws IOException {
+		
+		//get the number of questions
+		int numQuestions = (int)_slider.getValue();
+		String dir = System.getProperty("user.dir");
+		BufferedWriter writer = new BufferedWriter(new FileWriter(dir + "/tmp/text/numQuestions.txt"));
+		writer.write(numQuestions + "");	
+		writer.close();
+		
 		Toggle selectedMode = _mode.getSelectedToggle();
 		String game; //Will never end up being undefined
 		if (selectedMode.equals(_audioRadio)) {
