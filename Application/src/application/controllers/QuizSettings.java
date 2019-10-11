@@ -46,7 +46,7 @@ public class QuizSettings extends Controller implements Initializable {
 	@FXML private void handleHelp() {
 		System.out.println("Under construction");
 	}
-	
+	//TODO bind progress bar to something
 	@FXML private void handleNext() throws IOException {
 		
 		//get the number of questions

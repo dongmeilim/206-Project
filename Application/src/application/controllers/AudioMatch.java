@@ -40,6 +40,7 @@ public class AudioMatch extends Controller implements Initializable{
 	@FXML private Button _home;
 	@FXML private Button _help;
 	@FXML private Button _match;
+	@FXML private Label _errorLabel;
 
 	@FXML private ListView<File> _audio;
 	@FXML private ListView <String> _terms;
@@ -54,6 +55,7 @@ public class AudioMatch extends Controller implements Initializable{
 	
 	private ArrayList<File> _guessedAudio = new ArrayList<File>();
 	private ArrayList<String> _guessedQuery = new ArrayList<String>();
+	private int[] _audioScores;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -70,6 +72,12 @@ public class AudioMatch extends Controller implements Initializable{
 			e.printStackTrace();
 		}
 		
+		_audioScores = new int[_numQuestions];
+		for (int i = 0; i<_audioScores.length;i++) {
+		System.out.println(_audioScores[i]);
+		
+			
+		}
 		//populate the audio list
 		File[] files = new File("quiz").listFiles(File::isDirectory);
 		_allFiles = new ArrayList<File>(Arrays.asList(files));
@@ -113,14 +121,31 @@ public class AudioMatch extends Controller implements Initializable{
 	}
 	
 	@FXML private void handleMatch() {
+		//get users selected items
 		File selAudio = _audio.getSelectionModel().getSelectedItem();
 		String selQuery = _terms.getSelectionModel().getSelectedItem();
 		
-		_guessedAudio.add(selAudio);
-		_guessedQuery.add(selQuery);
+		if(selAudio!=null && selQuery != null) {
+			String audioName = selAudio.getName();
+			audioName = audioName.substring(0, audioName.length()-4);
+			
+			if(audioName.equalsIgnoreCase(selQuery)) {
+				_guessedAudio.add(selAudio);
+				_guessedQuery.add(selQuery);
+
+				_audioList.remove(selAudio);
+				_queryList.remove(selQuery);
+				_errorLabel.setText("Good Job!!!");
+			}else {
+				_errorLabel.setText("Uh-oh! Try again!");
+			}
+
+			
+			_audio.getSelectionModel().clearSelection();
+			_terms.getSelectionModel().clearSelection();
+		}
 		
-		_audioList.remove(selAudio);
-		_queryList.remove(selQuery);
+
 		
 		if (_audioList.size()==0) {
 			//TODO move to scoring window and calculate scores
@@ -133,15 +158,19 @@ public class AudioMatch extends Controller implements Initializable{
 		File queryFile;
 		String query;
 
-		for (int i = 0; i < _numQuestions; i++) { 			 
+		for (int i = 0; i < _numQuestions; i++) { 
+			//generate random file from list of files
             int index = rand.nextInt(_allFiles.size()); 
             queryFile = new File("quiz/"+_allFiles.get(index).getName()+"/query");
             
+            //get the term for that file
         	BufferedReader br = new BufferedReader(new FileReader(queryFile)); 
     		query = br.readLine();
     		br.close();
-            
+            //get the audio for that file
             audio = new File("quiz/"+_allFiles.get(index).getName()+"/"+query+".wav");
+          
+            //store audio and query in list
             _audioList.add(audio); 
             _queryList.add(query);
             
@@ -226,6 +255,7 @@ public class AudioMatch extends Controller implements Initializable{
             } else {
                 lastItem = item;
                 label.setText("Question "+ (getIndex()+1));
+                label.setStyle("-fx-text-fill: black; -fx-effect: null;");
                 setGraphic(hbox);
             }
         }
