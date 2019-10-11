@@ -17,7 +17,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -35,7 +37,7 @@ import javafx.util.Callback;
  */
 
 public class AudioMatch extends Controller implements Initializable{
-	
+
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
@@ -44,20 +46,20 @@ public class AudioMatch extends Controller implements Initializable{
 
 	@FXML private ListView<File> _audio;
 	@FXML private ListView <String> _terms;
-	
+
 	private int _numQuestions;
 	private  MediaPlayer _mp;
 	private ArrayList<Button> _playBtns = new ArrayList<Button>();
-	
+
 	private ArrayList<File> _allFiles;
 	private ObservableList<File> _audioList = FXCollections.observableArrayList();
 	private ObservableList<String> _queryList = FXCollections.observableArrayList();
-	
+
 	private ArrayList<File> _guessedAudio = new ArrayList<File>();
 	private ArrayList<String> _guessedQuery = new ArrayList<String>();
 	private int[] _audioGuesses; //stores the number of failed attempts per question. The corresponding terms are in _termsRecord
-	private ArrayList<String> _termsRecord = new ArrayList<String>(); // records which terms are used.	
-	
+	private ArrayList<File> _audioFileRecord = new ArrayList<File>(); // index of creation names correspond to _termsRecords 	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Get the number of questions from a file
@@ -72,10 +74,10 @@ public class AudioMatch extends Controller implements Initializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		//Initialize scoring array with zeroes
 		_audioGuesses = new int[_numQuestions];
-		
+
 		//populate the audio list
 		File[] files = new File("quiz").listFiles(File::isDirectory);
 		_allFiles = new ArrayList<File>(Arrays.asList(files));
@@ -89,16 +91,16 @@ public class AudioMatch extends Controller implements Initializable{
 		_audio.setItems(_audioList);
 		Collections.shuffle(_queryList);
 		_terms.setItems(_queryList);
-		
+
 		//add buttons to the audio list
-        _audio.setCellFactory(new Callback<ListView<File>, ListCell<File>>() {
-            public ListCell<File> call(ListView<File> param) {
-                return new ButtonCell();
-            }
-        });
+		_audio.setCellFactory(new Callback<ListView<File>, ListCell<File>>() {
+			public ListCell<File> call(ListView<File> param) {
+				return new ButtonCell();
+			}
+		});
 
 	}
-	
+
 	@FXML 
 	private void handleBack() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you go back");
@@ -113,20 +115,20 @@ public class AudioMatch extends Controller implements Initializable{
 			toMenu(_home.getScene());
 		}
 	}
-	
+
 	@FXML private void handleHelp() {
 		System.out.println("Under construction");
 	}
-	
-	@FXML private void handleMatch() {
+
+	@FXML private void handleMatch() throws IOException {
 		// get user's selected items
 		File selAudio = _audio.getSelectionModel().getSelectedItem();
 		String selQuery = _terms.getSelectionModel().getSelectedItem();
-		
+
 		if(selAudio!=null && selQuery != null) {
 			String audioName = selAudio.getName();
 			audioName = audioName.substring(0, audioName.length()-4);
-			
+
 			if(audioName.equalsIgnoreCase(selQuery)) {
 				_guessedAudio.add(selAudio);
 				_guessedQuery.add(selQuery);
@@ -136,24 +138,45 @@ public class AudioMatch extends Controller implements Initializable{
 				_errorLabel.setText("Good Job!!!");
 			}else {
 				_errorLabel.setText("Uh-oh! Try again!");
-				int index = _termsRecord.indexOf(selQuery);
+
+				//record failed attempt
+				int index = _audioFileRecord.indexOf(selAudio);
 				_audioGuesses[index] ++;
-				
+
 			}
 
-			
+			// clear selection from listviews
 			_audio.getSelectionModel().clearSelection();
 			_terms.getSelectionModel().clearSelection();
-		}
-		
 
-		
-		if (_audioList.size()==0) {
-//			System.out.
-			//TODO move to scoring window and calculate scores
+
+
+			if (_audioList.size()==0) {
+				// get the lists of right and wrong creations
+				ArrayList<String> wrongGuesses = new ArrayList<String>();
+				ArrayList<String> rightGuesses = new ArrayList<String>();
+
+				for (int i = 0; i<_audioGuesses.length;i++) {
+					String filename = _audioFileRecord.get(i).toString();
+					filename = filename.substring(filename.indexOf("/")+1, filename.lastIndexOf("/"));
+
+					if(_audioGuesses[i]>0) {
+						wrongGuesses.add(filename);
+					}else {
+						rightGuesses.add(filename);
+					}
+				}
+				//TODO move to scoring window
+				Scene scene = _match.getScene();
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/Score.fxml"));
+				Score controller = new Score(rightGuesses,wrongGuesses);
+				loader.setController(controller);
+				scene.setRoot(loader.load());
+
+			}
 		}
 	}
-	
+
 	/**
 	 * Randomly generate a list of _numQuestion files for the questions
 	 * @throws NumberFormatException
@@ -164,52 +187,53 @@ public class AudioMatch extends Controller implements Initializable{
 		File audio;
 		File queryFile;
 		String query;
-
+		//TODO implement game for one question
 		for (int i = 0; i < _numQuestions; i++) { 
 			//generate random file from list of files
-            int index = rand.nextInt(_allFiles.size()); 
-            queryFile = new File("quiz/"+_allFiles.get(index).getName()+"/query");
-            
-            //get the term for that file
-        	BufferedReader br = new BufferedReader(new FileReader(queryFile)); 
-    		query = br.readLine();
-    		br.close();
-            //get the audio for that file
-            audio = new File("quiz/"+_allFiles.get(index).getName()+"/"+query+".wav");
-          
-            //store audio and query in lists
-            _audioList.add(audio); 
-            _queryList.add(query);
-            _termsRecord.add(query);
-            
-            _allFiles.remove(index); 
-        } 
-		
+			int index = rand.nextInt(_allFiles.size()); 
+			queryFile = new File("quiz/"+_allFiles.get(index).getName()+"/query");
+
+			//get the term for that file
+			BufferedReader br = new BufferedReader(new FileReader(queryFile)); 
+			query = br.readLine();
+			br.close();
+
+			//get the audio for that file
+			audio = new File("quiz/"+_allFiles.get(index).getName()+"/"+query+".wav");
+
+			//store audio and query in lists
+			_audioList.add(audio); 
+			_queryList.add(query);
+			_audioFileRecord.add(audio);
+
+			_allFiles.remove(index); 
+		} 
+
 	}
-	
+
 	/**
 	 * This class contains adapted code.
 	 * Source (accessed 2019): https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
 	 * @author Rainer Schwarze
 	 * Modification and comments: dongmeilim
 	 */
-    public class ButtonCell extends ListCell<File> {
-        HBox hbox = new HBox();
-        Label label = new Label("(empty)");
-        Pane pane = new Pane();
-        Button playBtn = new Button("Play");
-        File lastItem;
+	public class ButtonCell extends ListCell<File> {
+		HBox hbox = new HBox();
+		Label label = new Label("(empty)");
+		Pane pane = new Pane();
+		Button playBtn = new Button("Play");
+		File lastItem;
 
-        public ButtonCell() {
-            super();
-            hbox.getChildren().addAll(label, pane, playBtn);
-            HBox.setHgrow(pane, Priority.ALWAYS);
-            _playBtns.add(playBtn);
-            
-            playBtn.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    
+		public ButtonCell() {
+			super();
+			hbox.getChildren().addAll(label, pane, playBtn);
+			HBox.setHgrow(pane, Priority.ALWAYS);
+			_playBtns.add(playBtn);
+
+			playBtn.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+
 					// Get the Audio in the same row as the button
 					File audio = lastItem;
 					Media media = new Media(audio.toURI().toString());
@@ -249,24 +273,33 @@ public class AudioMatch extends Controller implements Initializable{
 							button.setDisable(false);
 						}
 					}
-                }
-            });
-        }
+				}
+			});
+		}
 
-        @Override
-        protected void updateItem(File item, boolean empty) {
-            super.updateItem(item, empty);
-            setText(null);  // No text in label of super class
-            if (empty) {
-                lastItem = null;
-                setGraphic(null);
-            } else {
-                lastItem = item;
-//                label.setText(lastItem.getName());
-                label.setText("Question "+ (getIndex()+1));
-                label.setStyle("-fx-text-fill: black; -fx-effect: null;");
-                setGraphic(hbox);
-            }
-        }
-    }	
+		@Override
+		protected void updateItem(File item, boolean empty) {
+			super.updateItem(item, empty);
+			setText(null);  // No text in label of super class
+			if (empty) {
+				lastItem = null;
+				setGraphic(null);
+			} else {
+				lastItem = item;
+				label.setText(lastItem.getName());
+				//                label.setText("Question "+ (getIndex()+1));
+				label.setStyle("-fx-text-fill: black; -fx-effect: null;");
+				setGraphic(hbox);
+			}
+		}
+	}
+
+
+
+	//private void setAudio() {
+	//TODO implement setter
+	//}
+
+
+
 }
