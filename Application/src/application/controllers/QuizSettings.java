@@ -1,16 +1,17 @@
 package application.controllers;
 
+import java.io.BufferedWriter;
 import java.io.File;
+
+import java.io.FileWriter;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
-
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,7 +21,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 
-import javafx.scene.layout.HBox;
 
 /**
  * Controller that handles the ImageFetch.fxml view.
@@ -43,7 +43,6 @@ public class QuizSettings extends Controller implements Initializable {
 	@FXML private Slider _slider;
 	@FXML private ToggleGroup _mode;
 	
-	private int _questionAmountInt = 1;
 	
 	@FXML private void handleBack() {handleHome();}
 	@FXML public void handleHome() {toMenu(_home.getScene());}
@@ -51,9 +50,15 @@ public class QuizSettings extends Controller implements Initializable {
 	@FXML private void handleHelp() {
 		System.out.println("Under construction");
 	}
-	
-	@FXML private void handleNext() {
+
+	@FXML private void handleNext() throws IOException {
 		
+		//get the number of questions
+		int numQuestions = (int)_slider.getValue();
+		String dir = System.getProperty("user.dir");
+		BufferedWriter writer = new BufferedWriter(new FileWriter(dir + "/tmp/text/numQuestions.txt"));
+		writer.write(numQuestions + "");	
+		writer.close();
 		
 		Toggle selectedMode = _mode.getSelectedToggle();
 		String game = _PATH; //Will never end up being undefined
@@ -65,11 +70,7 @@ public class QuizSettings extends Controller implements Initializable {
 			System.out.println("Video quiz");
 			game=game+"VideoMatch.fxml";
 		}
-		
 		switchTo(_next.getScene(),getClass().getResource(game));
-		
-		
-		
 	}
 	
 	@FXML
@@ -78,7 +79,6 @@ public class QuizSettings extends Controller implements Initializable {
 		String stringValue = Double.toString(value);
 		//Trim off the .0
 		stringValue = stringValue.substring(0,stringValue.length()-2);
-		_questionAmountInt = Integer.parseInt(stringValue);
 		if (value == 1) {
 			_questionAmountDisplay.setText(stringValue + " question");  // 1 question
 		} else {
@@ -96,8 +96,4 @@ public class QuizSettings extends Controller implements Initializable {
 			_slider.setMax(creationAmount); //Max value is max amount of questions
 		}
 	}
-	
-	
-	
-	
 }
