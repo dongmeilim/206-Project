@@ -6,16 +6,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import application.app.DownloadImages;
+import application.app.ReadyImages;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -34,12 +38,18 @@ public class ImageMatch extends Controller {
 	@FXML private Button _home;
 	@FXML private Button _help;
 	@FXML private Button _match;
+	@FXML private Label _errorLabel;
 	@FXML private ListView<String> _thumbnails;
 	@FXML private ListView<String> _terms;
 	
 	private ObservableList<Image> _observableImages = FXCollections.observableArrayList(); 
 	private ObservableList<String> _observableTerms = FXCollections.observableArrayList(); 
-		
+	
+	private ArrayList<String> _guessedImage = new ArrayList<String>();
+	private ArrayList<String> _guessedQuery = new ArrayList<String>(); //TODO discuss: is this needed?
+	
+	private List<File> _creations = listDirectory("creations");
+	
 	public void setImages(int questionAmount) {
 		List<File> creations = listDirectory("creations");
 		Random rand = new Random();
@@ -102,7 +112,37 @@ public class ImageMatch extends Controller {
 	}
 	
 	@FXML private void handleMatch() {
-		//
+	
+		//get users selected items
+		String selCreationName = _thumbnails.getSelectionModel().getSelectedItem();
+		String selQuery = _terms.getSelectionModel().getSelectedItem();
+		
+		if(selCreationName!=null && selQuery != null) {
+	
+			String creationNameNoExtension =  selCreationName.substring(0,selCreationName.length()-4);
+			File imageLocation = new File("quiz/"+creationNameNoExtension+"/"+selQuery+".jpg");
+			
+			if(imageLocation.exists()) {
+				_guessedImage.add(selCreationName);
+				_guessedQuery.add(selQuery);
+
+				_thumbnails.getItems().remove(selCreationName);
+				_observableTerms.remove(selQuery);
+				_errorLabel.setText("Good Job!!!");
+			} else {
+				_errorLabel.setText("Uh-oh! Try again!");
+			}
+
+			_thumbnails.getSelectionModel().clearSelection();
+			_terms.getSelectionModel().clearSelection();
+		}
+		
+
+		
+		if (_observableImages.size()==0) {
+			//TODO move to scoring window and calculate scores
+		}
+		
 	}
 
 	
