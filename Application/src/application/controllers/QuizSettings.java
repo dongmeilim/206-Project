@@ -15,7 +15,6 @@ import javafx.fxml.Initializable;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Toggle;
@@ -36,7 +35,6 @@ public class QuizSettings extends Controller implements Initializable {
 	@FXML private Button _next;
 	@FXML private Label _questionAmountDisplay;
 	@FXML private Label _warning;
-	@FXML private ProgressBar _progress;
 	@FXML private RadioButton _audioRadio;
 	@FXML private RadioButton _imageRadio;
 	@FXML private RadioButton _bothRadio;

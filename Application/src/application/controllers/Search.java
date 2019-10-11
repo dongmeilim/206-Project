@@ -85,7 +85,7 @@ public class Search extends Controller implements Initializable{
 
 	}
 	
-	/*
+	/**
 	 * This method is bound to both the back and menu buttons
 	 * */
 	@FXML
