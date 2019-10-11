@@ -23,7 +23,6 @@ public class Main extends Application {
 		new File(dir+"/tmp/audio").mkdirs();
 		new File(dir+"/tmp/images").mkdirs();
 		new File(dir+"/tmp/video").mkdirs();
-		// TODO proper file-hierarchy
 		new File(dir+"/quiz").mkdirs();
 		
 		try {

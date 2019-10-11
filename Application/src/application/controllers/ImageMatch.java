@@ -68,7 +68,6 @@ public class ImageMatch extends Controller implements Initializable {
 		}
 		
 		
-		
 		List<File> creations = listDirectory("creations");
 		Random rand = new Random();
 		for (int i = 0; i < _questionAmount; i++) {
