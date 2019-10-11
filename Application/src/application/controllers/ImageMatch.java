@@ -6,16 +6,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.ResourceBundle;
 
 import application.app.DownloadImages;
 import application.app.ReadyImages;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -32,7 +35,7 @@ import javafx.scene.image.ImageView;
  * the application.app.DownloadImages Task is called.
  */
 
-public class ImageMatch extends Controller {
+public class ImageMatch extends Controller implements Initializable {
 	
 	@FXML private Button _back;
 	@FXML private Button _home;
@@ -42,6 +45,8 @@ public class ImageMatch extends Controller {
 	@FXML private ListView<String> _thumbnails;
 	@FXML private ListView<String> _terms;
 	
+	private String _questionAmountString;
+	
 	private ObservableList<Image> _observableImages = FXCollections.observableArrayList(); 
 	private ObservableList<String> _observableTerms = FXCollections.observableArrayList(); 
 	
@@ -50,7 +55,22 @@ public class ImageMatch extends Controller {
 	
 	private List<File> _creations = listDirectory("creations");
 	
-	public void setImages(int questionAmount) {
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
+		try {
+			File questionFile = new File("quiz/questionAmount");
+	    	BufferedReader bufferedReaderQuestion = new BufferedReader(new FileReader(questionFile)); 
+			_questionAmountString = bufferedReaderQuestion.readLine();
+			bufferedReaderQuestion.close();
+		} catch (IOException eQuestion) {
+
+			eQuestion.printStackTrace();
+		}
+		
+		
+		int questionAmount = Integer.parseInt(_questionAmountString);
+		
 		List<File> creations = listDirectory("creations");
 		Random rand = new Random();
 		for (int i = 0; i <= (questionAmount-1); i++) {
@@ -71,26 +91,26 @@ public class ImageMatch extends Controller {
 				String creationNameNoExtension = creationName.substring(0,creationName.length()-4);
 				
 				File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
-	        	BufferedReader bufferedReader = new BufferedReader(new FileReader(queryFile)); 
-	    		String query = bufferedReader.readLine();
-	    		bufferedReader.close();
+	        	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
+	    		String query = bufferedReaderQuery.readLine();
+	    		bufferedReaderQuery.close();
 	    		_observableTerms.add(query);
 				
 				FileInputStream inputStream = new FileInputStream("quiz/"+creationNameNoExtension+"/"+query+".jpg");
 				Image image = new Image(inputStream);
 				_observableImages.add(image);
 				
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (FileNotFoundException eQuery) {
+				eQuery.printStackTrace();
+			} catch (IOException eQuery) {
+				eQuery.printStackTrace();
 			}
 		}
 		_thumbnails.setCellFactory(param -> new Thumbnail());
 		Collections.shuffle(_observableTerms);
 		_terms.setItems(_observableTerms);
-	}
 	
+	}
 	
 	@FXML 
 	private void handleBack() {
@@ -173,4 +193,7 @@ public class ImageMatch extends Controller {
 	        }
 	    }
 	}
+
+
+
 }

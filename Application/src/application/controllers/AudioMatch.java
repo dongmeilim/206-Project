@@ -41,9 +41,6 @@ public class AudioMatch extends Controller {
 		
 	}
 	
-	//private void setAudio() {
-		//TODO implement setter
-	//}
 	
 	
 	

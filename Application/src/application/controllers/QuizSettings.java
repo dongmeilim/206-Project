@@ -53,26 +53,14 @@ public class QuizSettings extends Controller implements Initializable {
 	}
 	
 	@FXML private void handleNext() {
-		System.out.println(_questionAmountInt);
 		
 		
 		Toggle selectedMode = _mode.getSelectedToggle();
 		String game = _PATH; //Will never end up being undefined
-		FXMLLoader loader = new FXMLLoader();
 		if (selectedMode.equals(_audioRadio)) {
 			game=game+"AudioMatch.fxml";
 		} else if (selectedMode.equals(_imageRadio)) {
-			try {
-				game=game+"ImageMatch.fxml";
-				loader.setLocation(getClass().getResource(game));
-				HBox root = loader.load();
-				ImageMatch imageMatch = loader.getController();
-				imageMatch.setImages(_questionAmountInt);
-				_next.getScene().setRoot(root);
-				return;
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			game=game+"ImageMatch.fxml";
 		} else {
 			System.out.println("Video quiz");
 			game=game+"VideoMatch.fxml";

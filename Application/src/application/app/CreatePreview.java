@@ -25,7 +25,7 @@ public class CreatePreview extends Task<Void> {
 			ProcessBuilder pb = new ProcessBuilder();
 			pb.redirectError(_NULL);
 			pb.directory(new File("scripts/"));
-			pb.command("bash","createffmpegpreview.sh"); //TODO change script
+			pb.command("bash","createffmpegpreview.sh");
 			pb.start().waitFor();
 			Process process = pb.start();
 	        InputStream stdout = process.getInputStream();

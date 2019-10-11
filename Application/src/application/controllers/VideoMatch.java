@@ -41,9 +41,6 @@ public class VideoMatch extends Controller {
 		
 	}
 	
-	//private void setVideos() {
-		//TODO implement setter
-	//}
 	
 	
 	
