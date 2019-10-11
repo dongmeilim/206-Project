@@ -71,21 +71,12 @@ public class ImageMatch extends Controller implements Initializable {
 		
 		List<File> creations = listDirectory("creations");
 		Random rand = new Random();
-		for (int i = 0; i <= (_questionAmount-1); i++) {
+		for (int i = 0; i < _questionAmount; i++) {
 			try {
-				int index; //Won't ever be undefined
-
-				if ((_questionAmount-1) == 0 || (creations.size()-1) == 0) {
-					index=0;
-				} else if ( (creations.size()-1) <= (_questionAmount-1)) {
-					index = rand.nextInt(creations.size()-1);
-				} else {
-					index = rand.nextInt(_questionAmount-1);
-				}
+				int index = rand.nextInt(creations.size());
 				
 				String creationName = creations.get(index).getName();
 				creations.remove(index);
-				//_thumbnails.getItems().add(creationName);
 				_observableImageNames.add(creationName);
 				String creationNameNoExtension = creationName.substring(0,creationName.length()-4);
 				
@@ -135,7 +126,6 @@ public class ImageMatch extends Controller implements Initializable {
 	
 		//get users selected items
 		String selCreationName = _thumbnails.getSelectionModel().getSelectedItem();
-		//System.out.println(selCreationName);
 		String selQuery = _terms.getSelectionModel().getSelectedItem();
 		
 		if(selCreationName!=null && selQuery != null) {
@@ -143,26 +133,11 @@ public class ImageMatch extends Controller implements Initializable {
 			String creationNameNoExtension =  selCreationName.substring(0,selCreationName.length()-4);
 			File imageLocation = new File("quiz/"+creationNameNoExtension+"/"+selQuery+".jpg");
 			
-			System.out.println("quiz/"+creationNameNoExtension+"/"+selQuery+".jpg");
-			
 			if(imageLocation.exists()) {
 				_guessedImage.add(selCreationName);
 				_guessedQuery.add(selQuery);
 
-				FileInputStream inputStream;
-				try {
-					inputStream = new FileInputStream(imageLocation);
-					Image image = new Image(inputStream);
-					//System.out.println(_thumbnails.getSelectionModel().getSelectedIndex());
-					//_observableImages.remove(selCreationName);
-					// TODO fix
-					_observableImageNames.remove(selCreationName);
-					//_thumbnails.getItems().remove(creationNameNoExtension+".mp4");
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+				_observableImageNames.remove(selCreationName);
 				_observableTerms.remove(selQuery);
 				_errorLabel.setText("Good Job!!!");
 			} else {
@@ -187,8 +162,7 @@ public class ImageMatch extends Controller implements Initializable {
 			private final ImageView _imageView = new ImageView();
 			
 			public Thumbnail() {
-				setContentDisplay(ContentDisplay.RIGHT);
-				//setText()
+				setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 				setAlignment(Pos.CENTER);
 				
 	    }
@@ -201,7 +175,25 @@ public class ImageMatch extends Controller implements Initializable {
 	        	setGraphic(null);
 	        	
 	        } else {
-	        	_imageView.setImage(_observableImages.get(getListView().getItems().indexOf(item)));
+	        	String name = _observableImageNames.get(getListView().getItems().indexOf(item));
+	        	try {
+		        	String nomp4 =  name.substring(0,name.length()-4);
+					File queryFile = new File("quiz/"+nomp4+"/query");
+		        	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
+		    		String query = bufferedReaderQuery.readLine();
+		    		bufferedReaderQuery.close();
+		    		
+		    		File updatedImageFile = new File("quiz/"+nomp4+"/"+query+".jpg");
+		    		FileInputStream fileInputStream = new FileInputStream(updatedImageFile);
+		    		Image updatedImage = new Image(fileInputStream);
+		    		_imageView.setImage(updatedImage);
+	    		} catch (IOException e) {
+					e.printStackTrace();
+				}
+	 
+	        	
+	        	
+	        	//_imageView.setImage(_observableNames.get(getListView().getItems().indexOf(item)));
 	        	_imageView.setFitHeight(50);
 	        	_imageView.setFitWidth(50);
 	        	_imageView.setPreserveRatio(true);
