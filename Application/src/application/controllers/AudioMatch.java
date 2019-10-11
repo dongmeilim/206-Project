@@ -55,7 +55,8 @@ public class AudioMatch extends Controller implements Initializable{
 	
 	private ArrayList<File> _guessedAudio = new ArrayList<File>();
 	private ArrayList<String> _guessedQuery = new ArrayList<String>();
-	private int[] _audioScores;
+	private int[] _audioGuesses; //stores the number of failed attempts per question. The corresponding terms are in _termsRecord
+	private ArrayList<String> _termsRecord = new ArrayList<String>(); // records which terms are used.	
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -72,12 +73,9 @@ public class AudioMatch extends Controller implements Initializable{
 			e.printStackTrace();
 		}
 		
-		_audioScores = new int[_numQuestions];
-		for (int i = 0; i<_audioScores.length;i++) {
-		System.out.println(_audioScores[i]);
+		//Initialize scoring array with zeroes
+		_audioGuesses = new int[_numQuestions];
 		
-			
-		}
 		//populate the audio list
 		File[] files = new File("quiz").listFiles(File::isDirectory);
 		_allFiles = new ArrayList<File>(Arrays.asList(files));
@@ -121,7 +119,7 @@ public class AudioMatch extends Controller implements Initializable{
 	}
 	
 	@FXML private void handleMatch() {
-		//get users selected items
+		// get user's selected items
 		File selAudio = _audio.getSelectionModel().getSelectedItem();
 		String selQuery = _terms.getSelectionModel().getSelectedItem();
 		
@@ -138,6 +136,9 @@ public class AudioMatch extends Controller implements Initializable{
 				_errorLabel.setText("Good Job!!!");
 			}else {
 				_errorLabel.setText("Uh-oh! Try again!");
+				int index = _termsRecord.indexOf(selQuery);
+				_audioGuesses[index] ++;
+				
 			}
 
 			
@@ -148,10 +149,16 @@ public class AudioMatch extends Controller implements Initializable{
 
 		
 		if (_audioList.size()==0) {
+//			System.out.
 			//TODO move to scoring window and calculate scores
 		}
 	}
 	
+	/**
+	 * Randomly generate a list of _numQuestion files for the questions
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 */
 	private void generateRandomAudioFiles() throws NumberFormatException, IOException {
 		Random rand = new Random();
 		File audio;
@@ -170,9 +177,10 @@ public class AudioMatch extends Controller implements Initializable{
             //get the audio for that file
             audio = new File("quiz/"+_allFiles.get(index).getName()+"/"+query+".wav");
           
-            //store audio and query in list
+            //store audio and query in lists
             _audioList.add(audio); 
             _queryList.add(query);
+            _termsRecord.add(query);
             
             _allFiles.remove(index); 
         } 
@@ -181,9 +189,9 @@ public class AudioMatch extends Controller implements Initializable{
 	
 	/**
 	 * This class contains adapted code.
-	 * Source: https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
+	 * Source (accessed 2019): https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
 	 * @author Rainer Schwarze
-	 * Modified : dongmeilim
+	 * Modification and comments: dongmeilim
 	 */
     public class ButtonCell extends ListCell<File> {
         HBox hbox = new HBox();
@@ -254,6 +262,7 @@ public class AudioMatch extends Controller implements Initializable{
                 setGraphic(null);
             } else {
                 lastItem = item;
+//                label.setText(lastItem.getName());
                 label.setText("Question "+ (getIndex()+1));
                 label.setStyle("-fx-text-fill: black; -fx-effect: null;");
                 setGraphic(hbox);
