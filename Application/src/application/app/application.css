@@ -37,7 +37,7 @@
    -fx-focus-color: transparent;
 }
 
-#_imageTerms .list-cell {
+#_queryListView .list-cell {
     -fx-alignment: center;
 }
 

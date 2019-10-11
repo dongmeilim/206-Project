@@ -45,7 +45,6 @@ public class ImageMatch extends Controller implements Initializable {
 	
 	private int _questionAmount;
 	
-	private ObservableList<Image> _observableImages = FXCollections.observableArrayList();
 	private ObservableList<String> _observableImageNames = FXCollections.observableArrayList(); 
 	private ObservableList<String> _observableTerms = FXCollections.observableArrayList(); 
 	
@@ -84,10 +83,6 @@ public class ImageMatch extends Controller implements Initializable {
 	    		String query = bufferedReaderQuery.readLine();
 	    		bufferedReaderQuery.close();
 	    		_observableTerms.add(query);
-				
-				FileInputStream inputStream = new FileInputStream("quiz/"+creationNameNoExtension+"/"+query+".jpg");
-				Image image = new Image(inputStream);
-				_observableImages.add(image);
 				
 			} catch (FileNotFoundException eQuery) {
 				eQuery.printStackTrace();
@@ -148,23 +143,27 @@ public class ImageMatch extends Controller implements Initializable {
 		}
 		
 
-		
-		if (_observableImages.size()==0) {
+		//if (==0) {
 			//TODO move to scoring window and calculate scores
-		}
+		//}
 		
+	}
+	
+	@FXML private void clearError() {
+		_errorLabel.setText("");
 	}
 
 	
 	private class Thumbnail extends ListCell<String> {
 			
-			private final ImageView _imageView = new ImageView();
+		private final ImageView _imageView = new ImageView();
+		
+		public Thumbnail() {
+			setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+			setAlignment(Pos.CENTER);
+			setOnMouseClicked(e->clearError());
 			
-			public Thumbnail() {
-				setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-				setAlignment(Pos.CENTER);
-				
-	    }
+		}
 		
 		@Override
 	    protected void updateItem(String item, boolean empty) { //changes the order
@@ -190,9 +189,6 @@ public class ImageMatch extends Controller implements Initializable {
 					e.printStackTrace();
 				}
 	 
-	        	
-	        	
-	        	//_imageView.setImage(_observableNames.get(getListView().getItems().indexOf(item)));
 	        	_imageView.setFitHeight(50);
 	        	_imageView.setFitWidth(50);
 	        	_imageView.setPreserveRatio(true);

@@ -1,5 +1,8 @@
 Application/bin/
-Application/tmp/
+Application/tmp/audio/
+Application/tmp/video/
+Application/tmp/text/
+Application/tmp/images/*.jpg
 Application/.gitignore
 Application/flickr-api-keys.txt
 /.metadata/

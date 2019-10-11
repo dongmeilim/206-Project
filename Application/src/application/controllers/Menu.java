@@ -40,9 +40,9 @@ public class Menu extends Controller implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		List<File> creations = listDirectory("creations");
 		int creationAmount = creations.size();
-		if (creationAmount == 0) {
+		if (creationAmount < 2) {
 			_quiz.setDisable(true);
-			_warning.setText("Quiz disabled: You have no videos");
+			_warning.setText("Quiz disabled: You need at least two videos");
 		} else {
 			_quiz.setDisable(false);
 			_warning.setText("");

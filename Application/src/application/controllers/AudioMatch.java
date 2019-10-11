@@ -187,6 +187,10 @@ public class AudioMatch extends Controller implements Initializable{
 		
 	}
 	
+	@FXML private void clearError() {
+		_errorLabel.setText("");
+	}
+	
 	/**
 	 * This class contains adapted code.
 	 * Source (accessed 2019): https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
@@ -251,6 +255,7 @@ public class AudioMatch extends Controller implements Initializable{
 					}
                 }
             });
+            setOnMouseClicked(e->clearError());
         }
 
         @Override
@@ -262,7 +267,6 @@ public class AudioMatch extends Controller implements Initializable{
                 setGraphic(null);
             } else {
                 lastItem = item;
-//                label.setText(lastItem.getName());
                 label.setText("Question "+ (getIndex()+1));
                 label.setStyle("-fx-text-fill: black; -fx-effect: null;");
                 setGraphic(hbox);

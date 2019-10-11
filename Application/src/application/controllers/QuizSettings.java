@@ -89,7 +89,7 @@ public class QuizSettings extends Controller implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		List<File> creations = listDirectory("creations");
 		int creationAmount = creations.size();
-		if (creationAmount == 1) {
+		if (creationAmount == 2) {
 			_slider.setDisable(true); //Only one question is present
 		} else {
 			_slider.setDisable(false);

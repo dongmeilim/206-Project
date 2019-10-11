@@ -2,11 +2,11 @@ package application.controllers;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -14,15 +14,19 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
+import javafx.scene.control.ListView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -34,14 +38,20 @@ public class VideoMatch extends Controller implements Initializable {
 	@FXML private Button _help;
 	@FXML private Button _match;
 	
+	@FXML private ListView<String> _videos;
+	@FXML private ListView<String> _terms;
+	@FXML private Label _errorLabel;
 	
+	private MediaPlayer _mediaPlayer;
 	
 	private int _questionAmount;
+	private ArrayList<Button> _playBtns = new ArrayList<Button>();
 	
-	private ObservableList<Media> _observableVideos = FXCollections.observableArrayList();
 	private ObservableList<String> _observableVideoNames = FXCollections.observableArrayList(); 
 	private ObservableList<String> _observableTerms = FXCollections.observableArrayList(); 
 	
+	private ArrayList<String> _guessedVideo = new ArrayList<String>();
+	private ArrayList<String> _guessedQuery = new ArrayList<String>(); //TODO discuss: is this needed?
 	
 	
 	// TODO finish this, note to self (left ListView is called _videos)
@@ -54,7 +64,6 @@ public class VideoMatch extends Controller implements Initializable {
 			_questionAmount = Integer.parseInt(questionAmountString);
 			bufferedReaderQuestion.close();
 		} catch (IOException eQuestion) {
-
 			eQuestion.printStackTrace();
 		}
 		
@@ -66,7 +75,7 @@ public class VideoMatch extends Controller implements Initializable {
 				
 				String creationName = creations.get(index).getName();
 				creations.remove(index);
-				_observableImageNames.add(creationName);
+				_observableVideoNames.add(creationName);
 				String creationNameNoExtension = creationName.substring(0,creationName.length()-4);
 				
 				File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
@@ -75,18 +84,14 @@ public class VideoMatch extends Controller implements Initializable {
 	    		bufferedReaderQuery.close();
 	    		_observableTerms.add(query);
 				
-				FileInputStream inputStream = new FileInputStream("quiz/"+creationNameNoExtension+"/"+query+".jpg");
-				Image image = new Image(inputStream);
-				_observableImages.add(image);
-				
 			} catch (FileNotFoundException eQuery) {
 				eQuery.printStackTrace();
 			} catch (IOException eQuery) {
 				eQuery.printStackTrace();
 			}
 		}
-		_thumbnails.setItems(_observableImageNames);
-		_thumbnails.setCellFactory(param -> new Thumbnail());
+		_videos.setItems(_observableVideoNames);
+		_videos.setCellFactory(param -> new VideoSnippet());
 		Collections.shuffle(_observableTerms);
 		_terms.setItems(_observableTerms);
 		
@@ -113,54 +118,141 @@ public class VideoMatch extends Controller implements Initializable {
 	}
 	
 	@FXML private void handleMatch() {
+		//get users selected items
+		String selCreationName = _videos.getSelectionModel().getSelectedItem();
+		String selQuery = _terms.getSelectionModel().getSelectedItem();
 		
+		if(selCreationName!=null && selQuery != null) {
+	
+			String creationNameNoExtension =  selCreationName.substring(0,selCreationName.length()-4);
+			File imageLocation = new File("quiz/"+creationNameNoExtension+"/"+selQuery+".mp4");
+			
+			if(imageLocation.exists()) {
+				_guessedVideo.add(selCreationName);
+				_guessedQuery.add(selQuery);
+
+				_observableVideoNames.remove(selCreationName);
+				_observableTerms.remove(selQuery);
+				_errorLabel.setText("Good Job!!!");
+			} else {
+				_errorLabel.setText("Uh-oh! Try again!");
+			}
+
+			_videos.getSelectionModel().clearSelection();
+			_terms.getSelectionModel().clearSelection();
+		}
+		
+
+		//if (==0) {
+			//TODO move to scoring window and calculate scores
+		//}
+		
+	}
+	
+	@FXML private void clearError() {
+		_errorLabel.setText("");
 	}
 
 	private class VideoSnippet extends ListCell<String> {
 		
-		private final ImageView _imageView = new ImageView();
-		
+		private final MediaView _mediaView = new MediaView();
+        private HBox _hbox = new HBox();
+        private Pane _pane = new Pane();
+        private Button _playBtn = new Button("Play");
+        private Media _lastItem;
+        
 		public VideoSnippet() {
-			setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+			super();
+			_hbox.getChildren().addAll(_mediaView, _pane, _playBtn);
+            HBox.setHgrow(_pane, Priority.ALWAYS);
+            _playBtns.add(_playBtn);
+			//setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 			setAlignment(Pos.CENTER);
 			
-    }
-	
-	@Override
-    protected void updateItem(String item, boolean empty) { //changes the order
-        super.updateItem(item, empty);
-        
-        if (empty || item == null) {
-        	setGraphic(null);
-        	
-        } else {
-        	String name = _observableImageNames.get(getListView().getItems().indexOf(item));
-        	try {
-	        	String nomp4 =  name.substring(0,name.length()-4);
-				File queryFile = new File("quiz/"+nomp4+"/query");
-	        	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
-	    		String query = bufferedReaderQuery.readLine();
-	    		bufferedReaderQuery.close();
-	    		
-	    		File updatedImageFile = new File("quiz/"+nomp4+"/"+query+".jpg");
-	    		FileInputStream fileInputStream = new FileInputStream(updatedImageFile);
-	    		Image updatedImage = new Image(fileInputStream);
-	    		_imageView.setImage(updatedImage);
-    		} catch (IOException e) {
-				e.printStackTrace();
-			}
- 
-        	
-        	
-        	//_imageView.setImage(_observableNames.get(getListView().getItems().indexOf(item)));
-        	_imageView.setFitHeight(50);
-        	_imageView.setFitWidth(50);
-        	_imageView.setPreserveRatio(true);
-            setGraphic(_imageView); 
-        }
-    }
-	
-	
-	
+			_playBtn.setOnAction(e -> {
+				
+				Media mediaPlayed = _lastItem;
+				if(_mediaPlayer == null || !(_mediaPlayer.getStatus()== MediaPlayer.Status.PLAYING)) {
+
+					//set up a new media player
+					_mediaPlayer = new MediaPlayer(mediaPlayed);
+					_mediaView.setMediaPlayer(_mediaPlayer);
+					_mediaPlayer.setOnEndOfMedia(() -> {
+						_mediaPlayer.stop();
+						//_mediaPlayer.dispose();
+						_playBtn.setText("Play");
+
+						//enable other buttons
+						for (Button button : _playBtns) {
+							button.setDisable(false);
+						}
+					});
+					_mediaPlayer.play();
+					_playBtn.setText("Stop");
+
+					//Disable other buttons
+					for (Button button : _playBtns) {
+						if(button != _playBtn) {
+							button.setDisable(true);
+						}
+					}
+					//Enable Match button
+					_match.setDisable(true);
+
+				} else {
+					//stop playing
+					_mediaPlayer.stop();
+					//_mediaPlayer.dispose();
+					_playBtn.setText("Play");
+
+					//enable other buttons
+					for (Button button : _playBtns) {
+						button.setDisable(false);
+					}
+					
+					//enable Match button
+					
+					_match.setDisable(false);
+				}
+				
+			});
+			
+			setOnMouseClicked(e->clearError());
+		}
+		
+		
+		
+		@Override
+	    protected void updateItem(String item, boolean empty) { //changes the order
+	        super.updateItem(item, empty);
+	        
+	        if (empty || item == null) {
+	        	setGraphic(null);
+	        	_lastItem = null;
+	        } else {
+	        	String name = _observableVideoNames.get(getListView().getItems().indexOf(item));
+	        	try {
+		        	String nomp4 =  name.substring(0,name.length()-4);
+					File queryFile = new File("quiz/"+nomp4+"/query");
+		        	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
+		    		String query = bufferedReaderQuery.readLine();
+		    		bufferedReaderQuery.close();
+		    		
+		    		File updatedVideoFile = new File("quiz/"+nomp4+"/"+query+".mp4");
+		    		Media updatedVideo = new Media(updatedVideoFile.toURI().toString());
+		    		_lastItem = updatedVideo;
+		    		MediaPlayer mediaPlayer = new MediaPlayer(updatedVideo);
+		    		_mediaView.setMediaPlayer(mediaPlayer);
+	    		} catch (IOException e) {
+					e.printStackTrace();
+				}
+	 
+	        	_mediaView.setFitHeight(50);
+	        	_mediaView.setFitWidth(50);
+	        	_mediaView.setPreserveRatio(true);
+	        	 setGraphic(_hbox);
+	        }
+	    }
+	}
 	
 }
