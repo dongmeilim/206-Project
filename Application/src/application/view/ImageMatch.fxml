@@ -71,7 +71,7 @@
                   <Region prefHeight="200.0" prefWidth="108.0" />
                   <ListView fx:id="_thumbnails" prefHeight="418.0" prefWidth="277.0" />
                   <Region prefHeight="200.0" prefWidth="31.0" />
-                  <ListView prefHeight="418.0" prefWidth="277.0" />
+                  <ListView fx:id="_terms" id="_imageTerms" prefHeight="418.0" prefWidth="277.0" />
                </children>
             </HBox>
          </center>

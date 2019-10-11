@@ -37,6 +37,10 @@
    -fx-focus-color: transparent;
 }
 
+#_imageTerms .list-cell {
+    -fx-alignment: center;
+}
+
 .table-view *.scroll-bar:horizontal *.increment-button,
 .table-view *.scroll-bar:horizontal *.decrement-button {
   -fx-background-color: null;

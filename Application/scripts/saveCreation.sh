@@ -15,6 +15,10 @@ mkdir -p ../quiz/$fileName &> /dev/null
 cp ../tmp/video/videoWithText.mp4 ../creations/$creation &> /dev/null
 echo "25" #Percentage
 
+#QUERY
+
+cp ../tmp/text/query ../quiz/$fileName/query
+
 #THUMBNAIL AS IMAGE TEST
 cp ../tmp/images/saved/img001.jpg ../quiz/$fileName/$imageName &> /dev/null
 echo "50" #Percentage

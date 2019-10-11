@@ -180,7 +180,7 @@ public class VideoList extends Controller implements Initializable{
 								if(file.exists()) {
 									//delete the video
 									file.delete();
-									//Recursively delete quiz folder
+									//Delete quiz folder
 									clearDirectory("quiz/"+fileNameNoExtension);
 									quizDirectory.delete();
 									updateFileList();

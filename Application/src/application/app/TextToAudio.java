@@ -28,6 +28,7 @@ public class TextToAudio extends Task<Void> {
 	}
 	@Override
 	protected Void call() throws Exception {
+		updateProgress(0, 3);
 		// save the selected text to a text file
 		File text= new File(_dir+"/tmp/text/temp.txt");
 		text.createNewFile();

@@ -149,8 +149,9 @@ public class PreviewSave extends Controller implements Initializable {
 			if (Pattern.matches("^[a-zA-Z0-9_-]+$", fileName)) {
 				
 				for (File comparedFile: creationList) {
-					//Get the filename without .mp4
+					//Get the filename without .mp4 TODO fix this
 					String comparedFileName = comparedFile.getName().replace(comparedFile.getName().substring((comparedFile.getName().length()-4)), "");
+					
 					System.out.println(comparedFileName);
 					if (fileName.equals(comparedFileName) == true) {
 						sameFile = true;
