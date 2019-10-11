@@ -1,6 +1,10 @@
 package application.controllers;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 import java.net.URL;
@@ -24,10 +28,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
@@ -62,6 +68,7 @@ public class VideoList extends Controller implements Initializable{
 		_videos.setCellValueFactory(new PropertyValueFactory<>("name"));
 		addPlayButtonToTable();
 		addDeleteButtonToTable();
+		
 
 	}
 
@@ -219,40 +226,100 @@ public class VideoList extends Controller implements Initializable{
 	 * Comments: dongmeilim
 	 */
 	//TODO add thumbnails to table
-	/*
-	private void addThumbnail() {
-		Callback<TableColumn<File, Void>, TableCell<File, Void>> cellFactory = new Callback<TableColumn<File, Void>, TableCell<File, Void>>() {
-			@Override
-			public TableCell<File, Void> call(final TableColumn<File, Void> param) {
-				final TableCell<File, Void> cell = new TableCell<File, Void>() {
-					// set up the thumbnail
-					
-					private final ImageView thumbnail = new ImageView();
-					{
-						File file = getTableView().getItems().get(getIndex());
-						thumbnail.setImage(new Image(file.toURI().toString()));
-						thumbnail.setFitHeight(50);
-					}
 
-					@Override
-					public void updateItem(Void item, boolean empty) {
-						// insert delete buttons into the table column
-						super.updateItem(item, empty);
-						if (empty) {
-							setGraphic(null);
-						} else {
-							setGraphic(thumbnail);
-						}
-					}
-				};
-				return cell;
+	//	private void addThumbnail() {
+	//		Callback<TableColumn<File, Void>, TableCell<File, Void>> cellFactory = new Callback<TableColumn<File, Void>, TableCell<File, Void>>() {
+	//			@Override
+	//			public TableCell<File, Void> call(final TableColumn<File, Void> param) {
+	//				TableCell<File, Void> cell;
+	//				try {
+	//					cell = new TableCell<File, Void>() {
+	//						// set up the thumbnail
+	//						
+	//						private final ImageView thumbnail = new ImageView();
+	//						
+	//						{
+	//							System.out.println(getIndex());
+	//							File file = getTableView().getItems().get(getIndex());
+	//							
+	//							String creationNameNoExtension = file.getName().substring(0,file.getName().length()-4);
+	//							File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
+	//					    	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
+	//							String query = bufferedReaderQuery.readLine();
+	//							bufferedReaderQuery.close();
+	//							
+	//							thumbnail.setImage(new Image(new FileInputStream("quiz/"+creationNameNoExtension+"/"+query+".jpg")));
+	//							thumbnail.setFitHeight(50);
+	//						}
+	//
+	//						@Override
+	//						public void updateItem(Void item, boolean empty) {
+	//							// insert delete buttons into the table column
+	//							super.updateItem(item, empty);
+	//							if (empty) {
+	//								setGraphic(null);
+	//							} else {
+	//								setGraphic(thumbnail);
+	//							}
+	//						}
+	//					};
+	//				} catch (IOException e) {
+	//					// TODO Auto-generated catch block
+	//					cell = new TableCell<File, Void>();
+	//					e.printStackTrace();
+	//				}
+	//				return cell;
+	//			}
+	//		};
+	//
+	//		_thumbnails.setCellFactory(cellFactory);
+	//
+	//	}
+
+	private class Thumbnail extends TableCell<File,File> {
+
+		private final ImageView _imageView = new ImageView();
+
+		public Thumbnail() {
+			setContentDisplay(ContentDisplay.RIGHT);
+			//setText()
+			setAlignment(Pos.CENTER);
+
+		}
+
+		protected void updateItem(File item, boolean empty) { //changes the order
+			super.updateItem(item, empty);
+
+			if (empty || item == null) {
+				setGraphic(null);
+
+			} else {
+				String creationNameNoExtension = item.getName().substring(0,item.getName().length()-4);
+				File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
+				String query="";
+				BufferedReader bufferedReaderQuery;
+				try {
+					bufferedReaderQuery = new BufferedReader(new FileReader(queryFile));
+					query = bufferedReaderQuery.readLine();
+					bufferedReaderQuery.close();
+
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				try {
+					_imageView.setImage(new Image(new FileInputStream("quiz/"+creationNameNoExtension+"/"+query+".jpg")));
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				_imageView.setFitHeight(50);
+				_imageView.setFitWidth(50);
+				_imageView.setPreserveRatio(true);
+				setGraphic(_imageView); 
 			}
-		};
-
-		_thumbnails.setCellFactory(cellFactory);
-
+		}
 	}
-	*/
 
 	@FXML
 	private void sortABC() {

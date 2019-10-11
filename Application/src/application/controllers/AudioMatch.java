@@ -166,7 +166,7 @@ public class AudioMatch extends Controller implements Initializable{
 						rightGuesses.add(filename);
 					}
 				}
-				//TODO move to scoring window
+
 				Scene scene = _match.getScene();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/Score.fxml"));
 				Score controller = new Score(rightGuesses,wrongGuesses);
@@ -286,20 +286,13 @@ public class AudioMatch extends Controller implements Initializable{
 				setGraphic(null);
 			} else {
 				lastItem = item;
-				label.setText(lastItem.getName());
-				//                label.setText("Question "+ (getIndex()+1));
+				//				label.setText(lastItem.getName());
+				label.setText("Question "+ (getIndex()+1));
 				label.setStyle("-fx-text-fill: black; -fx-effect: null;");
 				setGraphic(hbox);
 			}
 		}
 	}
-
-
-
-	//private void setAudio() {
-	//TODO implement setter
-	//}
-
 
 
 }
