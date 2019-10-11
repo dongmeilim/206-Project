@@ -100,7 +100,7 @@
                                     <Font size="18.0" />
                                  </font>
                               </RadioButton>
-                              <RadioButton fx:id="_bothAudio" mnemonicParsing="false" text="Both" toggleGroup="$_mode">
+                              <RadioButton fx:id="_bothAudio" mnemonicParsing="false" text="Full Video" toggleGroup="$_mode">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

@@ -14,13 +14,10 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -44,6 +41,9 @@ public class VideoMatch extends Controller implements Initializable {
 	
 	private MediaPlayer _mediaPlayer;
 	
+	private final int _MEDIAWIDTH=100;
+	private final int _MEDIAHEIGHT=100;
+	
 	private int _questionAmount;
 	private ArrayList<Button> _playBtns = new ArrayList<Button>();
 	
@@ -51,10 +51,9 @@ public class VideoMatch extends Controller implements Initializable {
 	private ObservableList<String> _observableTerms = FXCollections.observableArrayList(); 
 	
 	private ArrayList<String> _guessedVideo = new ArrayList<String>();
-	private ArrayList<String> _guessedQuery = new ArrayList<String>(); //TODO discuss: is this needed?
+	private int[] _videoGuesses; //stores the number of failed attempts per question. The corresponding terms are in _audioFileRecord
+	private ArrayList<String> _videoFileRecord = new ArrayList<String>(); // index of creation names correspond to _termsRecords 
 	
-	
-	// TODO finish this, note to self (left ListView is called _videos)
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		try {
@@ -75,8 +74,9 @@ public class VideoMatch extends Controller implements Initializable {
 				
 				String creationName = creations.get(index).getName();
 				creations.remove(index);
-				_observableVideoNames.add(creationName);
 				String creationNameNoExtension = creationName.substring(0,creationName.length()-4);
+				_observableVideoNames.add(creationNameNoExtension);
+				_videoFileRecord.add(creationNameNoExtension);
 				
 				File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
 	        	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
@@ -102,6 +102,8 @@ public class VideoMatch extends Controller implements Initializable {
 	private void handleBack() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you go back");
 		if (decision == true) {
+			_mediaPlayer.stop();
+			_mediaPlayer.dispose(); // release the video
 			switchTo(_back.getScene(),getClass().getResource(_PATH+"QuizSettings.fxml"));
 		}
 	}
@@ -109,6 +111,8 @@ public class VideoMatch extends Controller implements Initializable {
 	public void handleHome() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");
 		if (decision == true) {
+			_mediaPlayer.stop();
+			_mediaPlayer.dispose(); // release the video
 			toMenu(_home.getScene());
 		}
 	}
@@ -124,18 +128,21 @@ public class VideoMatch extends Controller implements Initializable {
 		
 		if(selCreationName!=null && selQuery != null) {
 	
-			String creationNameNoExtension =  selCreationName.substring(0,selCreationName.length()-4);
-			File imageLocation = new File("quiz/"+creationNameNoExtension+"/"+selQuery+".mp4");
+			//String creationNameNoExtension =  selCreationName.substring(0,selCreationName.length()-4);
+			File imageLocation = new File("quiz/"+selCreationName+"/"+selQuery+".mp4");
 			
 			if(imageLocation.exists()) {
 				_guessedVideo.add(selCreationName);
-				_guessedQuery.add(selQuery);
 
 				_observableVideoNames.remove(selCreationName);
 				_observableTerms.remove(selQuery);
 				_errorLabel.setText("Good Job!!!");
 			} else {
 				_errorLabel.setText("Uh-oh! Try again!");
+				
+				//record failed attempt
+				int index = _videoFileRecord.indexOf(selCreationName);
+				_videoGuesses[index] ++;
 			}
 
 			_videos.getSelectionModel().clearSelection();
@@ -186,6 +193,11 @@ public class VideoMatch extends Controller implements Initializable {
 						for (Button button : _playBtns) {
 							button.setDisable(false);
 						}
+						
+						//enable Match button
+						_match.setDisable(false);
+						
+						
 					});
 					_mediaPlayer.play();
 					_playBtn.setText("Stop");
@@ -196,7 +208,7 @@ public class VideoMatch extends Controller implements Initializable {
 							button.setDisable(true);
 						}
 					}
-					//Enable Match button
+					//Disable Match button
 					_match.setDisable(true);
 
 				} else {
@@ -211,7 +223,6 @@ public class VideoMatch extends Controller implements Initializable {
 					}
 					
 					//enable Match button
-					
 					_match.setDisable(false);
 				}
 				
@@ -232,13 +243,13 @@ public class VideoMatch extends Controller implements Initializable {
 	        } else {
 	        	String name = _observableVideoNames.get(getListView().getItems().indexOf(item));
 	        	try {
-		        	String nomp4 =  name.substring(0,name.length()-4);
-					File queryFile = new File("quiz/"+nomp4+"/query");
+		    
+					File queryFile = new File("quiz/"+name+"/query");
 		        	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
 		    		String query = bufferedReaderQuery.readLine();
 		    		bufferedReaderQuery.close();
 		    		
-		    		File updatedVideoFile = new File("quiz/"+nomp4+"/"+query+".mp4");
+		    		File updatedVideoFile = new File("quiz/"+name+"/"+query+".mp4");
 		    		Media updatedVideo = new Media(updatedVideoFile.toURI().toString());
 		    		_lastItem = updatedVideo;
 		    		MediaPlayer mediaPlayer = new MediaPlayer(updatedVideo);
@@ -247,8 +258,8 @@ public class VideoMatch extends Controller implements Initializable {
 					e.printStackTrace();
 				}
 	 
-	        	_mediaView.setFitHeight(50);
-	        	_mediaView.setFitWidth(50);
+	        	_mediaView.setFitHeight(_MEDIAHEIGHT);
+	        	_mediaView.setFitWidth(_MEDIAWIDTH);
 	        	_mediaView.setPreserveRatio(true);
 	        	 setGraphic(_hbox);
 	        }

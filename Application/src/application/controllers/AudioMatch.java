@@ -56,8 +56,7 @@ public class AudioMatch extends Controller implements Initializable{
 	private ObservableList<String> _queryList = FXCollections.observableArrayList();
 
 	private ArrayList<File> _guessedAudio = new ArrayList<File>();
-	private ArrayList<String> _guessedQuery = new ArrayList<String>();
-	private int[] _audioGuesses; //stores the number of failed attempts per question. The corresponding terms are in _termsRecord
+	private int[] _audioGuesses; //stores the number of failed attempts per question. The corresponding terms are in _audioFileRecord
 	private ArrayList<File> _audioFileRecord = new ArrayList<File>(); // index of creation names correspond to _termsRecords 	
 
 	@Override
@@ -105,6 +104,8 @@ public class AudioMatch extends Controller implements Initializable{
 	private void handleBack() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you go back");
 		if (decision == true) {
+			_mp.stop();
+			_mp.dispose(); // release the video
 			switchTo(_back.getScene(),getClass().getResource(_PATH+"QuizSettings.fxml"));
 		}
 	}
@@ -112,6 +113,8 @@ public class AudioMatch extends Controller implements Initializable{
 	public void handleHome() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");
 		if (decision == true) {
+			_mp.stop();
+			_mp.dispose(); // release the video
 			toMenu(_home.getScene());
 		}
 	}
@@ -131,7 +134,6 @@ public class AudioMatch extends Controller implements Initializable{
 
 			if(audioName.equalsIgnoreCase(selQuery)) {
 				_guessedAudio.add(selAudio);
-				_guessedQuery.add(selQuery);
 
 				_audioList.remove(selAudio);
 				_queryList.remove(selQuery);
@@ -255,6 +257,8 @@ public class AudioMatch extends Controller implements Initializable{
 							for (Button button : _playBtns) {
 								button.setDisable(false);
 							}
+							//enable Match button
+							_match.setDisable(false);
 						});
 						_mp.play();
 						playBtn.setText("Stop");
@@ -265,6 +269,8 @@ public class AudioMatch extends Controller implements Initializable{
 								button.setDisable(true);
 							}
 						}
+						//Disable Match button
+						_match.setDisable(true);
 
 					}else {
 						//stop playing
@@ -276,6 +282,8 @@ public class AudioMatch extends Controller implements Initializable{
 						for (Button button : _playBtns) {
 							button.setDisable(false);
 						}
+						//enable Match button
+						_match.setDisable(false);
 					}
                 }
             });

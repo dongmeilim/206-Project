@@ -16,8 +16,10 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -45,11 +47,15 @@ public class ImageMatch extends Controller implements Initializable {
 	
 	private int _questionAmount;
 	
+	private final int _IMAGEWIDTH=100;
+	private final int _IMAGEHEIGHT=100;
+	
 	private ObservableList<String> _observableImageNames = FXCollections.observableArrayList(); 
 	private ObservableList<String> _observableTerms = FXCollections.observableArrayList(); 
 	
 	private ArrayList<String> _guessedImage = new ArrayList<String>();
-	private ArrayList<String> _guessedQuery = new ArrayList<String>(); //TODO discuss: is this needed?
+	private int[] _imageGuesses; //stores the number of failed attempts per question. The corresponding terms are in _audioFileRecord
+	private ArrayList<String> _imageFileRecord = new ArrayList<String>(); // index of creation names correspond to _termsRecords 
 	
 	
 	@Override
@@ -62,9 +68,11 @@ public class ImageMatch extends Controller implements Initializable {
 			_questionAmount = Integer.parseInt(questionAmountString);
 			bufferedReaderQuestion.close();
 		} catch (IOException eQuestion) {
-
 			eQuestion.printStackTrace();
 		}
+		
+		//Initialize scoring array with zeroes
+		_imageGuesses = new int[_questionAmount];
 		
 		
 		List<File> creations = listDirectory("creations");
@@ -75,8 +83,9 @@ public class ImageMatch extends Controller implements Initializable {
 				
 				String creationName = creations.get(index).getName();
 				creations.remove(index);
-				_observableImageNames.add(creationName);
 				String creationNameNoExtension = creationName.substring(0,creationName.length()-4);
+				_observableImageNames.add(creationNameNoExtension);
+				_imageFileRecord.add(creationNameNoExtension);
 				
 				File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
 	        	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
@@ -116,7 +125,7 @@ public class ImageMatch extends Controller implements Initializable {
 		System.out.println("Under construction");
 	}
 	
-	@FXML private void handleMatch() {
+	@FXML private void handleMatch() throws IOException {
 	
 		//get users selected items
 		String selCreationName = _thumbnails.getSelectionModel().getSelectedItem();
@@ -124,18 +133,20 @@ public class ImageMatch extends Controller implements Initializable {
 		
 		if(selCreationName!=null && selQuery != null) {
 	
-			String creationNameNoExtension =  selCreationName.substring(0,selCreationName.length()-4);
-			File imageLocation = new File("quiz/"+creationNameNoExtension+"/"+selQuery+".jpg");
+			File imageLocation = new File("quiz/"+selCreationName+"/"+selQuery+".jpg");
 			
 			if(imageLocation.exists()) {
 				_guessedImage.add(selCreationName);
-				_guessedQuery.add(selQuery);
 
 				_observableImageNames.remove(selCreationName);
 				_observableTerms.remove(selQuery);
 				_errorLabel.setText("Good Job!!!");
 			} else {
 				_errorLabel.setText("Uh-oh! Try again!");
+				
+				//record failed attempt
+				int index = _imageFileRecord.indexOf(selCreationName);
+				_imageGuesses[index] ++;
 			}
 
 			_thumbnails.getSelectionModel().clearSelection();
@@ -143,9 +154,29 @@ public class ImageMatch extends Controller implements Initializable {
 		}
 		
 
-		//if (==0) {
-			//TODO move to scoring window and calculate scores
-		//}
+
+		if (_observableImageNames.isEmpty() == true && _observableTerms.isEmpty() == true) {
+			// get the lists of right and wrong creations
+			ArrayList<String> wrongGuesses = new ArrayList<String>();
+			ArrayList<String> rightGuesses = new ArrayList<String>();
+
+			for (int i = 0; i<_imageGuesses.length;i++) {
+				String creationName = _imageFileRecord.get(i);
+				
+				if(_imageGuesses[i]>0) {
+					wrongGuesses.add(creationName);
+				}else {
+					rightGuesses.add(creationName);
+				}
+			}
+
+			Scene scene = _match.getScene();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/Score.fxml"));
+			Score controller = new Score(rightGuesses,wrongGuesses);
+			loader.setController(controller);
+			scene.setRoot(loader.load());
+
+		}
 		
 	}
 	
@@ -175,13 +206,12 @@ public class ImageMatch extends Controller implements Initializable {
 	        } else {
 	        	String name = _observableImageNames.get(getListView().getItems().indexOf(item));
 	        	try {
-		        	String nomp4 =  name.substring(0,name.length()-4);
-					File queryFile = new File("quiz/"+nomp4+"/query");
+					File queryFile = new File("quiz/"+name+"/query");
 		        	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
 		    		String query = bufferedReaderQuery.readLine();
 		    		bufferedReaderQuery.close();
 		    		
-		    		File updatedImageFile = new File("quiz/"+nomp4+"/"+query+".jpg");
+		    		File updatedImageFile = new File("quiz/"+name+"/"+query+".jpg");
 		    		FileInputStream fileInputStream = new FileInputStream(updatedImageFile);
 		    		Image updatedImage = new Image(fileInputStream);
 		    		_imageView.setImage(updatedImage);
@@ -189,8 +219,8 @@ public class ImageMatch extends Controller implements Initializable {
 					e.printStackTrace();
 				}
 	 
-	        	_imageView.setFitHeight(50);
-	        	_imageView.setFitWidth(50);
+	        	_imageView.setFitHeight(_IMAGEHEIGHT);
+	        	_imageView.setFitWidth(_IMAGEWIDTH);
 	        	_imageView.setPreserveRatio(true);
 	            setGraphic(_imageView); 
 	        }

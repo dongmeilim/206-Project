@@ -65,7 +65,6 @@ public class QuizSettings extends Controller implements Initializable {
 		} else if (selectedMode.equals(_imageRadio)) {
 			game=game+"ImageMatch.fxml";
 		} else {
-			System.out.println("Video quiz");
 			game=game+"VideoMatch.fxml";
 		}
 		switchTo(_next.getScene(),getClass().getResource(game));

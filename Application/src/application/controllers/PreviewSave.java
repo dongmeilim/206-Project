@@ -108,16 +108,24 @@ public class PreviewSave extends Controller implements Initializable {
 		
 	}
 	
-	@FXML private void handleBack() {switchTo(_back.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));}
+	@FXML private void handleBack() {
+		_player.stop();
+		_player.dispose(); // release the video
+		switchTo(_back.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));
+		}
 	
 	@FXML 
 	public void handleHome() {
 		
 		if (_videoHasBeenMade == true) {
+			_player.stop();
+			_player.dispose(); // release the video
 			toMenu(_home.getScene());
 		} else {
 			boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");
 			if (decision == true) {
+				_player.stop();
+				_player.dispose(); // release the video
 				toMenu(_home.getScene());
 			}
 		}
@@ -149,10 +157,8 @@ public class PreviewSave extends Controller implements Initializable {
 			if (Pattern.matches("^[a-zA-Z0-9_-]+$", fileName)) {
 				
 				for (File comparedFile: creationList) {
-					//Get the filename without .mp4 TODO fix this
-					String comparedFileName = comparedFile.getName().replace(comparedFile.getName().substring((comparedFile.getName().length()-4)), "");
-					
-					System.out.println(comparedFileName);
+					//Get filename without .mp4 extension
+					String comparedFileName = comparedFile.getName().substring(0,comparedFile.getName().length()-4);
 					if (fileName.equals(comparedFileName) == true) {
 						sameFile = true;
 						break;
