@@ -2,6 +2,63 @@
 
 ## Discussion Wiki
 
+### 12/10/2019 @ 2330 - Matchmaker
+
+We've been working on a few things since last time. Since the circumstance is that we are now in proximity, we have been working on many shorter branches and merging frequently. Here are some things we have implemented.
+
+**File Hierarchy**
+
+We needed to make a file hierarchy for the quiz games so that designing would be easier.
+![File Hierarchy](Concepts/initial_drawings/FileHierarchy.png)
+
+The idea is that the creations are loaded randomly using our `listDirectory` method among other things. Then for each random creation chosen, the query is read and the appropriate media is chosen e.g. if the quiz is in Audio Only mode then the `.wav` is chosen.
+
+**The Quiz**
+
+I was tasked with working on the ImageMatch and VideoMatch windows, while @dongmeilim worked on the AudioMatch and the Scoring system. Originally we had 50x50 shown for the Image and Video windows, but we agreed this was too small. Here are the windows:
+
+![AudioMatch](Concepts/screenshots_PRE_CSS/AudioMatch.png)
+![ImageMatch100x100](Concepts/screenshots_PRE_CSS/ImageMatchv2.png)
+![VideoMatch100x100](Concepts/screenshots_PRE_CSS/VideoMatchv2.png)
+![Score](Concepts/screenshots_PRE_CSS/VideoMatchv2.png)
+
+**Scoring**
+
+The Scoring was relatively simple to implement, though we decided on replacing the columned labels to Perfect and Needs Work.
+
+The System is that if you get it wrong at least once then it will be put into the Needs Work section. We talked about including lives but decided it would be better off if we implemented infinite retries. ScrollPanes were also added to account for no upper bound on number of questions.
+
+**Background Music**
+
+We retrieved the background music from [http://ccmixter.org](http://ccmixter.org). I added a checkbox inside ImageFetch so that the user may indicate if it is wanted or not. In this manner, adding a song is quick and easy and flows nicely with the no-complication style that is the rest of the app.
+
+**Help System Layout**
+
+Although not completed this implementation yet, we have an idea for how this will be implemented.
+
+* HBox
+ * StackPane
+  * BorderPane
+  * AnchorPane
+
+The Help Button will toggle between the children of the StackPanes.
+
+Quick Fixes
+
+* Removed horizontal scrollbars on the TableViews.
+* Made sure that onClickEvents will wipe error labels for smooth flow.
+* Renamed Both to Full Video.
+
+**Need to Implement**
+
+1. rename other steps to be more playful (to match - Create The Sound)
+2. Labels for icons
+3. Fix help icon in Menu
+4. Attribute the artist of the track on Menu
+5. Implement a kid-like CSS for our stakeholder.
+
+\- Mirlington
+
 ### 09/10/2019 @ 1739 - Let the Games Begin
 
 Finally have the TextSelect step (now renamed to Create the Sound) implemented. It has been redone to remove the need to the child user to name their audio files (kids don't have that kind of patience), as well as add the ability to play and delete saved audio files. The audio slider has been removed as it took up too much precious space in the window. The play/pause/stop controls should be enough for the child. The voices have also been given more descriptive(?) names.
