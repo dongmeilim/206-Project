@@ -15,10 +15,9 @@
 * #d69200
 * #ffa229
 */
-
 @font-face {
-    font-family: JellyFish;
-    src: url('Cute-Jellyfish.otf');
+    -fx-font-family: 'Cute Jellyfish';
+    src: url('/Cute-Jellyfish.ttf');
 }
 .button{
     -fx-background-color:
@@ -78,7 +77,7 @@
 } 
 
 .label {
-	-fx-font-family: 'JellyFish';
+	-fx-font-family: 'Cute Jellyfish';
     -fx-text-fill: white;
     -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 );
 }
