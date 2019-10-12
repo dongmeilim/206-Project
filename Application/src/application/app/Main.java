@@ -5,7 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.Parent;
 
 /**
  * SoftEng 206 Assignment 3: VARpedia
@@ -31,7 +31,7 @@ public class Main extends Application {
 			//load the menu on startup
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/application/view/Menu.fxml"));
-			BorderPane root = (BorderPane)loader.load();
+			Parent root = loader.load();
 			
 			Scene scene = new Scene(root,750,550);
 			scene.getStylesheets().add("/application/app/application.css");

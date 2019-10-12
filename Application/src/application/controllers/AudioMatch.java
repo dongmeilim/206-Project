@@ -19,6 +19,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -238,6 +239,7 @@ public class AudioMatch extends Controller implements Initializable{
 			super();
 			hbox.getChildren().addAll(label, pane, playBtn);
 			HBox.setHgrow(pane, Priority.ALWAYS);
+	        hbox.setAlignment(Pos.CENTER);
 			_playBtns.add(playBtn);
 
 			playBtn.setOnAction(new EventHandler<ActionEvent>() {
