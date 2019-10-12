@@ -30,8 +30,8 @@ public class Menu extends Controller implements Initializable {
 	@FXML private Button _videos;
 	@FXML private Button _quiz;
 	@FXML private Label _warning;
-	// TODO change help button to top right
-	@FXML private void openHelp() {System.out.println("Deprecated: To be removed");}
+
+	@FXML private void openHelp() {System.out.println("To be implemented!");}
 	@FXML private void openSearch() {switchTo(_help.getScene(), getClass().getResource(_PATH+"Search2.fxml"));}
 	@FXML private void openVideos() {switchTo(_help.getScene(), getClass().getResource(_PATH+"VideoList.fxml"));}
 	@FXML private void openQuiz() {switchTo(_quiz.getScene(), getClass().getResource(_PATH+"QuizSettings.fxml"));}

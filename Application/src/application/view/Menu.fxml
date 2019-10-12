@@ -15,7 +15,7 @@
    <center>
       <ScrollPane hbarPolicy="NEVER" prefWidth="750.0" vbarPolicy="NEVER" BorderPane.alignment="TOP_CENTER">
          <content>
-            <VBox alignment="CENTER" prefHeight="550.0" prefWidth="750.0" spacing="15.0">
+            <VBox alignment="TOP_CENTER" prefHeight="550.0" prefWidth="750.0" spacing="15.0">
                <children>
                   <Label text="VARpedia" underline="true">
                      <font>
@@ -61,19 +61,10 @@
                         <Insets right="20.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="_help" mnemonicParsing="false" onAction="#openHelp" prefHeight="50.0" prefWidth="60.0">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@/helpwhite.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
                </children>
+               <padding>
+                  <Insets top="50.0" />
+               </padding>
             </VBox>
          </content>
       </ScrollPane>
@@ -85,4 +76,22 @@
          </children>
       </HBox>
    </bottom>
+   <top>
+      <HBox alignment="TOP_RIGHT" prefHeight="51.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="_help" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#openHelp" prefHeight="50.0" prefWidth="50.0" text="Help">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/helpwhite.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </top>
 </BorderPane>
