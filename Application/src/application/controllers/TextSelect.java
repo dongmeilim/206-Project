@@ -446,8 +446,17 @@ public class TextSelect extends Controller implements Initializable{
 		writer.close();
 
 		file = new File(System.getProperty("user.dir")+"/tmp/text/query"); 
-		br = new BufferedReader(new FileReader(file)); 
-		String name = br.readLine()+fileNum; 
+		br = new BufferedReader(new FileReader(file));
+		char[] whiteSpaceCheck = br.readLine().toCharArray();
+		for (int i = 0; i < whiteSpaceCheck.length; i++) {
+			if (whiteSpaceCheck[i] == ' ') {
+				whiteSpaceCheck[i] = '_';
+			}
+		}
+		
+		String name = new String(whiteSpaceCheck);
+		name = name+fileNum; 
+		
 		br.close();
 
 		saveInBG(name);
