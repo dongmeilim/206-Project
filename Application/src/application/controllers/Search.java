@@ -21,6 +21,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+
 /**
  * Controller that handles the Search.fxml view.
  * After user types in an appropriate query,
@@ -39,6 +42,10 @@ public class Search extends Controller implements Initializable{
 
 	private String _dir = System.getProperty("user.dir");
 	private SearchWiki _wikitBG;
+	
+	@FXML private BorderPane _border;
+	@FXML private AnchorPane _anchor;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//clean the directory to prepare for a new creation
@@ -98,7 +105,11 @@ public class Search extends Controller implements Initializable{
 	
 	@FXML
 	private void handleHelp() {
-		// TODO implement help for Search
+		if (_anchor.isVisible()==true) {
+			_anchor.setVisible(false);
+		} else {
+			_anchor.setVisible(true);
+		}
 	}
 
 	@FXML
