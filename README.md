@@ -9,7 +9,7 @@ We've been working on a few things since last time. Since the circumstance is th
 **File Hierarchy**
 
 We needed to make a file hierarchy for the quiz games so that designing would be easier.
-![File Hierarchy](Concepts/initial_drawings/FileHierarchy.png)
+![File Hierarchy](Concepts/initial_drawings/FileHierarchy.PNG)
 
 The idea is that the creations are loaded randomly using our `listDirectory` method among other things. Then for each random creation chosen, the query is read and the appropriate media is chosen e.g. if the quiz is in Audio Only mode then the `.wav` is chosen.
 
@@ -20,7 +20,7 @@ I was tasked with working on the ImageMatch and VideoMatch windows, while @dongm
 ![AudioMatch](Concepts/screenshots_PRE_CSS/AudioMatch.png)
 ![ImageMatch100x100](Concepts/screenshots_PRE_CSS/ImageMatchv2.png)
 ![VideoMatch100x100](Concepts/screenshots_PRE_CSS/VideoMatchv2.png)
-![Score](Concepts/screenshots_PRE_CSS/VideoMatchv2.png)
+![Score](Concepts/screenshots_PRE_CSS/Scorev2.png)
 
 **Scoring**
 
