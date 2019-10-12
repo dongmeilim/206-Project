@@ -59,7 +59,7 @@ public class Menu extends Controller implements Initializable {
 			_anchor.setVisible(false);
 		}
 	}
-	@FXML private void openSearch() {switchTo(_create.getScene(), getClass().getResource(_PATH+"Search2.fxml"));}
+	@FXML private void openSearch() {switchTo(_create.getScene(), getClass().getResource(_PATH+"Search.fxml"));}
 	@FXML private void openVideos() {switchTo(_videos.getScene(), getClass().getResource(_PATH+"VideoList.fxml"));}
 	@FXML private void openQuiz() {switchTo(_quiz.getScene(), getClass().getResource(_PATH+"QuizSettings.fxml"));}
 	
