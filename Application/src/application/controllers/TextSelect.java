@@ -16,6 +16,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -93,6 +98,8 @@ public class TextSelect extends Controller implements Initializable{
 	private String _dir;
 	private String _blueBar = "-fx-accent: #315F83";
 	private String _purpleBar = "-fx-accent: #896A89";
+	
+	private final double _MAXDURATION = 300;
 
 	//TODO Warn the user preemptively that the NZ voice cant pronounce a lot of words.
 	@Override
@@ -210,7 +217,45 @@ public class TextSelect extends Controller implements Initializable{
 			_mediaPlayer.stop();
 			_mediaPlayer.dispose();
 		}
-		switchTo(_back.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));
+
+		boolean isAudioTooLong = isAudioTooLong();
+		
+		if (isAudioTooLong == true) {
+			_errorLabel.setText("Combined audio is too long, please delete some audio clips");
+			if (_rightVBox.getChildren().contains(_errorLabel) == false) {
+				_rightVBox.getChildren().add(_errorLabel);
+			}
+		} else {
+			if (_rightVBox.getChildren().contains(_errorLabel) == true) {
+				_rightVBox.getChildren().remove(_errorLabel);
+			}
+			switchTo(_next.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));
+		}
+	}
+	
+	private boolean isAudioTooLong() {
+		List<File> files = listDirectory("tmp/audio");
+		float durationInSeconds = 0;
+		for (File file: files) {
+			try {
+				AudioInputStream audioInputStream;
+				audioInputStream = AudioSystem.getAudioInputStream(file);
+				AudioFormat format = audioInputStream.getFormat();
+				long audioFileLength = file.length();
+				int frameSize = format.getFrameSize();
+				float frameRate = format.getFrameRate();
+				durationInSeconds = durationInSeconds + (audioFileLength / (frameSize * frameRate));
+			} catch (UnsupportedAudioFileException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		if (durationInSeconds > _MAXDURATION) { //Duration of the background music
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@FXML

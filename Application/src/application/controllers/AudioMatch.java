@@ -104,8 +104,10 @@ public class AudioMatch extends Controller implements Initializable{
 	private void handleBack() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you go back");
 		if (decision == true) {
-			_mp.stop();
-			_mp.dispose(); // release the video
+			if (_mp!=null) {
+				_mp.stop();
+				_mp.dispose(); // release the video
+			}
 			switchTo(_back.getScene(),getClass().getResource(_PATH+"QuizSettings.fxml"));
 		}
 	}
@@ -113,8 +115,10 @@ public class AudioMatch extends Controller implements Initializable{
 	public void handleHome() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");
 		if (decision == true) {
-			_mp.stop();
-			_mp.dispose(); // release the video
+			if (_mp!=null) {
+				_mp.stop();
+				_mp.dispose(); // release the video
+			}
 			toMenu(_home.getScene());
 		}
 	}

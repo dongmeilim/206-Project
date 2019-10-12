@@ -43,6 +43,7 @@ public class ImageFetch extends Controller {
 	@FXML private Button _help;
 	@FXML private Button _next;
 	@FXML private Button _fetch;
+	@FXML private CheckBox _backgroundMusic;
 	@FXML private Label _imageAmountDisplay;
 	@FXML private Label _warning;
 	@FXML private ProgressBar _imageProgress;
@@ -187,7 +188,14 @@ public class ImageFetch extends Controller {
 	}
 	
 	private void createPreview() {
-		CreatePreview createPreview = new CreatePreview();
+		boolean haveMusicInVideo;
+		if (_backgroundMusic.isSelected() == true) {
+			haveMusicInVideo = true;
+		} else {
+			haveMusicInVideo = false;
+		}
+		
+		CreatePreview createPreview = new CreatePreview(haveMusicInVideo);
 		Thread thread = new Thread(createPreview);
 		thread.start();
 		

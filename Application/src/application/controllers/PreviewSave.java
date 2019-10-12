@@ -109,6 +109,7 @@ public class PreviewSave extends Controller implements Initializable {
 	}
 	
 	@FXML private void handleBack() {
+		
 		_player.stop();
 		_player.dispose(); // release the video
 		switchTo(_back.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));

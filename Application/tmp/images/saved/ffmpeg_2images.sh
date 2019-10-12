@@ -12,7 +12,7 @@ if [ $# -eq 3 ]
 then
 		cat ../tmp/images/saved/*.jpg | ffmpeg -f image2pipe -framerate $framerate -i - -i ../quiz/$fileName/$audioName -c:v libx264 -pix_fmt yuv420p -vf "scale=750:500" -r 25 -max_muxing_queue_size 1024 -y ../quiz/$fileName/$videoName &> /dev/null 
 else
-	cat ../tmp/images/saved/*.jpg | ffmpeg -f image2pipe -framerate $framerate -i - -i ../tmp/audio/concatenatedAudio.wav -c:v libx264 -pix_fmt yuv420p -vf "scale=750:500" -r 25 -max_muxing_queue_size 1024 -y ../tmp/video/videoNoText.mp4 &> /dev/null 
+	cat ../tmp/images/saved/*.jpg | ffmpeg -f image2pipe -framerate $framerate -i - -i ../tmp/audio/finalAudio.wav -c:v libx264 -pix_fmt yuv420p -vf "scale=750:500" -r 25 -max_muxing_queue_size 1024 -y ../tmp/video/videoNoText.mp4 &> /dev/null 
 fi
 
 

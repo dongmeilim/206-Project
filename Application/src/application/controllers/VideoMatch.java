@@ -102,8 +102,10 @@ public class VideoMatch extends Controller implements Initializable {
 	private void handleBack() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you go back");
 		if (decision == true) {
-			_mediaPlayer.stop();
-			_mediaPlayer.dispose(); // release the video
+			if (_mediaPlayer!=null) {
+				_mediaPlayer.stop();
+				_mediaPlayer.dispose(); // release the video
+			}
 			switchTo(_back.getScene(),getClass().getResource(_PATH+"QuizSettings.fxml"));
 		}
 	}
@@ -111,8 +113,10 @@ public class VideoMatch extends Controller implements Initializable {
 	public void handleHome() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");
 		if (decision == true) {
-			_mediaPlayer.stop();
-			_mediaPlayer.dispose(); // release the video
+			if (_mediaPlayer!=null) {
+				_mediaPlayer.stop();
+				_mediaPlayer.dispose(); // release the video
+			}
 			toMenu(_home.getScene());
 		}
 	}

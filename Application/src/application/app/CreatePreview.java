@@ -17,6 +17,15 @@ import javafx.concurrent.Task;
 public class CreatePreview extends Task<Void> {
 
 	private final File _NULL = new File("/dev/null");
+	private final String _isBackgroundMusicSelected;
+	
+	public CreatePreview(boolean isBackgroundMusicSelected) {
+		if (isBackgroundMusicSelected == true) {
+			_isBackgroundMusicSelected = "1";
+		} else {
+			_isBackgroundMusicSelected = "0";
+		}
+	}
 	
 	@Override
 	protected Void call() throws Exception {
@@ -25,7 +34,7 @@ public class CreatePreview extends Task<Void> {
 			ProcessBuilder pb = new ProcessBuilder();
 			pb.redirectError(_NULL);
 			pb.directory(new File("scripts/"));
-			pb.command("bash","createffmpegpreview.sh");
+			pb.command("bash","createffmpegpreview.sh",_isBackgroundMusicSelected);
 			pb.start().waitFor();
 			Process process = pb.start();
 	        InputStream stdout = process.getInputStream();
