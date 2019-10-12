@@ -10,11 +10,20 @@
     -fx-text-fill: white;
 }
 * blue colour: #315F83
+* 
+* oranges:
+* #d69200
+* #ffa229
 */
+
+@font-face {
+    font-family: JellyFish;
+    src: url('Cute-Jellyfish.otf');
+}
 .button{
     -fx-background-color:
-    linear-gradient( #b2d8d8, #66b2b2),
-    radial-gradient(center 50% -40%, radius 200%, #006666 45%, #004c4c 50%);
+    linear-gradient( #fee6b9, #fdde96),
+    radial-gradient(center 50% -40%, radius 200%, #eb7900 45%, #bd6100 50%);
     -fx-background-radius: 20, 20;
     -fx-background-insets: 0, 1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
@@ -25,7 +34,7 @@
 	-fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 );
 }
 .root {
-    -fx-background-image: url("/background.jpg");
+    -fx-background-image: url("/background2.jpg");
     -fx-background-size: cover;
     -fx-focus-color: transparent;
 }
@@ -69,6 +78,7 @@
 } 
 
 .label {
+	-fx-font-family: 'JellyFish';
     -fx-text-fill: white;
     -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 );
 }

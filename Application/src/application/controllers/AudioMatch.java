@@ -279,7 +279,6 @@ public class AudioMatch extends Controller implements Initializable{
 					}else {
 						//stop playing
 						_mp.stop();
-						_mp.dispose();
 						playBtn.setText("Play");
 
 						//enable other buttons

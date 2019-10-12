@@ -28,7 +28,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -49,7 +48,7 @@ public class VideoList extends Controller implements Initializable{
 	@FXML private Button _sortABC;
 	@FXML private Button _sortDate;
 	@FXML private TableView<File> _table;
-	@FXML private TableColumn<File, Void> _thumbnails;
+	@FXML private TableColumn<File, String> _thumbnails;
 	@FXML private TableColumn<File, String> _videos;
 	@FXML private TableColumn<File, Void> _play;
 	@FXML private TableColumn<File, Void> _delete;
@@ -66,6 +65,8 @@ public class VideoList extends Controller implements Initializable{
 		_table.setSelectionModel(null);
 		_table.setItems(_fileList);
 		_videos.setCellValueFactory(new PropertyValueFactory<>("name"));
+		_thumbnails.setCellValueFactory(new PropertyValueFactory<>("name"));
+		_thumbnails.setCellFactory(param -> new Thumbnail());
 		addPlayButtonToTable();
 		addDeleteButtonToTable();
 		
@@ -225,7 +226,6 @@ public class VideoList extends Controller implements Initializable{
 	 * Modified: dongmeilim
 	 * Comments: dongmeilim
 	 */
-	//TODO add thumbnails to table
 
 	//	private void addThumbnail() {
 	//		Callback<TableColumn<File, Void>, TableCell<File, Void>> cellFactory = new Callback<TableColumn<File, Void>, TableCell<File, Void>>() {
@@ -276,7 +276,7 @@ public class VideoList extends Controller implements Initializable{
 	//
 	//	}
 
-	private class Thumbnail extends TableCell<File,File> {
+	private class Thumbnail extends TableCell<File,String> {
 
 		private final ImageView _imageView = new ImageView();
 
@@ -287,14 +287,14 @@ public class VideoList extends Controller implements Initializable{
 
 		}
 
-		protected void updateItem(File item, boolean empty) { //changes the order
+		protected void updateItem(String item, boolean empty) { //changes the order
 			super.updateItem(item, empty);
 
 			if (empty || item == null) {
 				setGraphic(null);
 
 			} else {
-				String creationNameNoExtension = item.getName().substring(0,item.getName().length()-4);
+				String creationNameNoExtension = item.substring(0,item.length()-4);
 				File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
 				String query="";
 				BufferedReader bufferedReaderQuery;
@@ -314,7 +314,6 @@ public class VideoList extends Controller implements Initializable{
 					e.printStackTrace();
 				}
 				_imageView.setFitHeight(50);
-				_imageView.setFitWidth(50);
 				_imageView.setPreserveRatio(true);
 				setGraphic(_imageView); 
 			}
