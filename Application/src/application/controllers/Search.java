@@ -34,9 +34,9 @@ public class Search extends Controller implements Initializable{
 	@FXML private Button _menu;
 	@FXML private Button _back;
 	@FXML private Button _search;
-	@FXML private Button _help;
 
-	@FXML private Label _lastTerm;
+	@FXML private Label _lastSearchedTerm;
+	@FXML private Label _term;
 	@FXML private Label _errorMessage;
 	@FXML private TextField _searchbar;
 
@@ -70,8 +70,10 @@ public class Search extends Controller implements Initializable{
 		} catch (IOException e2) {
 			e2.printStackTrace();
 		}
+		readQueryText();
+	}
 	
-		
+	private void readQueryText() {
 		//read the text file
 		String query = "";
 
@@ -88,9 +90,9 @@ public class Search extends Controller implements Initializable{
 			e.printStackTrace();
 		}
 
-		_lastTerm.setText(query);
-
+		_term.setText(query);
 	}
+	
 	
 	/**
 	 * This method is bound to both the back and menu buttons
@@ -104,18 +106,34 @@ public class Search extends Controller implements Initializable{
 	}
 	
 	@FXML
-	private void handleHelp() {
-		if (_anchor.isVisible()==true) {
-			_anchor.setVisible(false);
-		} else {
+	private void handleHelp() { //AnchorPane is invisible on startup
+		if (_anchor.isVisible()==false) {
+			_menu.setDisable(true);
+			_back.setDisable(true);
+			_searchbar.setDisable(true);
+			_search.setDisable(true);
+			
+			_lastSearchedTerm.setText("");
+			_term.setText("");
+			
 			_anchor.setVisible(true);
+		} else {
+			_menu.setDisable(false);
+			_back.setDisable(false);
+			_searchbar.setDisable(false);
+			_search.setDisable(false);
+			
+			_lastSearchedTerm.setText("Last Searched Term:");
+			readQueryText();
+			
+			_anchor.setVisible(false);
 		}
 	}
 
 	@FXML
 	private void search() throws IOException {
 		String input = _searchbar.getText();
-		_lastTerm.setText(input);
+		_term.setText(input);
 
 		//display message if empty input
 		if (input.equals("")) {

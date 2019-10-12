@@ -9,7 +9,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 /**
  * Controller that handles the Menu.fxml view.
@@ -25,15 +28,39 @@ import javafx.scene.control.Label;
 
 public class Menu extends Controller implements Initializable {
 	
-	@FXML private Button _help;
 	@FXML private Button _create;
 	@FXML private Button _videos;
 	@FXML private Button _quiz;
 	@FXML private Label _warning;
 
-	@FXML private void openHelp() {System.out.println("To be implemented!");}
-	@FXML private void openSearch() {switchTo(_help.getScene(), getClass().getResource(_PATH+"Search2.fxml"));}
-	@FXML private void openVideos() {switchTo(_help.getScene(), getClass().getResource(_PATH+"VideoList.fxml"));}
+	@FXML private AnchorPane _anchor;
+	@FXML private BorderPane _border;
+	
+	@FXML private void openHelp() {
+		if (_anchor.isVisible() == false) { //AnchorPane is invisible on startup
+			_create.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+			_videos.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+			_quiz.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+			
+			_create.setDisable(true);
+			_videos.setDisable(true);
+			_quiz.setDisable(true);
+			
+			_anchor.setVisible(true);
+		} else {
+			_create.setContentDisplay(ContentDisplay.LEFT);
+			_videos.setContentDisplay(ContentDisplay.LEFT);
+			_quiz.setContentDisplay(ContentDisplay.LEFT);
+			
+			_create.setDisable(false);
+			_videos.setDisable(false);
+			_quiz.setDisable(false);
+			
+			_anchor.setVisible(false);
+		}
+	}
+	@FXML private void openSearch() {switchTo(_create.getScene(), getClass().getResource(_PATH+"Search2.fxml"));}
+	@FXML private void openVideos() {switchTo(_videos.getScene(), getClass().getResource(_PATH+"VideoList.fxml"));}
 	@FXML private void openQuiz() {switchTo(_quiz.getScene(), getClass().getResource(_PATH+"QuizSettings.fxml"));}
 	
 	@Override

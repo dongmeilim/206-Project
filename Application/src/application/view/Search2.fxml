@@ -39,12 +39,12 @@
                               </Button>
                            </children>
                         </HBox>
-                        <Label text="Last Searched Term: ">
+                        <Label fx:id="_lastSearchedTerm" text="Last Searched Term: ">
                            <font>
                               <Font size="21.0" />
                            </font>
                         </Label>
-                        <Label fx:id="_lastTerm">
+                        <Label fx:id="_term">
                            <font>
                               <Font size="17.0" />
                            </font>
@@ -79,12 +79,12 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Label alignment="CENTER" prefHeight="44.0" prefWidth="609.0" text="Step 1: Search" textAlignment="CENTER">
+                        <Label alignment="CENTER" prefHeight="44.0" prefWidth="615.0" text="Step 1: Search" textAlignment="CENTER">
                            <font>
                               <Font size="36.0" />
                            </font>
                         </Label>
-                        <Button fx:id="_help" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0">
+                        <Button fx:id="_help" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -99,12 +99,12 @@
             </BorderPane>
             <AnchorPane fx:id="_anchor" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
-                  <ImageView fitHeight="75.0" fitWidth="61.0" layoutX="393.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="75.0" fitWidth="61.0" layoutX="358.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@/cursor.png" />
+                        <Image url="@/cursorwhite.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="237.0" layoutY="343.0" text="Enter a word here to learn more about it!">
+                  <Label layoutX="158.0" layoutY="308.0" text="Enter a word here to learn more about it!">
                      <font>
                         <Font size="21.0" />
                      </font>

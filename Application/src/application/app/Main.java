@@ -30,7 +30,7 @@ public class Main extends Application {
 			
 			//load the menu on startup
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource("/application/view/Menu2.fxml"));
+			loader.setLocation(getClass().getResource("/application/view/Menu.fxml"));
 			Parent root = loader.load();
 			
 			Scene scene = new Scene(root,750,550);
