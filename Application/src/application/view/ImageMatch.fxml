@@ -6,56 +6,96 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.ImageMatch">
    <children>
-      <BorderPane prefHeight="550.0" prefWidth="750.0">
-         <bottom>
-            <HBox fx:id="_ImageFetch" prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <BorderPane prefHeight="550.0" prefWidth="750.0">
+               <bottom>
+                  <HBox fx:id="_ImageFetch" prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="_back" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="50.0" text="back" HBox.hgrow="NEVER">
+                           <graphic>
+                              <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/back.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Region prefHeight="50.0" prefWidth="28.0" />
+                        <Button fx:id="_match" mnemonicParsing="false" onAction="#handleMatch" prefHeight="50.0" prefWidth="585.0" style="-fx-font-size: 26;" text="Match">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </bottom>
+               <top>
+                  <HBox fx:id="_ImageFetch" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="_home" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0" text="home">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/home.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="651.0" style="-fx-font-size: 30;" text="Match the Images" textAlignment="CENTER">
+                           <font>
+                              <Font size="27.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="_help" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/helpwhite.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </top>
+               <left>
+                  <VBox alignment="TOP_CENTER" prefHeight="450.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="450.0" prefWidth="676.0" spacing="50.0">
+                           <children>
+                              <ListView fx:id="_thumbnails" editable="true" prefHeight="402.0" prefWidth="277.0" />
+                              <ListView id="_queryListView" fx:id="_terms" onMouseClicked="#clearError" prefHeight="401.0" prefWidth="277.0" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="_errorLabel">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </VBox>
+               </left>
+            </BorderPane>
+            <AnchorPane fx:id="_anchor" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
-                  <Button fx:id="_back" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="50.0" text="back" HBox.hgrow="NEVER">
-                     <graphic>
-                        <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@/back.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Region prefHeight="50.0" prefWidth="28.0" />
-                  <Button fx:id="_match" mnemonicParsing="false" onAction="#handleMatch" prefHeight="50.0" prefWidth="585.0" style="-fx-font-size: 26;" text="Match">
-                     <font>
-                        <Font size="26.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
-         </bottom>
-         <top>
-            <HBox fx:id="_ImageFetch" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="_home" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0" text="home">
-                     <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@/home.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Region prefHeight="50.0" prefWidth="98.0" />
-                  <Label prefHeight="50.0" prefWidth="593.0" text="                    Match the Images" textAlignment="CENTER">
-                     <font>
-                        <Font size="27.0" />
-                     </font>
-                  </Label>
-                  <Region prefHeight="50.0" prefWidth="128.0" />
-                  <Button fx:id="_help" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                  <Label layoutX="203.0" layoutY="172.0" prefHeight="72.0" prefWidth="173.0" style="-fx-font-size: 17;" text="2. Click a picture to select it" textAlignment="CENTER" wrapText="true" />
+                  <Label layoutX="422.0" layoutY="189.0" prefHeight="72.0" prefWidth="173.0" style="-fx-font-size: 17;" text="3. Choose the word you think matches the picture" textAlignment="CENTER" wrapText="true" />
+                  <Label layoutX="244.0" layoutY="448.0" prefHeight="72.0" prefWidth="317.0" style="-fx-font-size: 17;" text="4. Click Match to check your answer" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="_anchorHelp" contentDisplay="GRAPHIC_ONLY" layoutX="701.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0">
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -64,29 +104,19 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <ImageView fitHeight="84.0" fitWidth="114.0" layoutX="184.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true" rotate="56.3">
+                     <image>
+                        <Image url="@/arrowLeft.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="89.0" fitWidth="80.0" layoutX="520.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" rotate="-114.8">
+                     <image>
+                        <Image url="@/arrow.png" />
+                     </image>
+                  </ImageView>
                </children>
-            </HBox>
-         </top>
-         <left>
-            <VBox alignment="TOP_CENTER" prefHeight="450.0" prefWidth="750.0" BorderPane.alignment="CENTER">
-               <children>
-                  <HBox alignment="TOP_CENTER" fillHeight="false" prefHeight="450.0" prefWidth="676.0" spacing="50.0">
-                     <children>
-                        <ListView fx:id="_thumbnails" editable="true" prefHeight="402.0" prefWidth="277.0" />
-                        <ListView id="_queryListView" fx:id="_terms" onMouseClicked="#clearError" prefHeight="401.0" prefWidth="277.0" />
-                     </children>
-                  </HBox>
-                  <Label fx:id="_errorLabel">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" />
-                     </padding>
-                  </Label>
-               </children>
-            </VBox>
-         </left>
-      </BorderPane>
+            </AnchorPane>
+         </children>
+      </StackPane>
    </children>
 </HBox>

@@ -20,7 +20,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -28,8 +28,10 @@ import javafx.util.Duration;
 
 public class PreviewSave extends Controller implements Initializable {
 	
+	@FXML private AnchorPane _anchor;
 	@FXML private Button _back;
 	@FXML private Button _home;
+	@FXML private Button _anchorHelp;
 	@FXML private Button _help;
 	@FXML private Button _save;
 	@FXML private Label _warning;
@@ -133,7 +135,25 @@ public class PreviewSave extends Controller implements Initializable {
 	}
 	
 	@FXML private void handleHelp() {
-		System.out.println("Under construction");
+		if (_anchor.isVisible()==false) { //AnchorPane is invisible on startup
+				
+			_home.setDisable(true);
+			_back.setDisable(true);
+			_save.setDisable(true);
+			_play.setDisable(true);
+			_player.pause();
+			_play.setGraphic(_playImage);
+			
+			_anchor.setVisible(true);
+		} else {
+			
+			_home.setDisable(false);
+			_back.setDisable(false);
+			_save.setDisable(false);
+			_play.setDisable(false);
+			
+			_anchor.setVisible(false);
+		}
 	}
 	
 	@FXML private void handleSave() {

@@ -20,7 +20,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 
 
 /**
@@ -45,7 +44,6 @@ public class QuizSettings extends Controller implements Initializable {
 	@FXML private ToggleGroup _mode;
 	
 	@FXML private AnchorPane _anchor;
-	@FXML private BorderPane _border;
 	
 	@FXML private void handleBack() {handleHome();}
 	@FXML public void handleHome() {toMenu(_home.getScene());}

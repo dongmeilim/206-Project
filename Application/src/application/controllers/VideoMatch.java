@@ -15,12 +15,15 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -33,7 +36,10 @@ public class VideoMatch extends Controller implements Initializable {
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
+	@FXML private Button _anchorHelp;
 	@FXML private Button _match;
+
+	@FXML private AnchorPane _anchor;
 	
 	@FXML private ListView<String> _videos;
 	@FXML private ListView<String> _terms;
@@ -41,10 +47,10 @@ public class VideoMatch extends Controller implements Initializable {
 	
 	private MediaPlayer _mediaPlayer;
 	
-	private final int _MEDIAWIDTH=100;
-	private final int _MEDIAHEIGHT=100;
+	private final int _MEDIAWIDTH=200;
+	private final int _MEDIAHEIGHT=200;
 	
-	private int _questionAmount;
+	private int _numQuestions;
 	private ArrayList<Button> _playBtns = new ArrayList<Button>();
 	
 	private ObservableList<String> _observableVideoNames = FXCollections.observableArrayList(); 
@@ -60,7 +66,7 @@ public class VideoMatch extends Controller implements Initializable {
 			File questionFile = new File(System.getProperty("user.dir")+"/tmp/text/numQuestions.txt");
 	    	BufferedReader bufferedReaderQuestion = new BufferedReader(new FileReader(questionFile)); 
 			String questionAmountString = bufferedReaderQuestion.readLine();
-			_questionAmount = Integer.parseInt(questionAmountString);
+			_numQuestions = Integer.parseInt(questionAmountString);
 			bufferedReaderQuestion.close();
 		} catch (IOException eQuestion) {
 			eQuestion.printStackTrace();
@@ -68,7 +74,7 @@ public class VideoMatch extends Controller implements Initializable {
 		
 		List<File> creations = listDirectory("creations");
 		Random rand = new Random();
-		for (int i = 0; i < _questionAmount; i++) {
+		for (int i = 0; i < _numQuestions; i++) {
 			try {
 				int index = rand.nextInt(creations.size());
 				
@@ -95,6 +101,7 @@ public class VideoMatch extends Controller implements Initializable {
 		Collections.shuffle(_observableTerms);
 		_terms.setItems(_observableTerms);
 		
+		_videoGuesses = new int[_numQuestions];
 		
 	}
 	
@@ -122,10 +129,28 @@ public class VideoMatch extends Controller implements Initializable {
 	}
 	
 	@FXML private void handleHelp() {
-		System.out.println("Under construction");
+		if (_anchor.isVisible() == false) { //AnchorPane is invisible on startup
+
+			_anchor.setVisible(true);
+			
+			_videos.setDisable(true);
+			_terms.setDisable(true);
+			_back.setDisable(true);
+			_home.setDisable(true);
+			_match.setDisable(true);
+		} else {			
+			_anchor.setVisible(false);
+
+			_videos.setDisable(false);
+			_terms.setDisable(false);
+			_back.setDisable(false);
+			_home.setDisable(false);
+			_match.setDisable(false);
+
+		}
 	}
 	
-	@FXML private void handleMatch() {
+	@FXML private void handleMatch() throws IOException {
 		//get users selected items
 		String selCreationName = _videos.getSelectionModel().getSelectedItem();
 		String selQuery = _terms.getSelectionModel().getSelectedItem();
@@ -151,13 +176,30 @@ public class VideoMatch extends Controller implements Initializable {
 
 			_videos.getSelectionModel().clearSelection();
 			_terms.getSelectionModel().clearSelection();
-		}
-		
+			
+			if (_observableVideoNames.size()==0) {
+				// get the lists of right and wrong creations
+				ArrayList<String> wrongGuesses = new ArrayList<String>();
+				ArrayList<String> rightGuesses = new ArrayList<String>();
 
-		//if (==0) {
-			//TODO move to scoring window and calculate scores
-		//}
-		
+				for (int i = 0; i<_videoGuesses.length;i++) {
+					String filename = _videoFileRecord.get(i).toString();
+					//filename = filename.substring(filename.indexOf("/")+1, filename.lastIndexOf("/"));
+
+					if(_videoGuesses[i]>0) {
+						wrongGuesses.add(filename);
+					}else {
+						rightGuesses.add(filename);
+					}
+				}
+
+				Scene scene = _match.getScene();
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/Score.fxml"));
+				Score controller = new Score(rightGuesses,wrongGuesses);
+				loader.setController(controller);
+				scene.setRoot(loader.load());
+			}
+		}
 	}
 	
 	@FXML private void clearError() {

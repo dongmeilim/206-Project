@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -42,9 +43,12 @@ public class AudioMatch extends Controller implements Initializable{
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
+	@FXML private Button _anchorHelp;
 	@FXML private Button _match;
 	@FXML private Label _errorLabel;
-
+	
+	@FXML private AnchorPane _anchor;
+	
 	@FXML private ListView<File> _audio;
 	@FXML private ListView <String> _terms;
 
@@ -125,7 +129,25 @@ public class AudioMatch extends Controller implements Initializable{
 	}
 
 	@FXML private void handleHelp() {
-		System.out.println("Under construction");
+		if (_anchor.isVisible() == false) { //AnchorPane is invisible on startup
+
+			_anchor.setVisible(true);
+			
+			_audio.setDisable(true);
+			_terms.setDisable(true);
+			_back.setDisable(true);
+			_home.setDisable(true);
+			_match.setDisable(true);
+		} else {			
+			_anchor.setVisible(false);
+
+			_audio.setDisable(false);
+			_terms.setDisable(false);
+			_back.setDisable(false);
+			_home.setDisable(false);
+			_match.setDisable(false);
+
+		}
 	}
 
 	@FXML private void handleMatch() throws IOException {
@@ -194,12 +216,12 @@ public class AudioMatch extends Controller implements Initializable{
 		File audio;
 		File queryFile;
 		String query;
-				for (int i = 0; i < _numQuestions; i++) { 
+		for (int i = 0; i < _numQuestions; i++) { 
 			//generate random file from list of files
 			int index = rand.nextInt(_allFiles.size()); 
 			String creationName = _allFiles.get(index).getName();
 			creationName = creationName.substring(0,creationName.length()-4);
-			
+
 			queryFile = new File("quiz/"+creationName+"/query");
 
 			//get the term for that file
@@ -219,11 +241,11 @@ public class AudioMatch extends Controller implements Initializable{
 		} 
 
 	}
-	
+
 	@FXML private void clearError() {
 		_errorLabel.setText("");
 	}
-	
+
 	/**
 	 * This class contains adapted code.
 	 * Source (accessed 2019): https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
@@ -241,7 +263,7 @@ public class AudioMatch extends Controller implements Initializable{
 			super();
 			hbox.getChildren().addAll(label, pane, playBtn);
 			HBox.setHgrow(pane, Priority.ALWAYS);
-	        hbox.setAlignment(Pos.CENTER);
+			hbox.setAlignment(Pos.CENTER);
 			_playBtns.add(playBtn);
 
 			playBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -292,24 +314,24 @@ public class AudioMatch extends Controller implements Initializable{
 						//enable Match button
 						_match.setDisable(false);
 					}
-                }
-            });
-            setOnMouseClicked(e->clearError());
-        }
+				}
+			});
+			setOnMouseClicked(e->clearError());
+		}
 
-        @Override
-        protected void updateItem(File item, boolean empty) {
-            super.updateItem(item, empty);
-            setText(null);  // No text in label of super class
-            if (empty) {
-                lastItem = null;
-                setGraphic(null);
-            } else {
-                lastItem = item;
-                label.setText("Question "+ (getIndex()+1));
-                label.setStyle("-fx-text-fill: black; -fx-effect: null;");
-                setGraphic(hbox);
-            }
-        }
-    }	
+		@Override
+		protected void updateItem(File item, boolean empty) {
+			super.updateItem(item, empty);
+			setText(null);  // No text in label of super class
+			if (empty) {
+				lastItem = null;
+				setGraphic(null);
+			} else {
+				lastItem = item;
+				label.setText("Question "+ (getIndex()+1));
+				label.setStyle("-fx-text-fill: black; -fx-effect: null;");
+				setGraphic(hbox);
+			}
+		}
+	}	
 }

@@ -27,6 +27,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 
 /**
@@ -40,10 +41,13 @@ public class ImageMatch extends Controller implements Initializable {
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
+	@FXML private Button _anchorHelp;
 	@FXML private Button _match;
 	@FXML private Label _errorLabel;
 	@FXML private ListView<String> _thumbnails;
 	@FXML private ListView<String> _terms;
+	
+	@FXML private AnchorPane _anchor;
 	
 	private int _questionAmount;
 	
@@ -122,7 +126,25 @@ public class ImageMatch extends Controller implements Initializable {
 	}
 	
 	@FXML private void handleHelp() {
-		System.out.println("Under construction");
+		if (_anchor.isVisible() == false) { //AnchorPane is invisible on startup
+
+			_anchor.setVisible(true);
+			
+			_thumbnails.setDisable(true);
+			_terms.setDisable(true);
+			_back.setDisable(true);
+			_home.setDisable(true);
+			_match.setDisable(true);
+		} else {			
+			_anchor.setVisible(false);
+
+			_thumbnails.setDisable(false);
+			_terms.setDisable(false);
+			_back.setDisable(false);
+			_home.setDisable(false);
+			_match.setDisable(false);
+
+		}
 	}
 	
 	@FXML private void handleMatch() throws IOException {

@@ -153,7 +153,7 @@
                         <Image url="@/arrow.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="_anchorHelp" contentDisplay="GRAPHIC_ONLY" layoutX="700.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                  <Button fx:id="_anchorHelp" contentDisplay="GRAPHIC_ONLY" layoutX="700.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0">
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                            <image>

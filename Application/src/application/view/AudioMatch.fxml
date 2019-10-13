@@ -52,14 +52,12 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Region prefHeight="50.0" prefWidth="98.0" />
-                        <Label prefHeight="50.0" prefWidth="593.0" text="                    Match the Sound" textAlignment="CENTER">
+                        <Label alignment="CENTER" prefHeight="50.0" prefWidth="651.0" style="-fx-font-size: 35;" text="Match the Sound" textAlignment="CENTER" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="27.0" />
                            </font>
                         </Label>
-                        <Region prefHeight="50.0" prefWidth="128.0" />
-                        <Button fx:id="_help" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                        <Button fx:id="_help" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="help">
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -92,15 +90,34 @@
                   </VBox>
                </left>
             </BorderPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="_anchor" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
-                  <Label layoutX="210.0" layoutY="151.0" prefHeight="75.0" prefWidth="175.0" style="-fx-font-size: 15;" text="2. Click on a question to select it" wrapText="true" />
-                  <Label layoutX="315.0" layoutY="95.0" prefHeight="56.0" prefWidth="152.0" style="-fx-font-size: 15;" text="1. Click play to hear the sound" wrapText="true" />
-                  <Label layoutX="512.0" layoutY="163.0" prefHeight="75.0" prefWidth="211.0" style="-fx-font-size: 15;" text="3. Click the answer you think matches the sound" wrapText="true" />
-                  <Label layoutX="259.0" layoutY="430.0" prefHeight="75.0" prefWidth="211.0" style="-fx-font-size: 15;" text="4. When you've selected a question and an answer, click Match!" textAlignment="CENTER" wrapText="true" />
-                  <ImageView fitHeight="56.0" fitWidth="57.0" layoutX="260.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true" rotate="116.6">
+                  <Label layoutX="244.0" layoutY="73.0" prefHeight="72.0" prefWidth="173.0" style="-fx-font-size: 17;" text="1. Click play to hear the sound" textAlignment="CENTER" wrapText="true" />
+                  <Label layoutX="158.0" layoutY="143.0" prefHeight="72.0" prefWidth="173.0" style="-fx-font-size: 17;" text="2. Click a question to select it" textAlignment="CENTER" wrapText="true" />
+                  <Label layoutX="422.0" layoutY="189.0" prefHeight="72.0" prefWidth="173.0" style="-fx-font-size: 17;" text="3. Choose the word you think matches the question" textAlignment="CENTER" wrapText="true" />
+                  <Label layoutX="244.0" layoutY="448.0" prefHeight="72.0" prefWidth="317.0" style="-fx-font-size: 17;" text="4. Click Match to check your answer" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="_anchorHelp" contentDisplay="GRAPHIC_ONLY" layoutX="701.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/helpwhite.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <ImageView fitHeight="60.0" fitWidth="67.0" layoutX="319.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true" rotate="164.7">
                      <image>
-                        <Image url="@../../../assets/arrowLeft.png" />
+                        <Image url="@/arrow.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="84.0" fitWidth="114.0" layoutX="102.0" layoutY="85.0" pickOnBounds="true" preserveRatio="true" rotate="56.3">
+                     <image>
+                        <Image url="@/arrowLeft.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="89.0" fitWidth="80.0" layoutX="520.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" rotate="-114.8">
+                     <image>
+                        <Image url="@/arrow.png" />
                      </image>
                   </ImageView>
                </children>

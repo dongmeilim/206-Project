@@ -71,7 +71,7 @@
                                  <content>
                                     <TableView fx:id="_table" prefHeight="200.0" prefWidth="275.0">
                                        <placeholder>
-                                          <Label id="_blackText" text="There is no audio" />
+                                          <Label id="_blackText" style="-fx-effect: null;" text="There is no audio" />
                                        </placeholder>
                                        <columns>
                                           <TableColumn fx:id="_playCol" editable="false" minWidth="0.0" prefWidth="69.0" resizable="false" sortable="false" text="Play" />
@@ -183,7 +183,22 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="525.0" layoutY="123.0" prefHeight="32.0" prefWidth="207.0" text="Warning this voice isn't&#10;reliable!" textAlignment="CENTER" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="524.0" layoutY="131.0" prefHeight="32.0" prefWidth="207.0" text="Warning this NZ voice isn't&#10;reliable!" textAlignment="CENTER" />
+                  <ImageView fitHeight="71.0" fitWidth="56.0" layoutX="578.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" rotate="-178.8">
+                     <image>
+                        <Image url="@/arrow.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="72.0" layoutY="400.0" prefHeight="76.0" prefWidth="275.0" text="You can preview what your text will sound like before you save" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="76.0" fitWidth="57.0" layoutX="43.0" layoutY="455.0" pickOnBounds="true" preserveRatio="true" rotate="70.3">
+                     <image>
+                        <Image url="@/arrow.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
          </children>
