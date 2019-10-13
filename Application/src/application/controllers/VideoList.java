@@ -195,8 +195,7 @@ public class VideoList extends Controller implements Initializable{
 									
 									//Delete quiz folder
 									clearDirectory("quiz/"+fileNameNoExtension);
-									System.out.println(quizDirectory.getAbsolutePath());
-									quizDirectory.delete();//TODO fix delete - has no affect on application currently, but is weird
+									quizDirectory.delete(); //TODO fix delete - has no affect on application currently
 																
 									updateFileList();
 								}

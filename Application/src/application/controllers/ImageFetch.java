@@ -254,6 +254,10 @@ public class ImageFetch extends Controller {
 		_videoProgress.progressProperty().bind(createPreview.progressProperty());
 		_videoProgress.setStyle("-fx-accent: #5c91b0;");
 		
+		createPreview.setOnRunning(running -> {
+			_imageContent.setDisable(true);
+		});
+		
 		createPreview.setOnSucceeded(e-> {
 			_imageProgress.progressProperty().unbind();
 			switchTo(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));

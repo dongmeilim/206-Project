@@ -238,7 +238,7 @@ public class TextSelect extends Controller implements Initializable{
 			switchTo(_next.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));
 		}
 	}
-	// TODO fix EOFException
+	
 	private boolean isAudioTooLong() {
 		List<File> files = listDirectory("tmp/audio");
 		float durationInSeconds = 0;
@@ -254,9 +254,9 @@ public class TextSelect extends Controller implements Initializable{
 			} catch (UnsupportedAudioFileException e) {
 				e.printStackTrace();
 			} catch (EOFException e) {
-				// expected
+				// TODO fix EOFException
 			} catch (IOException e) {
-				e.printStackTrace();
+				//TODO fix RIFFInvalidDataException
 			}
 		}
 		if (durationInSeconds > _MAXDURATION) { //Duration of the background music
