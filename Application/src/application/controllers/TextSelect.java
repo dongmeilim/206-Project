@@ -234,7 +234,7 @@ public class TextSelect extends Controller implements Initializable{
 			if (_rightVBox.getChildren().contains(_errorLabel) == true) {
 				_rightVBox.getChildren().remove(_errorLabel);
 			}
-			switchTo(_next.getScene(), getClass().getResource(_PATH+"ImageFetch2.fxml"));
+			switchTo(_next.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));
 		}
 	}
 	

@@ -69,7 +69,6 @@ public class ImageFetch extends Controller {
 	
 	@FXML private void handleHelp() {
 		
-		
 		if (_anchor.isVisible()==false) { //AnchorPane is invisible on startup
 			_currentAmount = _imageAmountDisplay.getText();
 			_imageAmountDisplay.setText("");

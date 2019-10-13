@@ -8,52 +8,105 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
 <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.PreviewSave">
    <children>
-      <BorderPane prefHeight="550.0" prefWidth="750.0">
-         <bottom>
-            <HBox fx:id="_ImageFetch" prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+      <StackPane prefHeight="550.0" prefWidth="752.0">
+         <children>
+            <BorderPane prefHeight="550.0" prefWidth="691.0">
+               <bottom>
+                  <HBox fx:id="_ImageFetch" prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="_back" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="50.0" text="back" HBox.hgrow="NEVER">
+                           <graphic>
+                              <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/back.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label fx:id="_warning" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="650.0" />
+                     </children>
+                  </HBox>
+               </bottom>
+               <top>
+                  <HBox fx:id="_ImageFetch1" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="_home" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0" text="home">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/home.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Region prefHeight="50.0" prefWidth="151.0" />
+                        <Label text="Step 4: Save Video">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <Region prefHeight="50.0" prefWidth="157.0" />
+                        <Button fx:id="_help" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/helpwhite.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </top>
+               <center>
+                  <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <MediaView fx:id="_view" fitHeight="300.0" fitWidth="600.0" />
+                        <HBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="750.0" spacing="5.0">
+                           <children>
+                              <Button fx:id="_play" mnemonicParsing="false" onAction="#playPause" prefHeight="38.0" prefWidth="51.0">
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/play.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Slider fx:id="_timeSlider" prefHeight="16.0" prefWidth="447.0" />
+                              <Label fx:id="_time" prefHeight="17.0" prefWidth="89.0" text="00:00/00:00" />
+                              <Label text="Vol:" textAlignment="RIGHT" />
+                              <Slider fx:id="_volume" prefHeight="18.0" prefWidth="35.0" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="36.0" prefWidth="751.0">
+                           <children>
+                              <TextField fx:id="_field" alignment="CENTER" prefHeight="36.0" prefWidth="289.0" promptText="Please enter a name for your video..." />
+                              <Button fx:id="_save" mnemonicParsing="false" onAction="#handleSave" prefHeight="36.0" prefWidth="70.0" text="Save" />
+                           </children>
+                        </HBox>
+                        <ProgressBar fx:id="_progress" prefHeight="24.0" prefWidth="424.0" progress="0.0" />
+                     </children>
+                  </VBox>
+               </center>
+            </BorderPane>
+            <AnchorPane fx:id="_anchor" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
-                  <Button fx:id="_back" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="50.0" text="back" HBox.hgrow="NEVER">
-                     <graphic>
-                        <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@/back.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Label fx:id="_warning" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="650.0" />
-               </children>
-            </HBox>
-         </bottom>
-         <top>
-            <HBox fx:id="_ImageFetch1" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="_home" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0" text="home">
-                     <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@/home.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Region prefHeight="50.0" prefWidth="151.0" />
-                  <Label text="Step 4: Save Video">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Label>
-                  <Region prefHeight="50.0" prefWidth="157.0" />
-                  <Button fx:id="_help" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                  <Button fx:id="_anchorHelp" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="700.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -62,43 +115,24 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="149.0" layoutY="215.0" text="Preview the video here.&#10;&#10;You can go back to edit the video before/after saving it. " textAlignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="67.0" fitWidth="67.0" layoutX="557.0" layoutY="419.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+                     <image>
+                        <Image url="@/arrow.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="602.0" layoutY="478.0" text="Save the video&#10;here." textAlignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
                </children>
-            </HBox>
-         </top>
-         <center>
-            <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-               <children>
-                  <MediaView fx:id="_view" fitHeight="300.0" fitWidth="600.0" />
-                  <HBox alignment="TOP_CENTER" prefHeight="29.0" prefWidth="750.0" spacing="5.0">
-                     <children>
-                        <Button fx:id="_play" mnemonicParsing="false" onAction="#playPause" prefHeight="38.0" prefWidth="51.0">
-                           <graphic>
-                              <ImageView fitHeight="26.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@/play.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Slider fx:id="_timeSlider" prefHeight="16.0" prefWidth="447.0" />
-                        <Label fx:id="_time" prefHeight="17.0" prefWidth="89.0" text="00:00/00:00" />
-                        <Label text="Vol:" textAlignment="RIGHT" />
-                        <Slider fx:id="_volume" prefHeight="18.0" prefWidth="35.0" />
-                     </children>
-                     <padding>
-                        <Insets bottom="10.0" top="10.0" />
-                     </padding>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="751.0">
-                     <children>
-                        <TextField fx:id="_field" alignment="CENTER" prefHeight="36.0" prefWidth="289.0" promptText="Please enter a name for your video..." />
-                        <Button fx:id="_save" mnemonicParsing="false" onAction="#handleSave" prefHeight="36.0" prefWidth="70.0" text="Save" />
-                     </children>
-                  </HBox>
-                  <ProgressBar fx:id="_progress" prefHeight="24.0" prefWidth="424.0" progress="0.0" />
-               </children>
-            </VBox>
-         </center>
-      </BorderPane>
+            </AnchorPane>
+         </children>
+      </StackPane>
    </children>
 </HBox>

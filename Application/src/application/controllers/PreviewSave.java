@@ -15,11 +15,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -27,6 +29,8 @@ import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
 public class PreviewSave extends Controller implements Initializable {
+	
+	@FXML private AnchorPane _anchor;
 	
 	@FXML private Button _back;
 	@FXML private Button _home;
@@ -133,7 +137,53 @@ public class PreviewSave extends Controller implements Initializable {
 	}
 	
 	@FXML private void handleHelp() {
-		System.out.println("Under construction");
+		/*
+		if (_anchor.isVisible()==false) { //AnchorPane is invisible on startup
+			_home.setDisable(true);
+			_back.setDisable(true);
+			
+			_view.setDisable(true);
+			_timeSlider.setDisable(true);
+			_play.setDisable(true);
+			_backgroundMusic.setDisable(true);
+			if (_fetchButtonIsEnabled == true) {
+				_fetch.setDisable(true);
+			} else if (_imageProgress.getProgress() >= 1) {
+				_cursorAnchor.setVisible(true);
+			}
+			if (_nextButtonIsEnabled == true) {
+				_next.setDisable(true);
+			}
+			
+			for (CheckBox checkBox: _checkBoxes) {
+				checkBox.setDisable(true);
+			}
+			
+			_anchor.setVisible(true);
+		} else {
+			_imageAmountDisplay.setText(_currentAmount);
+			
+			_home.setDisable(false);
+			_back.setDisable(false);
+			_slider.setDisable(false);
+			_backgroundMusic.setDisable(false);
+			if (_fetchButtonIsEnabled == true) {
+				_fetch.setDisable(false);
+			} else if (_imageProgress.getProgress() >= 1) {
+				_cursorAnchor.setVisible(false);
+			}
+			if (_nextButtonIsEnabled == true) {
+				_next.setDisable(false);
+			}
+			
+			for (CheckBox checkBox: _checkBoxes) {
+				checkBox.setDisable(false);
+			}
+			
+			_anchor.setVisible(false);
+		}*/
+		
+		// TODO pause the video when the user presses help after video plays.
 	}
 	
 	@FXML private void handleSave() {
