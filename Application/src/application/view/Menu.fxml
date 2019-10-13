@@ -23,7 +23,7 @@
                      <content>
                         <VBox alignment="TOP_CENTER" prefHeight="550.0" prefWidth="750.0" spacing="15.0">
                            <children>
-                              <Label text="VARpedia" underline="true">
+                              <Label style="-fx-font-size: 96;" text="VARpedia">
                                  <font>
                                     <Font size="91.0" />
                                  </font>
