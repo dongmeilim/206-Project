@@ -157,7 +157,7 @@ public class ImageFetch extends Controller {
 		thread.start();
 		
 		_imageProgress.progressProperty().bind(downloadImages.progressProperty());
-		_imageProgress.setStyle("-fx-accent: #315F83;");
+		_imageProgress.setStyle("-fx-accent: #eb7900;");
 		
 		downloadImages.setOnSucceeded(e-> {
 			_imageProgress.progressProperty().unbind();
@@ -253,7 +253,7 @@ public class ImageFetch extends Controller {
 		thread.start();
 		
 		_videoProgress.progressProperty().bind(createPreview.progressProperty());
-		_videoProgress.setStyle("-fx-accent: #315F83;");
+		_videoProgress.setStyle("-fx-accent: #eb7900;");
 		
 		createPreview.setOnSucceeded(e-> {
 			_imageProgress.progressProperty().unbind();

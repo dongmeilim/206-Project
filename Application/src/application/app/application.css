@@ -16,10 +16,11 @@
 * #ffa229
 */
 @font-face {
-    -fx-font-family: 'BubbleGum';
-    src: url('/Bubblegum.ttf');
+    -fx-font-family: 'Chewy';
+    src: url('/Chewy.ttf');
 }
 .button{
+	-fx-font-family: 'Chewy';
     -fx-background-color:
     linear-gradient( #fee6b9, #fdde96),
     radial-gradient(center 50% -40%, radius 200%, #eb7900 45%, #bd6100 50%);
@@ -77,9 +78,9 @@
 } 
 
 .label {
-	-fx-font-family: 'BubbleGum';
+	-fx-font-family: 'Chewy';
     -fx-text-fill: white;
-    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 );
+    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 1 , 1 );
 }
 
 

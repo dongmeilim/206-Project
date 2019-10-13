@@ -182,7 +182,8 @@ public class VideoList extends Controller implements Initializable{
 							File file = getTableView().getItems().get(getIndex());
 							String fileName = file.getName();
 							String fileNameNoExtension = fileName.substring(0,fileName.length()-4);
-							File quizDirectory = new File("quiz/"+fileNameNoExtension+"/");
+							File quizDirectory = new File("quiz/"+fileNameNoExtension);
+							
 							// Confirm the user wants to delete the video
 							Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 							alert.setHeaderText("Are you sure you want to delete "+ file.getName()+"?");
@@ -191,9 +192,12 @@ public class VideoList extends Controller implements Initializable{
 								if(file.exists()) {
 									//delete the video
 									file.delete();
+									
 									//Delete quiz folder
 									clearDirectory("quiz/"+fileNameNoExtension);
-									quizDirectory.delete();
+									System.out.println(quizDirectory.getAbsolutePath());
+									quizDirectory.delete();//TODO fix delete - has no affect on application currently, but is weird
+																
 									updateFileList();
 								}
 							}
@@ -219,62 +223,6 @@ public class VideoList extends Controller implements Initializable{
 		_delete.setCellFactory(cellFactory);
 
 	}
-
-	/**
-	 * Author: Rip Tutorial
-	 * Original: https://riptutorial.com/javafx/example/27946/add-button-to-tableview
-	 * Modified: dongmeilim
-	 * Comments: dongmeilim
-	 */
-
-	//	private void addThumbnail() {
-	//		Callback<TableColumn<File, Void>, TableCell<File, Void>> cellFactory = new Callback<TableColumn<File, Void>, TableCell<File, Void>>() {
-	//			@Override
-	//			public TableCell<File, Void> call(final TableColumn<File, Void> param) {
-	//				TableCell<File, Void> cell;
-	//				try {
-	//					cell = new TableCell<File, Void>() {
-	//						// set up the thumbnail
-	//						
-	//						private final ImageView thumbnail = new ImageView();
-	//						
-	//						{
-	//							System.out.println(getIndex());
-	//							File file = getTableView().getItems().get(getIndex());
-	//							
-	//							String creationNameNoExtension = file.getName().substring(0,file.getName().length()-4);
-	//							File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
-	//					    	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
-	//							String query = bufferedReaderQuery.readLine();
-	//							bufferedReaderQuery.close();
-	//							
-	//							thumbnail.setImage(new Image(new FileInputStream("quiz/"+creationNameNoExtension+"/"+query+".jpg")));
-	//							thumbnail.setFitHeight(50);
-	//						}
-	//
-	//						@Override
-	//						public void updateItem(Void item, boolean empty) {
-	//							// insert delete buttons into the table column
-	//							super.updateItem(item, empty);
-	//							if (empty) {
-	//								setGraphic(null);
-	//							} else {
-	//								setGraphic(thumbnail);
-	//							}
-	//						}
-	//					};
-	//				} catch (IOException e) {
-	//					// TODO Auto-generated catch block
-	//					cell = new TableCell<File, Void>();
-	//					e.printStackTrace();
-	//				}
-	//				return cell;
-	//			}
-	//		};
-	//
-	//		_thumbnails.setCellFactory(cellFactory);
-	//
-	//	}
 
 	private class Thumbnail extends TableCell<File,String> {
 
@@ -304,13 +252,11 @@ public class VideoList extends Controller implements Initializable{
 					bufferedReaderQuery.close();
 
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
 				try {
 					_imageView.setImage(new Image(new FileInputStream("quiz/"+creationNameNoExtension+"/"+query+".jpg")));
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				_imageView.setFitHeight(50);

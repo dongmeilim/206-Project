@@ -19,6 +19,8 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 
 /**
@@ -32,6 +34,7 @@ public class QuizSettings extends Controller implements Initializable {
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
+	@FXML private Button _anchorHelp;
 	@FXML private Button _next;
 	@FXML private Label _questionAmountDisplay;
 	@FXML private Label _warning;
@@ -41,12 +44,35 @@ public class QuizSettings extends Controller implements Initializable {
 	@FXML private Slider _slider;
 	@FXML private ToggleGroup _mode;
 	
+	@FXML private AnchorPane _anchor;
+	@FXML private BorderPane _border;
 	
 	@FXML private void handleBack() {handleHome();}
 	@FXML public void handleHome() {toMenu(_home.getScene());}
 	
 	@FXML private void handleHelp() {
-		System.out.println("Under construction");
+		if (_anchor.isVisible() == false) { //AnchorPane is invisible on startup
+			
+			_anchor.setVisible(true);
+			_audioRadio.setDisable(true);
+			_imageRadio.setDisable(true);
+			_bothRadio.setDisable(true);
+			_slider.setDisable(true);
+			_back.setDisable(true);
+			_home.setDisable(true);
+			_next.setDisable(true);
+		} else {			
+			_anchor.setVisible(false);
+
+			_audioRadio.setDisable(false);
+			_imageRadio.setDisable(false);
+			_bothRadio.setDisable(false);
+			_slider.setDisable(false);
+			_back.setDisable(false);
+			_home.setDisable(false);
+			_next.setDisable(false);
+			
+		}
 	}
 
 	@FXML private void handleNext() throws IOException {

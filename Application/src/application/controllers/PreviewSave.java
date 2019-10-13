@@ -197,7 +197,7 @@ public class PreviewSave extends Controller implements Initializable {
 		Thread thread = new Thread(saveVideo);
 		thread.start();
 		_progress.progressProperty().bind(saveVideo.progressProperty()); //Listen to the thread
-		_progress.setStyle("-fx-accent: #896A89;");
+		_progress.setStyle("-fx-accent: #eb7900;");
 		
 		saveVideo.setOnSucceeded(e-> {
 			_videoHasBeenMade = true;
