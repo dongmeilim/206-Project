@@ -18,7 +18,7 @@
 
 @font-face {
     font-family: JellyFish;
-    src: url('Cute-Jellyfish.otf');
+    src: url('/Cute-Jellyfish.otf');
 }
 .button{
     -fx-background-color:

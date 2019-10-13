@@ -40,6 +40,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -60,6 +61,8 @@ import javafx.util.Callback;
 
 public class TextSelect extends Controller implements Initializable{
 
+	@FXML private AnchorPane _anchor;
+	
 	@FXML private Button _menu;
 	@FXML private Button _back;
 	@FXML private Button _next;
@@ -88,6 +91,8 @@ public class TextSelect extends Controller implements Initializable{
 	private ArrayList<Button> _playBtns = new ArrayList<Button>();
 	private ArrayList<Button> _delBtns = new ArrayList<Button>();
 
+	private boolean _nextButtonIsEnabled = false;
+	
 	private Label _errorLabel = new Label("Sorry, this text contains a word that can't be pronounced.");
 	private Label _overflowLabel = new Label();
 
@@ -98,6 +103,7 @@ public class TextSelect extends Controller implements Initializable{
 	private String _dir;
 	private String _blueBar = "-fx-accent: #315F83";
 	private String _purpleBar = "-fx-accent: #896A89";
+	private String _pausedText = "";
 	
 	private final double _MAXDURATION = 300;
 
@@ -296,7 +302,39 @@ public class TextSelect extends Controller implements Initializable{
 
 	@FXML
 	private void handleHelp() {
-		//TODO implement help screen for TextSelect
+		if (_anchor.isVisible()==false) { //AnchorPane is invisible on startup
+			_text.clear();
+			
+			_menu.setDisable(true);
+			_back.setDisable(true);
+			_prevAndAudio.setDisable(true);
+			_reset.setDisable(true);
+			_save.setDisable(true);
+			if (_nextButtonIsEnabled == true) {
+				_next.setDisable(true);
+			}
+			_radioButtons.setDisable(true);
+			_text.setDisable(true);
+			_table.setDisable(true);
+			
+			_anchor.setVisible(true);
+		} else {
+			resetText();
+			
+			_menu.setDisable(false);
+			_back.setDisable(false);
+			_prevAndAudio.setDisable(false);
+			_reset.setDisable(false);
+			_save.setDisable(false);
+			if (_nextButtonIsEnabled == true) {
+				_next.setDisable(false);
+			}
+			_radioButtons.setDisable(false);
+			_text.setDisable(false);
+			_table.setDisable(false);
+			
+			_anchor.setVisible(false);
+		}
 	}
 
 	@FXML
@@ -519,6 +557,7 @@ public class TextSelect extends Controller implements Initializable{
 				if (_next.isDisabled() && numberOfAudioClips >= 1) {
 
 					if (filesAreValid()) {
+						_nextButtonIsEnabled = true;
 						_next.setDisable(false);
 					}
 				}
