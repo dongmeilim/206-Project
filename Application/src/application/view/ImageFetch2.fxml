@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.ImageFetch">
+   <children>
+      <StackPane prefHeight="550.0" prefWidth="750.0">
+         <children>
+            <BorderPane prefHeight="550.0" prefWidth="750.0">
+               <bottom>
+                  <HBox fx:id="_ImageFetch" prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="_back" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="50.0" text="back" HBox.hgrow="NEVER">
+                           <graphic>
+                              <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/back.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <StackPane prefHeight="50.0" prefWidth="655.0">
+                           <children>
+                              <Label fx:id="_warning" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="653.0" />
+                              <ProgressIndicator fx:id="_videoProgress" progress="0.0" visible="false" />
+                           </children>
+                        </StackPane>
+                        <Button fx:id="_next" contentDisplay="GRAPHIC_ONLY" disable="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="50.0" prefWidth="50.0" text="next" HBox.hgrow="NEVER">
+                           <graphic>
+                              <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/next.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </bottom>
+               <top>
+                  <HBox fx:id="_ImageFetch1" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="_home" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0" text="home">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/home.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Region prefHeight="50.0" prefWidth="140.0" />
+                        <Label prefHeight="44.0" prefWidth="461.0" text="Step 3: Fetch Images">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                        <Region prefHeight="50.0" prefWidth="58.0" />
+                        <Button fx:id="_help" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/helpwhite.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </top>
+               <center>
+                  <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="450.0" prefWidth="750.0" spacing="10.0" BorderPane.alignment="TOP_CENTER">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="44.0" prefWidth="750.0" spacing="10.0">
+                           <children>
+                              <Slider fx:id="_slider" blockIncrement="1.0" majorTickUnit="1.0" max="10.0" min="1.0" minorTickCount="0" onMouseReleased="#handleValueChange" prefHeight="44.0" prefWidth="293.0" showTickMarks="true" snapToTicks="true" value="1.0" />
+                              <Button fx:id="_fetch" mnemonicParsing="false" onAction="#handleFetch" prefHeight="44.0" prefWidth="69.0" text="Fetch" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="_imageAmountDisplay" prefHeight="19.0" prefWidth="134.0" text="1 image">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Label>
+                        <ProgressBar fx:id="_imageProgress" prefHeight="24.0" prefWidth="394.0" progress="0.0" />
+                        <CheckBox fx:id="_backgroundMusic" mnemonicParsing="false" text="Would you like background music?" />
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="368.0" prefWidth="750.0">
+                           <content>
+                              <VBox fx:id="_imageContent" prefHeight="325.0" prefWidth="750.0" spacing="10.0" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+               </center>
+            </BorderPane>
+            <AnchorPane fx:id="_anchor" prefHeight="550.0" prefWidth="750.0" visible="false">
+               <children>
+                  <ImageView fitHeight="63.0" fitWidth="51.0" layoutX="78.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/cursorwhite.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="79.0" text="Select the amount of images with the slider.&#10;Then tick the checkboxes you want." textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="_help1" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="700.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/helpwhite.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</HBox>

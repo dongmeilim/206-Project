@@ -235,7 +235,7 @@ public class TextSelect extends Controller implements Initializable{
 			if (_rightVBox.getChildren().contains(_errorLabel) == true) {
 				_rightVBox.getChildren().remove(_errorLabel);
 			}
-			switchTo(_next.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));
+			switchTo(_next.getScene(), getClass().getResource(_PATH+"ImageFetch2.fxml"));
 		}
 	}
 	
@@ -303,6 +303,7 @@ public class TextSelect extends Controller implements Initializable{
 	@FXML
 	private void handleHelp() {
 		if (_anchor.isVisible()==false) { //AnchorPane is invisible on startup
+			_pausedText = _text.getText();
 			_text.clear();
 			
 			_menu.setDisable(true);
@@ -319,7 +320,7 @@ public class TextSelect extends Controller implements Initializable{
 			
 			_anchor.setVisible(true);
 		} else {
-			resetText();
+			_text.setText(_pausedText);
 			
 			_menu.setDisable(false);
 			_back.setDisable(false);

@@ -23,6 +23,7 @@ import javafx.scene.control.Slider;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -38,6 +39,7 @@ public class ImageFetch extends Controller {
 	private final int _SPACING = 10;
 	private List<CheckBox> _checkBoxes = new ArrayList<CheckBox>();
 	
+	@FXML private AnchorPane _anchor;
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
@@ -61,16 +63,31 @@ public class ImageFetch extends Controller {
 	}
 	
 	@FXML private void handleHelp() {
-		System.out.println("Under construction");
+		/*
+		
+		if (_anchor.isVisible()==false) { //AnchorPane is invisible on startup
+			// TODO check if _imageProgress has reached 100, if it has, then show cursor as well (this would be an additional anchorpane on top)
+			_home.setDisable(true);
+			_back.setDisable(true);
+			//if (_nextButtonIsEnabled == true) {
+			//	_next.setDisable(true);
+			//}
+			_anchor.setVisible(true);
+		} else {
+			_home.setDisable(false);
+			_back.setDisable(false);
+			//if (_nextButtonIsEnabled == true) {
+			//	_next.setDisable(false);
+			//}
+			_anchor.setVisible(false);
+		}*/
 	}
 	
-	//TODO add loading icon (circular) and label "Loading Video. . ." before moving on to PreviewSave.fxml
 	@FXML private void handleNext() {
 		_warning.setText("");
 		_next.setDisable(true);
 		_videoProgress.setVisible(true);
 		createPreview();
-		//switchTo(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));
 	}
 	
 	@FXML

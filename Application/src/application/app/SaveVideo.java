@@ -36,9 +36,9 @@ public class SaveVideo extends Task<Void> {
 	        InputStream stdout = process.getInputStream();
 	        BufferedReader stdoutBuffered = new BufferedReader(new InputStreamReader(stdout));
 	        String line = null;
-	        int percentage;
+	        double percentage;
 	        while ((line = stdoutBuffered.readLine()) != null ) {
-	        	percentage = Integer.parseInt(line);
+	        	percentage = Double.parseDouble(line);
 	        	updateProgress(percentage,100); //ProgressBar listens to this line
 	        }
 	        stdoutBuffered.close();

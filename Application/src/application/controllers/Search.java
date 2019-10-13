@@ -162,7 +162,7 @@ public class Search extends Controller implements Initializable{
 				if (_wikitBG.getValue()) {
 					//move on to the next step
 
-					switchTo(_search.getScene(), getClass().getResource(_PATH+"TextSelect2.fxml"));
+					switchTo(_search.getScene(), getClass().getResource(_PATH+"TextSelect.fxml"));
 
 				} else {
 					//let the user enter another term if there is no entry for the previous one on wikit

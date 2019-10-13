@@ -45,14 +45,14 @@ public class PreviewSave extends Controller implements Initializable {
 	
 	@FXML private MediaView _view;
 	private MediaPlayer _player;
-
+	private final String _VIDPATH = "tmp/video/finalVideo.mp4";
+	
 	private boolean _videoHasBeenMade = false;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		String dir = System.getProperty("user.dir");
-		List<File> videos = listDirectory("tmp/video"); // TODO mockdata put proper implementation in
-		File vid = videos.get(1); //videoWithText comes after videoNoText
+		File vid = new File(_VIDPATH);
 		_player= new MediaPlayer(new Media(vid.toURI().toString()));
 		
 		_view.setMediaPlayer(_player);

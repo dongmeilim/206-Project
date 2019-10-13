@@ -12,7 +12,7 @@ rm ../tmp/text/censoredAudioFiles &> /dev/null
 mkdir -p ../quiz/$fileName &> /dev/null
 
 #CREATION IN CREATION FOLDER
-cp ../tmp/video/videoWithText.mp4 ../creations/$creation &> /dev/null
+cp ../tmp/video/finalVideo.mp4 ../creations/$creation &> /dev/null
 echo "25" #Percentage
 
 #QUERY
