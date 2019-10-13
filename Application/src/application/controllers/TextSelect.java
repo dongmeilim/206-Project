@@ -238,7 +238,7 @@ public class TextSelect extends Controller implements Initializable{
 			switchTo(_next.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));
 		}
 	}
-	
+	// TODO fix EOFException
 	private boolean isAudioTooLong() {
 		List<File> files = listDirectory("tmp/audio");
 		float durationInSeconds = 0;
