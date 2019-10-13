@@ -102,7 +102,7 @@ public class TextSelect extends Controller implements Initializable{
 
 	private String _dir;
 	private String _blueBar = "-fx-accent: #315F83";
-	private String _purpleBar = "-fx-accent: #896A89";
+	private String _saveBar = "-fx-accent: #eb7900";
 	private String _pausedText = "";
 	
 	private final double _MAXDURATION = 300;
@@ -521,7 +521,7 @@ public class TextSelect extends Controller implements Initializable{
 				_save.setDisable(true);
 				// bind the progress bar the the preview task
 				_pb.progressProperty().bind(saveBG.progressProperty());	
-				_pb.setStyle(_purpleBar);
+				_pb.setStyle(_saveBar);
 			});
 
 			saveBG.setOnSucceeded(succeed -> {
