@@ -38,8 +38,13 @@ public class ImageFetch extends Controller {
 	private final double _WINDOWWIDTH = 750;
 	private final int _SPACING = 10;
 	private List<CheckBox> _checkBoxes = new ArrayList<CheckBox>();
+	private String _currentAmount = "";
+	
+	private boolean _fetchButtonIsEnabled = true;
+	private boolean _nextButtonIsEnabled = false;
 	
 	@FXML private AnchorPane _anchor;
+	@FXML private AnchorPane _cursorAnchor;
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
@@ -63,24 +68,52 @@ public class ImageFetch extends Controller {
 	}
 	
 	@FXML private void handleHelp() {
-		/*
+		
 		
 		if (_anchor.isVisible()==false) { //AnchorPane is invisible on startup
-			// TODO check if _imageProgress has reached 100, if it has, then show cursor as well (this would be an additional anchorpane on top)
+			_currentAmount = _imageAmountDisplay.getText();
+			_imageAmountDisplay.setText("");
+			
 			_home.setDisable(true);
 			_back.setDisable(true);
-			//if (_nextButtonIsEnabled == true) {
-			//	_next.setDisable(true);
-			//}
+			_slider.setDisable(true);
+			_backgroundMusic.setDisable(true);
+			if (_fetchButtonIsEnabled == true) {
+				_fetch.setDisable(true);
+			} else if (_imageProgress.getProgress() >= 1) {
+				_cursorAnchor.setVisible(true);
+			}
+			if (_nextButtonIsEnabled == true) {
+				_next.setDisable(true);
+			}
+			
+			for (CheckBox checkBox: _checkBoxes) {
+				checkBox.setDisable(true);
+			}
+			
 			_anchor.setVisible(true);
 		} else {
+			_imageAmountDisplay.setText(_currentAmount);
+			
 			_home.setDisable(false);
 			_back.setDisable(false);
-			//if (_nextButtonIsEnabled == true) {
-			//	_next.setDisable(false);
-			//}
+			_slider.setDisable(false);
+			_backgroundMusic.setDisable(false);
+			if (_fetchButtonIsEnabled == true) {
+				_fetch.setDisable(false);
+			} else if (_imageProgress.getProgress() >= 1) {
+				_cursorAnchor.setVisible(false);
+			}
+			if (_nextButtonIsEnabled == true) {
+				_next.setDisable(false);
+			}
+			
+			for (CheckBox checkBox: _checkBoxes) {
+				checkBox.setDisable(false);
+			}
+			
 			_anchor.setVisible(false);
-		}*/
+		}
 	}
 	
 	@FXML private void handleNext() {
@@ -98,6 +131,7 @@ public class ImageFetch extends Controller {
 		enteredText = enteredText.substring(0,enteredText.length()-2);
 		int enteredNumber = Integer.parseInt(enteredText);
 		_fetch.setDisable(true);
+		_fetchButtonIsEnabled = false;
 		_slider.setDisable(true);
 		downloadImages(enteredNumber);
 	}
@@ -197,9 +231,11 @@ public class ImageFetch extends Controller {
 			storeFileType("image", savedImageNames);
 			_warning.setText("");
 			_next.setDisable(false);
+			_nextButtonIsEnabled = true;
 			_next.requestFocus(); //Let the user know it is ok to move forward
 		} else {
 			_warning.setText("Please select at least one image.");
+			_nextButtonIsEnabled = false;
 			_next.setDisable(true);
 		}
 	}

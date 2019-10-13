@@ -99,7 +99,7 @@
                         </Label>
                         <ProgressBar fx:id="_imageProgress" prefHeight="24.0" prefWidth="394.0" progress="0.0" />
                         <CheckBox fx:id="_backgroundMusic" mnemonicParsing="false" text="Would you like background music?" />
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="368.0" prefWidth="750.0">
+                        <ScrollPane fx:id="_scroll" hbarPolicy="NEVER" prefHeight="368.0" prefWidth="750.0">
                            <content>
                               <VBox fx:id="_imageContent" prefHeight="325.0" prefWidth="750.0" spacing="10.0" />
                            </content>
@@ -110,17 +110,30 @@
             </BorderPane>
             <AnchorPane fx:id="_anchor" prefHeight="550.0" prefWidth="750.0" visible="false">
                <children>
-                  <ImageView fitHeight="63.0" fitWidth="51.0" layoutX="78.0" layoutY="233.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@/cursorwhite.png" />
-                     </image>
-                  </ImageView>
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="79.0" text="Select the amount of images with the slider.&#10;Then tick the checkboxes you want." textAlignment="CENTER">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Button fx:id="_help1" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="700.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                  <Button fx:id="_helpAnchor" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="700.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/helpwhite.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="_cursorAnchor" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <children>
+                  <ImageView fitHeight="63.0" fitWidth="51.0" layoutX="73.0" layoutY="236.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@/cursorwhite.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="_helpCursor" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="700.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                            <image>
