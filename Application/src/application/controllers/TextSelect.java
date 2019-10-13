@@ -101,7 +101,7 @@ public class TextSelect extends Controller implements Initializable{
 	private ArrayList<RadioButton> _rbList;
 
 	private String _dir;
-	private String _blueBar = "-fx-accent: #315F83";
+	private String _blueBar = "-fx-accent: #5c91b0";
 	private String _saveBar = "-fx-accent: #eb7900";
 	private String _pausedText = "";
 	
