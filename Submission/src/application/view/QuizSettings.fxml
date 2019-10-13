@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.QuizSettings">
+   <children>
+      <StackPane prefHeight="550.0" prefWidth="816.0">
+         <children>
+            <BorderPane fx:id="_border" prefHeight="550.0" prefWidth="750.0">
+               <bottom>
+                  <HBox fx:id="_ImageFetch" prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="_back" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleBack" prefHeight="50.0" prefWidth="50.0" text="back" HBox.hgrow="NEVER">
+                           <graphic>
+                              <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/back.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label fx:id="_warning" alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="650.0" />
+                        <Button fx:id="_next" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleNext" prefHeight="50.0" prefWidth="50.0" text="next" HBox.hgrow="NEVER">
+                           <graphic>
+                              <ImageView fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/next.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </bottom>
+               <top>
+                  <HBox fx:id="_ImageFetch1" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="_home" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0" text="home">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/home.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="655.0" text="How would you like to practice today?" textAlignment="CENTER">
+                           <font>
+                              <Font size="37.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="_help" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0" text="home">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/helpwhite.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </top>
+               <center>
+                  <VBox prefHeight="363.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Region prefHeight="73.0" prefWidth="750.0" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="332.0" prefWidth="750.0">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" prefHeight="388.0" prefWidth="369.0" spacing="20.0">
+                                 <children>
+                                    <Label alignment="CENTER" text="1. Select Mode">
+                                       <font>
+                                          <Font size="27.0" />
+                                       </font>
+                                    </Label>
+                                    <Region prefHeight="62.0" prefWidth="339.0" />
+                                    <RadioButton fx:id="_audioRadio" mnemonicParsing="false" selected="true" text="Sound Only">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="_mode" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="_imageRadio" mnemonicParsing="false" text="Pictures Only" toggleGroup="$_mode">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </RadioButton>
+                                    <RadioButton fx:id="_bothRadio" mnemonicParsing="false" text="Full Video" toggleGroup="$_mode">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </RadioButton>
+                                 </children>
+                                 <padding>
+                                    <Insets left="30.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox alignment="CENTER_RIGHT" prefHeight="309.0" prefWidth="382.0" spacing="20.0">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="352.0" text="2. Select Number of Questions" textAlignment="CENTER" wrapText="true">
+                                       <font>
+                                          <Font size="27.0" />
+                                       </font>
+                                    </Label>
+                                    <Region prefHeight="70.0" prefWidth="352.0" />
+                                    <Slider fx:id="_slider" blockIncrement="1.0" majorTickUnit="1.0" max="2.0" min="2.0" minorTickCount="0" onMouseReleased="#handleValueChange" prefHeight="44.0" prefWidth="293.0" showTickMarks="true" snapToTicks="true" value="1.0" />
+                                    <Label fx:id="_questionAmountDisplay" alignment="CENTER" contentDisplay="CENTER" prefHeight="19.0" prefWidth="351.0" text="2 questions">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets right="30.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </center>
+            </BorderPane>
+            <AnchorPane fx:id="_anchor" prefHeight="550.0" prefWidth="750.0" visible="false">
+               <children>
+                  <Label layoutX="28.0" layoutY="62.0" prefHeight="86.0" prefWidth="675.0" style="-fx-font-size: 24;" text="This game works by matching sounds, pictures, or videos to the correct word" textAlignment="CENTER" wrapText="true" />
+                  <Label layoutX="28.0" layoutY="234.0" style="-fx-font-size: 15;" text="Choose how you want to practice here!" />
+                  <Label layoutX="395.0" layoutY="244.0" prefHeight="78.0" prefWidth="333.0" style="-fx-font-size: 15;" text="Drag the slider to choose how many things&#10;you want to match!" />
+                  <Label layoutX="553.0" layoutY="442.0" prefHeight="60.0" prefWidth="190.0" style="-fx-font-size: 15;" text="Press next when you're ready to start the game!" wrapText="true" />
+                  <ImageView fitHeight="119.0" fitWidth="61.0" layoutX="188.0" layoutY="265.0" pickOnBounds="true" preserveRatio="true" rotate="-33.7">
+                     <image>
+                        <Image url="@/arrowLeft.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="119.0" fitWidth="61.0" layoutX="345.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true" rotate="45.0">
+                     <image>
+                        <Image url="@/arrow.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="_anchorHelp" contentDisplay="GRAPHIC_ONLY" layoutX="700.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/helpwhite.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</HBox>

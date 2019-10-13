@@ -1,0 +1,90 @@
+/* Stylesheet for JavaFX windows */
+
+/* JavaFX CSS
+.button {
+    -fx-background-color:
+        linear-gradient(to right, indigo , red);
+    -fx-background-radius: 20, 20;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: white;
+}
+* blue colour: #315F83
+* 
+* oranges:
+* #d69200
+* #ffa229
+*/
+@font-face {
+    -fx-font-family: 'Chewy';
+    src: url('/Chewy.ttf');
+}
+.button{
+	-fx-font-family: 'Chewy';
+    -fx-background-color:
+    linear-gradient( #fee6b9, #fdde96),
+    radial-gradient(center 50% -40%, radius 200%, #eb7900 45%, #bd6100 50%);
+    -fx-background-radius: 20, 20;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: white;
+}
+.radio-button{
+	-fx-text-fill: white;
+	-fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 );
+}
+.root {
+    -fx-background-image: url("/background2.jpg");
+    -fx-background-size: cover;
+    -fx-focus-color: transparent;
+}
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}
+.scroll-pane {
+   -fx-background-color: transparent;
+   -fx-focus-color: transparent;
+}
+
+#_queryListView .list-cell {
+    -fx-alignment: center;
+}
+
+.table-view *.scroll-bar:horizontal *.increment-button,
+.table-view *.scroll-bar:horizontal *.decrement-button {
+  -fx-background-color: null;
+  -fx-background-radius: 0;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+}
+
+.table-view *.scroll-bar:horizontal *.increment-arrow,
+.table-view *.scroll-bar:horizontal *.decrement-arrow {
+  -fx-background-color: null;
+  -fx-background-radius: 0;
+  -fx-background-insets: 0;
+  -fx-padding: 0;
+  -fx-shape: null;
+}
+
+.progress-indicator .percentage {
+    -fx-fill:null;
+}
+
+#_blackText {
+	/*Default values */
+	-fx-text-fill: black;
+	-fx-effect: dropshadow( one-pass-box , black , 0 , 0.0 , 0 , 0 );
+} 
+
+.label {
+	-fx-font-family: 'Chewy';
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 1 , 1 );
+}
+
+
+.check-box {
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( one-pass-box , black , 0 , 1.0 , 2 , 2 );
+}

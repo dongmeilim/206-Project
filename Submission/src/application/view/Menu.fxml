@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.Menu">
+   <children>
+      <StackPane prefHeight="550.0" prefWidth="750.0">
+         <children>
+            <BorderPane fx:id="_border" prefHeight="550.0" prefWidth="750.0">
+               <center>
+                  <ScrollPane hbarPolicy="NEVER" prefWidth="750.0" vbarPolicy="NEVER" BorderPane.alignment="TOP_CENTER">
+                     <content>
+                        <VBox alignment="TOP_CENTER" prefHeight="441.0" prefWidth="749.0" spacing="15.0">
+                           <children>
+                              <Label style="-fx-font-size: 96;" text="VARpedia">
+                                 <font>
+                                    <Font size="91.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="_create" alignment="CENTER" graphicTextGap="30.0" mnemonicParsing="false" onAction="#openSearch" prefHeight="60.0" prefWidth="400.0" style="-fx-font-size: 24;" text="Create">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/createwhite.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="_videos" alignment="CENTER" graphicTextGap="30.0" mnemonicParsing="false" onAction="#openVideos" prefHeight="60.0" prefWidth="400.0" style="-fx-font-size: 24;" text="Videos">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/videowhite.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="_quiz" alignment="CENTER" graphicTextGap="30.0" mnemonicParsing="false" onAction="#openQuiz" prefHeight="60.0" prefWidth="400.0" style="-fx-font-size: 24;" text="Quiz">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                                 <graphic>
+                                    <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/quizwhite.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <padding>
+                                    <Insets right="20.0" />
+                                 </padding>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets top="50.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </ScrollPane>
+               </center>
+               <bottom>
+                  <HBox alignment="CENTER" prefHeight="60.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Label fx:id="_warning" />
+                     </children>
+                  </HBox>
+               </bottom>
+               <top>
+                  <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="TOP_RIGHT">
+                     <children>
+                        <Button fx:id="_helpBorder" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#openHelp" prefHeight="50.0" prefWidth="50.0" text="Help">
+                           <graphic>
+                              <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@/helpwhite.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </top>
+            </BorderPane>
+            <AnchorPane fx:id="_anchor" prefHeight="200.0" prefWidth="200.0" visible="false">
+               <children>
+                  <Label layoutX="294.0" layoutY="249.0" text="Create a video">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="300.0" layoutY="319.0" text="Watch Videos">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="224.0" layoutY="396.0" text="Practice what you've learnt">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="_helpAnchor" contentDisplay="GRAPHIC_ONLY" layoutX="700.0" mnemonicParsing="false" onAction="#openHelp" prefHeight="50.0" prefWidth="50.0" text="Help">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@/helpwhite.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Button>
+               </children></AnchorPane>
+         </children>
+      </StackPane>
+   </children>
+</HBox>
