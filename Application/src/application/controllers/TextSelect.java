@@ -4,6 +4,7 @@ import application.app.TextToAudio;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -252,6 +253,8 @@ public class TextSelect extends Controller implements Initializable{
 				durationInSeconds = durationInSeconds + (audioFileLength / (frameSize * frameRate));
 			} catch (UnsupportedAudioFileException e) {
 				e.printStackTrace();
+			} catch (EOFException e) {
+				// expected
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

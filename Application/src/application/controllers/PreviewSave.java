@@ -21,6 +21,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -29,6 +30,7 @@ import javafx.util.Duration;
 public class PreviewSave extends Controller implements Initializable {
 	
 	@FXML private AnchorPane _anchor;
+
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _anchorHelp;
@@ -135,6 +137,7 @@ public class PreviewSave extends Controller implements Initializable {
 	}
 	
 	@FXML private void handleHelp() {
+
 		if (_anchor.isVisible()==false) { //AnchorPane is invisible on startup
 				
 			_home.setDisable(true);
@@ -154,6 +157,7 @@ public class PreviewSave extends Controller implements Initializable {
 			
 			_anchor.setVisible(false);
 		}
+
 	}
 	
 	@FXML private void handleSave() {

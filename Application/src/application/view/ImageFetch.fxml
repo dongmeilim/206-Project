@@ -52,7 +52,7 @@
                   </HBox>
                </bottom>
                <top>
-                  <HBox fx:id="_ImageFetch1" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+                  <HBox prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                      <children>
                         <Button fx:id="_home" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0" text="home">
                            <graphic>

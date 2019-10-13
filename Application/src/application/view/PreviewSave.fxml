@@ -40,7 +40,8 @@
                <top>
                   <HBox fx:id="_ImageFetch1" prefHeight="50.0" prefWidth="600.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="_home" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0" text="home">
+                        <Button fx:id="_home" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleHome" prefHeight="50.0" prefWidth="50.0" text="home">
+
                            <graphic>
                               <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -112,11 +113,12 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="9.0" layoutY="258.0" prefHeight="78.0" prefWidth="122.0" text="Preview the video before you save it" textAlignment="CENTER" wrapText="true">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="275.0" prefHeight="63.0" prefWidth="148.0" text="Preview the video before you save it" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
+
                   <Label alignment="CENTER" contentDisplay="CENTER" layoutX="569.0" layoutY="393.0" prefHeight="78.0" prefWidth="181.0" text="Name your video and click save if you're happy with it" textAlignment="CENTER" wrapText="true">
                      <font>
                         <Font size="16.0" />
