@@ -107,7 +107,6 @@ public class TextSelect extends Controller implements Initializable{
 	
 	private final double _MAXDURATION = 300;
 
-	//TODO Warn the user preemptively that the NZ voice cant pronounce a lot of words.
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		_dir = System.getProperty("user.dir");
@@ -519,6 +518,7 @@ public class TextSelect extends Controller implements Initializable{
 
 			saveBG.setOnRunning(running -> {
 				_save.setDisable(true);
+				_next.setDisable(true);
 				// bind the progress bar the the preview task
 				_pb.progressProperty().bind(saveBG.progressProperty());	
 				_pb.setStyle(_saveBar);

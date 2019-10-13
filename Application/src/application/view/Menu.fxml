@@ -21,14 +21,14 @@
                <center>
                   <ScrollPane hbarPolicy="NEVER" prefWidth="750.0" vbarPolicy="NEVER" BorderPane.alignment="TOP_CENTER">
                      <content>
-                        <VBox alignment="TOP_CENTER" prefHeight="550.0" prefWidth="750.0" spacing="15.0">
+                        <VBox alignment="TOP_CENTER" prefHeight="441.0" prefWidth="749.0" spacing="15.0">
                            <children>
                               <Label style="-fx-font-size: 96;" text="VARpedia">
                                  <font>
                                     <Font size="91.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="_create" alignment="CENTER" graphicTextGap="30.0" mnemonicParsing="false" onAction="#openSearch" prefHeight="60.0" prefWidth="400.0" text="Create">
+                              <Button fx:id="_create" alignment="CENTER" graphicTextGap="30.0" mnemonicParsing="false" onAction="#openSearch" prefHeight="60.0" prefWidth="400.0" style="-fx-font-size: 24;" text="Create">
                                  <font>
                                     <Font size="22.0" />
                                  </font>
@@ -40,7 +40,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button fx:id="_videos" alignment="CENTER" graphicTextGap="30.0" mnemonicParsing="false" onAction="#openVideos" prefHeight="60.0" prefWidth="400.0" text="Videos">
+                              <Button fx:id="_videos" alignment="CENTER" graphicTextGap="30.0" mnemonicParsing="false" onAction="#openVideos" prefHeight="60.0" prefWidth="400.0" style="-fx-font-size: 24;" text="Videos">
                                  <font>
                                     <Font size="22.0" />
                                  </font>
@@ -52,7 +52,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <Button fx:id="_quiz" alignment="CENTER" graphicTextGap="30.0" mnemonicParsing="false" onAction="#openQuiz" prefHeight="60.0" prefWidth="400.0" text="Quiz">
+                              <Button fx:id="_quiz" alignment="CENTER" graphicTextGap="30.0" mnemonicParsing="false" onAction="#openQuiz" prefHeight="60.0" prefWidth="400.0" style="-fx-font-size: 24;" text="Quiz">
                                  <font>
                                     <Font size="22.0" />
                                  </font>
@@ -83,7 +83,7 @@
                   </HBox>
                </bottom>
                <top>
-                  <HBox alignment="TOP_RIGHT" prefHeight="51.0" prefWidth="750.0" BorderPane.alignment="TOP_RIGHT">
+                  <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="750.0" BorderPane.alignment="TOP_RIGHT">
                      <children>
                         <Button fx:id="_helpBorder" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#openHelp" prefHeight="50.0" prefWidth="50.0" text="Help">
                            <graphic>

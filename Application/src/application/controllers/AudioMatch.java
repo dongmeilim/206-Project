@@ -79,7 +79,7 @@ public class AudioMatch extends Controller implements Initializable{
 		_audioGuesses = new int[_numQuestions];
 
 		//populate the audio list
-		File[] files = new File("quiz").listFiles(File::isDirectory);
+		File[] files = new File("creations").listFiles();
 		_allFiles = new ArrayList<File>(Arrays.asList(files));
 		try {
 			generateRandomAudioFiles();
@@ -194,11 +194,13 @@ public class AudioMatch extends Controller implements Initializable{
 		File audio;
 		File queryFile;
 		String query;
-		//TODO implement game for one question
-		for (int i = 0; i < _numQuestions; i++) { 
+				for (int i = 0; i < _numQuestions; i++) { 
 			//generate random file from list of files
 			int index = rand.nextInt(_allFiles.size()); 
-			queryFile = new File("quiz/"+_allFiles.get(index).getName()+"/query");
+			String creationName = _allFiles.get(index).getName();
+			creationName = creationName.substring(0,creationName.length()-4);
+			
+			queryFile = new File("quiz/"+creationName+"/query");
 
 			//get the term for that file
 			BufferedReader br = new BufferedReader(new FileReader(queryFile)); 
@@ -206,7 +208,7 @@ public class AudioMatch extends Controller implements Initializable{
 			br.close();
 
 			//get the audio for that file
-			audio = new File("quiz/"+_allFiles.get(index).getName()+"/"+query+".wav");
+			audio = new File("quiz/"+creationName+"/"+query+".wav");
 
 			//store audio and query in lists
 			_audioList.add(audio); 

@@ -86,7 +86,6 @@ public class ImageOrder extends Controller {
 	 *Comments by: Mirlington
 	 *
 	 */
-	//TODO use thumbnails in video list
 	public class DragImageCell extends ListCell<String> {
 		
 		private final ImageView _imageView = new ImageView();
