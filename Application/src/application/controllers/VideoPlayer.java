@@ -59,15 +59,14 @@ public class VideoPlayer extends Controller implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		_title.setText(_vidTitle);
-		String dir = System.getProperty("user.dir");
 		
 		//set up the play icon
-		_playImage = new ImageView("file:"+dir+"/assets/play.png");
+		_playImage = new ImageView("/play.png");
 		_playImage.setFitHeight(26);
 		_playImage.setFitWidth(26);
 		
 		// set up the pause icon
-		_pauseImage= new ImageView("file:"+dir+"/assets/pause.png");
+		_pauseImage= new ImageView("/pause.png");
 		_pauseImage.setFitHeight(26);
 		_pauseImage.setFitWidth(26);
 		
