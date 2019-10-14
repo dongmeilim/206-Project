@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.ImageMatch">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.ImageMatch">
    <children>
       <StackPane prefHeight="150.0" prefWidth="200.0">
          <children>
@@ -92,9 +92,9 @@
             </BorderPane>
             <AnchorPane fx:id="_anchor" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
-                  <Label layoutX="203.0" layoutY="172.0" prefHeight="72.0" prefWidth="173.0" style="-fx-font-size: 17;" text="2. Click a picture to select it" textAlignment="CENTER" wrapText="true" />
-                  <Label layoutX="422.0" layoutY="189.0" prefHeight="72.0" prefWidth="173.0" style="-fx-font-size: 17;" text="3. Choose the word you think matches the picture" textAlignment="CENTER" wrapText="true" />
-                  <Label layoutX="244.0" layoutY="448.0" prefHeight="72.0" prefWidth="317.0" style="-fx-font-size: 17;" text="4. Click Match to check your answer" textAlignment="CENTER" wrapText="true" />
+                  <Label layoutX="203.0" layoutY="172.0" prefHeight="72.0" prefWidth="173.0" style="-fx-font-size: 17;" text="1. Click a picture to select it" textAlignment="CENTER" wrapText="true" />
+                  <Label layoutX="422.0" layoutY="189.0" prefHeight="72.0" prefWidth="173.0" style="-fx-font-size: 17;" text="2. Choose the word you think matches the picture" textAlignment="CENTER" wrapText="true" />
+                  <Label layoutX="244.0" layoutY="448.0" prefHeight="72.0" prefWidth="317.0" style="-fx-font-size: 17;" text="3. Click Match to check your answer" textAlignment="CENTER" wrapText="true" />
                   <Button fx:id="_anchorHelp" contentDisplay="GRAPHIC_ONLY" layoutX="701.0" mnemonicParsing="false" onAction="#handleHelp" prefHeight="50.0" prefWidth="50.0">
                      <graphic>
                         <ImageView fitHeight="32.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">

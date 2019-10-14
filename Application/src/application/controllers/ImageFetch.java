@@ -57,7 +57,7 @@ public class ImageFetch extends Controller {
 	@FXML private ProgressIndicator _videoProgress;
 	@FXML private VBox _imageContent;
 	@FXML private Slider _slider;
-	
+	// TODO make it so user can always use arrow keys for navigating slider
 	@FXML private void handleBack() {switchTo(_back.getScene(), getClass().getResource(_PATH+"TextSelect.fxml"));}
 	@FXML 
 	public void handleHome() {

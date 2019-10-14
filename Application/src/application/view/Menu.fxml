@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.Menu">
+<HBox prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.Menu">
    <children>
       <StackPane prefHeight="550.0" prefWidth="750.0">
          <children>
@@ -103,17 +103,17 @@
             </BorderPane>
             <AnchorPane fx:id="_anchor" prefHeight="200.0" prefWidth="200.0" visible="false">
                <children>
-                  <Label layoutX="294.0" layoutY="249.0" text="Create a video">
+                  <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="176.0" layoutY="232.0" prefHeight="60.0" prefWidth="399.0" text="Create a video" textAlignment="CENTER">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Label>
-                  <Label layoutX="300.0" layoutY="319.0" text="Watch Videos">
+                  <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="308.0" prefHeight="60.0" prefWidth="399.0" text="Watch Videos" textAlignment="CENTER">
                      <font>
                         <Font size="22.0" />
                      </font>
                   </Label>
-                  <Label layoutX="224.0" layoutY="396.0" text="Practice what you've learnt">
+                  <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="176.0" layoutY="383.0" prefHeight="60.0" prefWidth="399.0" text="Practice what you've learnt" textAlignment="CENTER">
                      <font>
                         <Font size="22.0" />
                      </font>

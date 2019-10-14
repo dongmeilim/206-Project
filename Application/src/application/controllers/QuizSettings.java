@@ -113,7 +113,7 @@ public class QuizSettings extends Controller implements Initializable {
 		if (creationAmount == 2) {
 			_slider.setDisable(true); //Only one question is present
 		} else {
-			_slider.setDisable(false);
+			_slider.setDisable(false); // TODO make it so user can always use arrow keys for navigating slider
 			_slider.setMax(creationAmount); //Max value is max amount of questions
 		}
 	}
