@@ -50,7 +50,7 @@ public class SearchWiki extends Task<Boolean> {
 			String line= reader.readLine();
 			reader.close();
 			//if there was no entry, return false
-			if (line.equals(_searchTerm+" not found :^(")) {
+			if (line.contains(_searchTerm+" not found :^(")) {
 				return false;
 			}else if (line.contains("Ambiguous results, \""+_searchTerm+"\" may refer to:")) {
 				return false;
