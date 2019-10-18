@@ -2,6 +2,100 @@
 
 ## Discussion Wiki
 
+### 18/10/2019 @ 1544 - So Much of Everything
+
+This is the post where we talk about everything we have implemented and what we intend to finish up and fix.
+
+**1. GUI Overhaul**
+
+We decided together that the Teal Sunset theme of [Assignment 3](https://github.com/dongmeilim/Assignment_3_206) would not work as our stake holder is a child. With this in mind, we got posted some suggestions for background images taken from [unsplash](https://unsplash.com/).
+
+I initially put up some images with vibrant background.
+
+![vibrantbackgrounds](Concepts/backgrounds/vibrantbackgrounds.png)
+
+However upon reflection we both agreed that it should be a bit plainer; "bright, but just a few colours".
+
+![brightbutfewcolours](Concepts/backgrounds/brightbutfewcolours.png)
+
+We chose the baby blue background with the yellow origami boat.
+
+Then we set out to make this a theme, very similar to last time. Here's what we have for our map.
+
+![fullmap](Concepts/maps/fullmap.png)
+
+Noteworthy changes:
+
+* Help Buttons implemented.
+* Thumbnails added for `VideoList.fxml`.
+* Changed icons to match video-game-esque help button.
+* Decided against using text under labels as it stretched the button out of proportion.
+* Decided against changing the headings, it being unnecessary.
+* Decided against progress bar in `QuizSettings.fxml`, it being unnecessary.
+* Background music implemented and attribution appears on the video when used.
+* Reset button implemented for `TextSelect.fxml`.
+
+Extra changes to be made:
+
+* Bind buttons to keyboard
+* Implement Safesearch
+
+**2. User Testing Feedback**
+
+@dongmeilim's brother tested our application and remarked that it was unintuitive to him that Stop needed to be pressed before making another preview.
+
+In light of this, we will change the Preview button to have the following functionality.
+
+* Preview will dispose after one-time play for quick and instant previews.
+* While playing, the Preview button will simply show the Stop text instead of splitting up into two buttons (Stop, Play).
+
+**3. Peer Review Feedback**
+
+We recently received some [peer review feedback](Misc/PeerReviewFeedback_Summarised.md).
+
+Overall they complimented the User Interface but the majority of the reviewers couldn't actually make a creation. This is most likely due to the fact we didn't test the runnable.jar of the application before submitting due to lack of time.
+
+Compiled at the end of the post are some bugs that we still need to fix.
+
+**4. Began work on the manual**
+
+As part of our submission for the project, we need to submit a manual. We've currently drafted up some headings.
+
+```
+1. How to Install
+2. How to Run
+3. Key Words (Glossed) Optional
+
+4. What to Do - Introduction
+ 4a) Create Videos - map
+ 4b) Watch Videos
+ 4c) Do the Quiz - map
+
+FAQ & Troubleshooting (Contacts?)
+
+Appendix
+ Full screen diagram
+```
+
+**Table of Bugs**
+
+| Where is it?                                                        | What happens?                                                                           |
+|---------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| PreviewSave.fxml                                                    | Duration is 00:00 until play button is pressed.                                         |
+| PreviewSave.fxml, VideoPlayer.fxml                                  | Slider jumps around upon repeated presses of play and pause.                            |
+| Arriving in TextSelect.fxml after checking music in ImageFetch.fxml | Concatenated files appear in the table.                                                 |
+| Application/quiz/                                                   | When a creation is deleted, the corresponding quiz directory is not deleted.            |
+| *Match.fxml                                                         | Matching should be case-INsensitive in the case of similar creations.                   |
+| (JAR) ImageFetch.fxml                                               | LoadException when trying to progress to PreviewSave.fxml                               |
+| (JAR) Menu.fxml                                                     | When there are less than 2 creations, pressing Help repeatedly enables the Quiz button. |
+| (JAR) Search.fxml                                                   | Repeatedly searching unknown terms is accepted.                                         |
+| (JAR) VideoPlayer.fxml                                              | Leftover images remain in new creations.                                                |
+| (JAR) Search.fxml                                                   | Users can enter -version and -help and it is accepted.                                  |
+
+\- Mirlington
+
+---
+
 ### 12/10/2019 @ 2330 - Matchmaker
 
 We've been working on a few things since last time. Since the circumstance is that we are now in proximity, we have been working on many shorter branches and merging frequently. Here are some things we have implemented.
@@ -59,6 +153,8 @@ Quick Fixes
 
 \- Mirlington
 
+---
+
 ### 09/10/2019 @ 1739 - Let the Games Begin
 
 Finally have the TextSelect step (now renamed to Create the Sound) implemented. It has been redone to remove the need to the child user to name their audio files (kids don't have that kind of patience), as well as add the ability to play and delete saved audio files. The audio slider has been removed as it took up too much precious space in the window. The play/pause/stop controls should be enough for the child. The voices have also been given more descriptive(?) names.
@@ -69,6 +165,8 @@ Here's how the window looks currently:
 With this done, more of my focus can be put on the game component now :D
 
 \- dongmeilim
+
+---
 
 ### 08/10/2019 @ 1553 - Rain Cloud Under The Honey Tree
 
@@ -86,6 +184,8 @@ Here are some other things we agreed on while coding:
 ![menu](Concepts/screenshots_PRE_CSS/Menu.png)
 
 \- Mirlington
+
+---
 
 ### 06/10/2019 @ 2015 - The Branch Less Traveled
 
