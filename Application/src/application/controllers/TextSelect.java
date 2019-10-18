@@ -197,7 +197,8 @@ public class TextSelect extends Controller implements Initializable{
 		// This is to avoid the ConcurrentModificationException when using the for-loop.
 		List<File> toRemove = new ArrayList<File>();		
 		for (File file : files) {
-			if (file.getName().contains(".__")) {
+			if (file.getName().contains(".__")||file.getName().equals("finalAudio.wav") || file.getName().equals("concatenatedAudio.wav")
+					||file.getName().equals("quietBackground.wav")||file.getName().equals("truncatedTrack.wav")) {
 				toRemove.add(file);
 			}
 		}

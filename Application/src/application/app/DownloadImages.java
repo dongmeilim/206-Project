@@ -16,6 +16,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
@@ -67,10 +69,11 @@ public class DownloadImages extends Task<Void> {
 		
 		private String getAPIKey(String key) throws Exception {
 
-			String config = System.getProperty("user.dir") + System.getProperty("file.separator")+ "flickr-api-keys.txt"; //Retrieve API
+			String config = "/flickr-api-keys.txt"; //Retrieve API
 			
-			File file = new File(config); 
-			BufferedReader br = new BufferedReader(new FileReader(file)); 
+			
+			InputStream inputstream = getClass().getResourceAsStream(config); 
+			BufferedReader br = new BufferedReader(new InputStreamReader(inputstream)); 
 			
 			String line;
 			while ( (line = br.readLine()) != null ) {
@@ -80,7 +83,7 @@ public class DownloadImages extends Task<Void> {
 				}
 			}
 			br.close();
-			throw new RuntimeException("Couldn't find " + key +" in config file "+file.getName());
+			throw new RuntimeException("Couldn't find " + key +" in config file "+config);
 		}
 
 		private void downloadImages(String tmp, int imageAmount, String query) {
