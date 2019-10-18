@@ -1,0 +1,1 @@
+The cat is either a house cat or a farm cat, which are pets, or a feral cat, which ranges freely and avoids human contact.
