@@ -2,7 +2,7 @@
 
 ## Discussion Wiki
 
-### 18/10/2019 @ 1537 - So Much of Everything
+### 18/10/2019 @ 1544 - So Much of Everything
 
 This is the post where we talk about everything we have implemented and what we intend to finish up and fix.
 
@@ -31,6 +31,7 @@ Noteworthy changes:
 * Changed icons to match video-game-esque help button.
 * Decided against using text under labels as it stretched the button out of proportion.
 * Decided against changing the headings, it being unnecessary.
+* Decided against progress bar in `QuizSettings.fxml`, it being unnecessary.
 * Background music implemented and attribution appears on the video when used.
 * Reset button implemented for `TextSelect.fxml`.
 
