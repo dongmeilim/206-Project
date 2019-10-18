@@ -83,7 +83,7 @@ Appendix
 |---------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
 | PreviewSave.fxml                                                    | Duration is 00:00 until play button is pressed.                                         |
 | PreviewSave.fxml, VideoPlayer.fxml                                  | Slider jumps around upon repeated presses of play and pause.                            |
-| Arriving in TextSelect.fxml after checking music in ImageFetch.fxml | Concatenated files appear in the table.                                                 |
+| ~~Arriving in TextSelect.fxml after checking music in ImageFetch.fxml~~ | ~~Concatenated files appear in the table.~~                                                |
 | Application/quiz/                                                   | When a creation is deleted, the corresponding quiz directory is not deleted.            |
 | *Match.fxml                                                         | Matching should be case-INsensitive in the case of similar creations.                   |
 | (JAR) ImageFetch.fxml                                               | LoadException when trying to progress to PreviewSave.fxml                               |
