@@ -1,4 +1,4 @@
-## Final Map
+# Final Map
 
 ![finalmap](maps/fullmap.png)
 
@@ -8,6 +8,6 @@
 
 ---
 
-## Initial Map
+# Initial Map
 
 ![intialmap](maps/initialmap.png)
