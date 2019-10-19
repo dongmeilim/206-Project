@@ -24,6 +24,9 @@ public class SearchWiki extends Task<Boolean> {
 
 	@Override
 	protected Boolean call() {
+		if(_searchTerm.contains("-version")|| _searchTerm.contains("-help")) {
+			return false;
+		}
 		//call bash and use wikit to get the entry for the user's search term. Return true if there is an entry and false if there isn't
 		String s = "timeout 5 wikit \""+ _searchTerm +"\" | sed -e 's/^[ \\t]*//' > "+_dir+"/tmp/text/wikitext.txt";
 
