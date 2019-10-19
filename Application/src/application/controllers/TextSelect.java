@@ -242,6 +242,15 @@ public class TextSelect extends Controller implements Initializable{
 	
 	private boolean isAudioTooLong() {
 		List<File> files = listDirectory("tmp/audio");
+		ArrayList<File> toRemove = new ArrayList<File>();
+		for (File file: files) {
+			if (file.getName().contains(".__")|| file.getName().equals("finalAudio.wav") || file.getName().equals("concatenatedAudio.wav")
+					||file.getName().equals("quietBackground.wav")||file.getName().equals("truncatedTrack.wav")) {
+				toRemove.add(file);
+			}
+		}
+		files.removeAll(toRemove);
+		
 		float durationInSeconds = 0;
 		for (File file: files) {
 			try {
@@ -255,9 +264,9 @@ public class TextSelect extends Controller implements Initializable{
 			} catch (UnsupportedAudioFileException e) {
 				e.printStackTrace();
 			} catch (EOFException e) {
-				// TODO fix EOFException
+				e.printStackTrace();
 			} catch (IOException e) {
-				//TODO fix RIFFInvalidDataException
+				e.printStackTrace();
 			}
 		}
 		if (durationInSeconds > _MAXDURATION) { //Duration of the background music

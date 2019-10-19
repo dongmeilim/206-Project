@@ -155,9 +155,12 @@ public class ImageMatch extends Controller implements Initializable {
 		
 		if(selCreationName!=null && selQuery != null) {
 	
-			File imageLocation = new File("quiz/"+selCreationName+"/"+selQuery+".jpg");
+			File queryFile = new File("quiz/"+selCreationName+"/query");
+			BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
+    		String query = bufferedReaderQuery.readLine();
+    		bufferedReaderQuery.close();
 			
-			if(imageLocation.exists()) {
+			if(query.equalsIgnoreCase(selQuery)) {
 				_guessedImage.add(selCreationName);
 
 				_observableImageNames.remove(selCreationName);

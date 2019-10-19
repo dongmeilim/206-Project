@@ -328,7 +328,8 @@ public class AudioMatch extends Controller implements Initializable{
 				setGraphic(null);
 			} else {
 				lastItem = item;
-				label.setText("Question "+ (getIndex()+1));
+				int index = _audioFileRecord.indexOf(item);
+				label.setText("Question "+ (index+1));
 				label.setStyle("-fx-text-fill: black; -fx-effect: null;");
 				setGraphic(hbox);
 			}
