@@ -79,18 +79,18 @@ Appendix
 
 **Table of Bugs**
 
-| Where is it?                                                        | What happens?                                                                           |
-|---------------------------------------------------------------------|-----------------------------------------------------------------------------------------|
-| PreviewSave.fxml                                                    | Duration is 00:00 until play button is pressed.                                         |
-| PreviewSave.fxml, VideoPlayer.fxml                                  | Slider jumps around upon repeated presses of play and pause.                            |
-| ~~Arriving in TextSelect.fxml after checking music in ImageFetch.fxml~~ | ~~Concatenated files appear in the table.~~                                                |
-| Application/quiz/                                                   | When a creation is deleted, the corresponding quiz directory is not deleted.            |
-| *Match.fxml                                                         | Matching should be case-INsensitive in the case of similar creations.                   |
+| Where is it?                                                            | What happens?                                                                               |
+|-------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| PreviewSave.fxml                                                        | Duration is 00:00 until play button is pressed.                                             |
+| PreviewSave.fxml, VideoPlayer.fxml                                      | Slider jumps around upon repeated presses of play and pause.                                |
+| ~~Arriving in TextSelect.fxml after checking music in ImageFetch.fxml~~ | ~~Concatenated files appear in the table.~~                                                 |
+| Application/quiz/                                                       | When a creation is deleted, the corresponding quiz directory is not deleted.                |
+| *Match.fxml                                                             | Matching should be case-INsensitive in the case of similar creations.                       |
 | ~~(JAR) ImageFetch.fxml~~                                               | ~~LoadException when trying to progress to PreviewSave.fxml~~                               |
 | ~~(JAR) Menu.fxml~~                                                     | ~~When there are less than 2 creations, pressing Help repeatedly enables the Quiz button.~~ |
-| (JAR) Search.fxml                                                   | Repeatedly searching unknown terms is accepted.                                         |
-| (JAR) VideoPlayer.fxml                                              | Leftover images remain in new creations.                                                |
-|~~(JAR) Search.fxml~~                                                  | ~~Users can enter -version and -help and it is accepted.~~                                  |
+| (JAR) Search.fxml                                                       | Repeatedly searching unknown terms is accepted. (unable to recreate)                        |
+| ~~(JAR) VideoPlayer.fxml~~                                              | ~~Leftover images remain in new creations.~~                                                |
+| ~~(JAR) Search.fxml~~                                                   | ~~Users can enter -version and -help and it is accepted.~~                                  |
 
 \- Mirlington
 
