@@ -20,7 +20,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -28,16 +27,18 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
 
 /**
  * Controller that handles the ImageFetch.fxml view.
- * After user selects amount of images with slider,
- * the application.app.DownloadImages Task is called.
+ * 
+ * The user must select one element from both ListViews
+ * before progressing.
+ * 
+ * This, along with the other *Match windows is the second
+ * step of the Quiz Cycle.
  */
 
 public class ImageMatch extends Controller implements Initializable {
@@ -206,10 +207,15 @@ public class ImageMatch extends Controller implements Initializable {
 		
 	}
 	
+	//Accessed by both the query ListView and the Thumbnail ListView
 	@FXML private void clearError() {
 		_errorLabel.setText("");
 	}
 
+	
+	/**
+	 * Private inner class to render images from strings in the ListView
+	 */
 	
 	private class Thumbnail extends ListCell<String> {
 			
@@ -219,7 +225,6 @@ public class ImageMatch extends Controller implements Initializable {
 			setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
 			setAlignment(Pos.CENTER);
 			setOnMouseClicked(e->clearError());
-			
 		}
 		
 		@Override
@@ -252,7 +257,4 @@ public class ImageMatch extends Controller implements Initializable {
 	        }
 	    }
 	}
-
-
-
 }

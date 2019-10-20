@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.management.PlatformLoggingMXBean;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -46,6 +45,8 @@ public class Main extends Application {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//Delete files upon application exit
 		primaryStage.setOnCloseRequest(e-> {
 			e.consume(); //Eats up the Close event, so that the program can deal with it
 			primaryStage.close();
@@ -84,7 +85,7 @@ public class Main extends Application {
 			FileWriter fw = new FileWriter(script, true);
 			String s;
 			while ((s = br.readLine()) != null) { // read a line
-				fw.write(s+"\n");
+				fw.write(s+"\n"); //Newline character there to format lines properly
 				fw.flush();
 			}
 			br.close();

@@ -20,7 +20,7 @@ public class CreatePreview extends Task<Void> {
 	private final String _isBackgroundMusicSelected;
 	
 	public CreatePreview(boolean isBackgroundMusicSelected) {
-		if (isBackgroundMusicSelected == true) {
+		if (isBackgroundMusicSelected == true) { //Making strings to be passed into the bash script
 			_isBackgroundMusicSelected = "1";
 		} else {
 			_isBackgroundMusicSelected = "0";
@@ -33,7 +33,7 @@ public class CreatePreview extends Task<Void> {
 			updateProgress(0,100); //ProgressBar listens to this line
 			ProcessBuilder pb = new ProcessBuilder();
 			pb.redirectError(_NULL);
-			updateProgress(5,100);
+			updateProgress(5,100); //ProgressBar listens to this line
 			pb.directory(new File("scripts/"));
 			pb.command("bash","createffmpegpreview.sh",_isBackgroundMusicSelected);
 			pb.start().waitFor();

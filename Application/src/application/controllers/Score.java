@@ -10,6 +10,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
+/**
+ * Controller that handles Score.fxml
+ * 
+ * This window displays what the user got right and which ones
+ * they made mistakes on via Labels and ScrollPanes.
+ * 
+ * As the third and final step of the Quiz Cycle, the user has the option to
+ * make a new game or go home.
+ */
+
 public class Score extends Controller implements Initializable {
 
 	@FXML private Button _home;

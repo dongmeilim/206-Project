@@ -38,6 +38,7 @@ import javafx.util.Callback;
 
 /**
  * Controller that handles the VideoList.fxml view.
+ * 
  * Displays videos in a TableView for playback or deletion.
  * Videos can also be ordered by date of creation or by alphabetical order.
  */

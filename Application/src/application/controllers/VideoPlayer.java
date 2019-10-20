@@ -25,7 +25,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 import javafx.util.Duration;
-//TODO buggy slider needs fixing
+
 /**
  * Controller that handles the VideoPlayer.fxml view.
  * Plays the video with JavaFX MediaPlayer while also

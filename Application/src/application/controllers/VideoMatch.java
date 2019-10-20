@@ -31,6 +31,16 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
+/**
+ * Controller that handles the VideoMatch.fxml view.
+ * 
+ * The user must select one element from both ListViews
+ * before progressing.
+ * 
+ * This, along with the other *Match windows is the second
+ * step of the Quiz Cycle.
+ */
+
 public class VideoMatch extends Controller implements Initializable {
 
 	@FXML private Button _back;
@@ -209,6 +219,9 @@ public class VideoMatch extends Controller implements Initializable {
 		_errorLabel.setText("");
 	}
 
+	/**
+	 * Private inner class that renders a video in MediaView and a play/stop button as controls.
+	 */
 	private class VideoSnippet extends ListCell<String> {
 
 		private final MediaView _mediaView = new MediaView();

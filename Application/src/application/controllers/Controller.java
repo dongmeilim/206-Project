@@ -55,7 +55,6 @@ protected final String _PATH = "/application/view/";
 	/**
 	 * Lists all files (not directories) using the file.listFiles() method
 	 * @param directory
-	 * @return
 	 */
 	
 	protected List<File> listDirectory(String directory) {
@@ -97,7 +96,6 @@ protected final String _PATH = "/application/view/";
 	/**
 	 * Stores file order
 	 * @param type, savedItems
-	 * @return
 	 */
 	
 	protected void storeFileType(String type, List<String> savedItems) {
@@ -123,7 +121,6 @@ protected final String _PATH = "/application/view/";
 	/**
 	 * Retrieves file of stored order (remembers the order of files and remembers when to skip)
 	 * @param type
-	 * @return
 	 */
 	
 	protected List<String> retrieveFileType(String type) {
@@ -148,7 +145,8 @@ protected final String _PATH = "/application/view/";
 	}
 	
 	/**
-	 * Deletes each file in the directory
+	 * Deletes directories
+	 * @param directory
 	 */
 	
 	protected void deleteDirectoryRecursively(File directory) {

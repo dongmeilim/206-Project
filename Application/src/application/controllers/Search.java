@@ -26,10 +26,14 @@ import javafx.scene.layout.BorderPane;
 
 /**
  * Controller that handles the Search.fxml view.
+ * 
  * After user types in an appropriate query,
  * the application.app.SearchWiki Task is called.
+ * 
+ * This is the first step of the Creation Cycle so no loss of progress
+ * is warned when returning home.
  */
-//TODO implement safe search
+
 public class Search extends Controller implements Initializable{
 	@FXML private Button _menu;
 	@FXML private Button _back;
@@ -73,8 +77,11 @@ public class Search extends Controller implements Initializable{
 		readQueryText();
 	}
 	
+	/**
+	 * As the tmp file is deleted upon exit, this file stores the last-searched term.
+	 */
 	private void readQueryText() {
-		//read the text file
+		
 		String query = "";
 
 		try (BufferedReader reader = new BufferedReader(new FileReader(new File(_dir+"/creations/query/query")))) {

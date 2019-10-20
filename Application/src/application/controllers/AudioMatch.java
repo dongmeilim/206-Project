@@ -35,7 +35,13 @@ import javafx.util.Callback;
 
 
 /**
- * Controller that handles the AudioMatch.fxml view
+ * Controller that handles the AudioMatch.fxml view.
+ * 
+ * The user must select one element from both ListViews
+ * before progressing.
+ * 
+ * This, along with the other *Match windows is the second
+ * step of the Quiz Cycle.
  */
 
 public class AudioMatch extends Controller implements Initializable{

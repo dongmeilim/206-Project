@@ -27,6 +27,15 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.util.Duration;
 
+/**
+ * Controller that handles PreviewSave.fxml
+ *
+ * The goal of this window is to Preview the user-created video and 
+ * give the user the option to save said video.
+ * 
+ * This is the last step of the Creation Cycle.
+ */
+
 public class PreviewSave extends Controller implements Initializable {
 	
 	@FXML private AnchorPane _anchor;
@@ -229,8 +238,6 @@ public class PreviewSave extends Controller implements Initializable {
 			_home.requestFocus(); //Tell users to go home, job done
 		});
 	}
-	// TODO smooth playback
-	// When you pause the video - save the time, when you play the video, load the time
 	
 	protected void updateValues() {
 		if (_time != null && _timeSlider != null && _volume != null) {

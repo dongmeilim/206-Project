@@ -36,7 +36,7 @@ public class DownloadImages extends Task<Void> {
 	
 	public DownloadImages(int imageAmount) {
 		_imageAmount = imageAmount;
-		_increment = 100/_imageAmount;
+		_increment = 100/_imageAmount; //Using float so that progressBar reaches 100
 	}
 	
 	@Override

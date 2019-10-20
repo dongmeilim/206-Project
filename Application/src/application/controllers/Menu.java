@@ -19,13 +19,6 @@ import javafx.scene.layout.BorderPane;
  * The first window that is seen by the user.
  */
 
-// TODO key bindings
-// Add key bindings where possible. This will help reduce time taken to make video etc.
-// Enter for save
-// Space for play/pause
-// ??? for next
-// Esc for back
-
 public class Menu extends Controller implements Initializable {
 
 	@FXML private Button _create;
@@ -56,7 +49,7 @@ public class Menu extends Controller implements Initializable {
 
 			_create.setDisable(false);
 			_videos.setDisable(false);
-			if (!_notEnoughCreations) {
+			if (!_notEnoughCreations) { //Don't re-enable the quiz
 				_quiz.setDisable(false);				
 			}
 
