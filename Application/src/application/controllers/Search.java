@@ -77,12 +77,12 @@ public class Search extends Controller implements Initializable{
 		//read the text file
 		String query = "";
 
-		try (BufferedReader reader = new BufferedReader(new FileReader(new File(_dir+"/tmp/text/query")))) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(new File(_dir+"/creations/query/query")))) {
 			query = reader.readLine();
 			reader.close();
 		}catch(FileNotFoundException e) {
 			try {
-				new File(_dir+"/tmp/text/query").createNewFile();
+				new File(_dir+"/creations/query/query").createNewFile();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -143,9 +143,13 @@ public class Search extends Controller implements Initializable{
 			_search.setDisable(true);
 			_searchbar.setDisable(true);
 
-			BufferedWriter writer = new BufferedWriter(new FileWriter(_dir + "/tmp/text/query"));
-			writer.write(input);
-			writer.close();
+			BufferedWriter queriedTerm = new BufferedWriter(new FileWriter(_dir + "/tmp/text/query"));
+			queriedTerm.write(input);
+			queriedTerm.close();
+			
+			BufferedWriter lastTermSearched = new BufferedWriter(new FileWriter(_dir + "/creations/query/query"));
+			lastTermSearched.write(input);
+			lastTermSearched.close();
 
 			//search the term in bg thread
 			_wikitBG = new SearchWiki(input);

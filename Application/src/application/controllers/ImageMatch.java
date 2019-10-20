@@ -20,6 +20,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -27,7 +28,10 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 
 /**
@@ -38,6 +42,7 @@ import javafx.scene.layout.AnchorPane;
 
 public class ImageMatch extends Controller implements Initializable {
 	
+	@FXML private BorderPane _border;
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
@@ -64,7 +69,6 @@ public class ImageMatch extends Controller implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
 		try {
 			File questionFile = new File(System.getProperty("user.dir")+"/tmp/text/numQuestions.txt");
 	    	BufferedReader bufferedReaderQuestion = new BufferedReader(new FileReader(questionFile)); 
@@ -77,7 +81,6 @@ public class ImageMatch extends Controller implements Initializable {
 		
 		//Initialize scoring array with zeroes
 		_imageGuesses = new int[_questionAmount];
-		
 		
 		List<File> creations = listDirectory("creations");
 		Random rand = new Random();
@@ -107,7 +110,6 @@ public class ImageMatch extends Controller implements Initializable {
 		_thumbnails.setCellFactory(param -> new Thumbnail());
 		Collections.shuffle(_observableTerms);
 		_terms.setItems(_observableTerms);
-	
 	}
 	
 	@FXML 
@@ -148,7 +150,6 @@ public class ImageMatch extends Controller implements Initializable {
 	}
 	
 	@FXML private void handleMatch() throws IOException {
-	
 		//get users selected items
 		String selCreationName = _thumbnails.getSelectionModel().getSelectedItem();
 		String selQuery = _terms.getSelectionModel().getSelectedItem();
