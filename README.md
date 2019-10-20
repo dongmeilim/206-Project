@@ -2,6 +2,22 @@
 
 ## Discussion Wiki
 
+### 20/10/2019 @ 2134 - Falcon's Wings
+
+The bugs have been fixed. The JAR works and everything is ready for submission, including the [manual](Misc/User_Manual_Varpedia.pdf). Here's what the cover page looks like:
+
+![coverpage](Misc/manualcover.PNG)
+
+Due to time pressure it is unlikely that any further implementations will be added, but in case I'm proven wrong, here's a list of what we would do:
+
+* Key bindings (with buttons and sliders)
+* Smooth slider transitions, especially when paused or played
+* Extra file management.
+
+Bye for now.
+
+\- Mirlington
+
 ### 18/10/2019 @ 1544 - So Much of Everything
 
 This is the post where we talk about everything we have implemented and what we intend to finish up and fix.
@@ -81,11 +97,11 @@ Appendix
 
 | Where is it?                                                            | What happens?                                                                               |
 |-------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| PreviewSave.fxml                                                        | Duration is 00:00 until play button is pressed.                                             |
+| ~~PreviewSave.fxml~~                                                    | ~~Duration is 00:00 until play button is pressed.~~                                         |
 | PreviewSave.fxml, VideoPlayer.fxml                                      | Slider jumps around upon repeated presses of play and pause.                                |
 | ~~Arriving in TextSelect.fxml after checking music in ImageFetch.fxml~~ | ~~Concatenated files appear in the table.~~                                                 |
-| Application/quiz/                                                       | When a creation is deleted, the corresponding quiz directory is not deleted.                |
-| ~~*Match.fxml~~                                                         | ~~Matching should be case-INsensitive in the case of similar creations.~~                       |
+| ~~Application/quiz/~~                                                   | ~~When a creation is deleted, the corresponding quiz directory is not deleted.~~            |
+| ~~*Match.fxml~~                                                         | ~~Matching should be case-INsensitive in the case of similar creations.~~                   |
 | ~~(JAR) ImageFetch.fxml~~                                               | ~~LoadException when trying to progress to PreviewSave.fxml~~                               |
 | ~~(JAR) Menu.fxml~~                                                     | ~~When there are less than 2 creations, pressing Help repeatedly enables the Quiz button.~~ |
 | (JAR) Search.fxml                                                       | Repeatedly searching unknown terms is accepted. (unable to recreate)                        |
