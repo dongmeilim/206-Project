@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.management.PlatformLoggingMXBean;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -28,7 +30,7 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		// initialize the directories needed for making creations
-		new File(_DIR+"/creations").mkdirs();
+		new File(_DIR+"/creations/query").mkdirs();
 		new File(_DIR+"/quiz").mkdirs();
 		new File(_DIR+"/tmp/text").mkdirs();
 		new File(_DIR+"/tmp/audio").mkdirs();
@@ -45,12 +47,13 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 		primaryStage.setOnCloseRequest(e-> {
-			//e.consume(); //Eats up the Close event, so that the program can deal with it
+			e.consume(); //Eats up the Close event, so that the program can deal with it
+			primaryStage.close();
 			File tmpDirectory = new File(_DIR+"/tmp/");
 			File scriptDirectory = new File(_DIR+"/scripts/");
 			deleteDirectoryRecursively(tmpDirectory);
 			deleteDirectoryRecursively(scriptDirectory);
-			primaryStage.close();
+			Platform.exit();
 		});
 
 		

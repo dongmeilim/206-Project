@@ -68,9 +68,7 @@ public class VideoList extends Controller implements Initializable{
 		_thumbnails.setCellValueFactory(new PropertyValueFactory<>("name"));
 		_thumbnails.setCellFactory(param -> new Thumbnail());
 		addPlayButtonToTable();
-		addDeleteButtonToTable();
-		
-
+		addDeleteButtonToTable();		
 	}
 
 	@FXML private void goBack(){ switchTo(_back.getScene(), getClass().getResource(_PATH+"Menu.fxml")); }

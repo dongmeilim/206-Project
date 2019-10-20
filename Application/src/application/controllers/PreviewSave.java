@@ -74,7 +74,8 @@ public class PreviewSave extends Controller implements Initializable {
 		_pauseImage.setFitHeight(26);
 		_pauseImage.setFitWidth(26);
 		
-		_play.setGraphic(_playImage);
+		_play.setGraphic(_pauseImage);
+		_player.play();
 		
 		/**
 		 * The following code is adapted from Oracle:
