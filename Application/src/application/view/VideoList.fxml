@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.VideoList">
+<BorderPane prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.VideoList">
    <top>
       <HBox alignment="CENTER" prefHeight="42.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <padding>
@@ -37,8 +37,8 @@
               	<columns>
                   <TableColumn fx:id="_thumbnails" editable="false" prefWidth="152.0" resizable="false" sortable="false" />
                 	<TableColumn fx:id="_videos" editable="false" prefWidth="364.0" resizable="false" sortable="false" text="Videos" />
-                	<TableColumn fx:id="_play" editable="false" minWidth="0.0" prefWidth="116.0" resizable="false" sortable="false" text="Play" />
-                  	<TableColumn fx:id="_delete" editable="false" prefWidth="99.0" resizable="false" sortable="false" text="Delete" />
+                	<TableColumn fx:id="_play" editable="false" minWidth="0.0" prefWidth="105.0" resizable="false" sortable="false" text="Play" />
+                  	<TableColumn fx:id="_delete" editable="false" prefWidth="95.0" resizable="false" sortable="false" text="Delete" />
               	</columns>
             </TableView>
          </content>
