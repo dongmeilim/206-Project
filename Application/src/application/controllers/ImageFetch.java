@@ -37,6 +37,8 @@ public class ImageFetch extends Controller {
 	
 	private final double _WINDOWWIDTH = 750;
 	private final int _SPACING = 10;
+	private final String _IMAGEDIRECTORY = "tmp/images/";
+	
 	private List<CheckBox> _checkBoxes = new ArrayList<CheckBox>();
 	private String _currentAmount = "";
 	
@@ -150,7 +152,7 @@ public class ImageFetch extends Controller {
 	
 	private void downloadImages(int imageAmount) {
 		
-		clearDirectory("tmp/images/");
+		clearImages();
 		DownloadImages downloadImages = new DownloadImages(imageAmount);
 		Thread thread = new Thread(downloadImages);
 		thread.start();
@@ -263,5 +265,12 @@ public class ImageFetch extends Controller {
 			switchTo(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));
 			
 		});	
+	}
+	
+	private void clearImages() {
+		List<File> files = listDirectory(_IMAGEDIRECTORY);
+		for (File file: files) {
+			file.delete();
+		}
 	}
 }

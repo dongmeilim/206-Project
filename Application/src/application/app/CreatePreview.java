@@ -33,6 +33,7 @@ public class CreatePreview extends Task<Void> {
 			updateProgress(0,100); //ProgressBar listens to this line
 			ProcessBuilder pb = new ProcessBuilder();
 			pb.redirectError(_NULL);
+			updateProgress(5,100);
 			pb.directory(new File("scripts/"));
 			pb.command("bash","createffmpegpreview.sh",_isBackgroundMusicSelected);
 			pb.start().waitFor();

@@ -3,7 +3,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="assets"/>
-	<classpathentry kind="src" path="scripts"/>
+	<classpathentry kind="src" path="scriptTexts"/>
 	<classpathentry kind="lib" path="libs/flickr4java-3.0.1.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-core-2.9.9.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-databind-2.9.9.jar"/>

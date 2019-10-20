@@ -55,7 +55,6 @@ public class PreviewSave extends Controller implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		String dir = System.getProperty("user.dir");
 		File vid = new File(_VIDPATH);
 		_player= new MediaPlayer(new Media(vid.toURI().toString()));
 		
@@ -67,11 +66,11 @@ public class PreviewSave extends Controller implements Initializable {
 			_play.setGraphic(_playImage);
 		});
 		
-		_playImage = new ImageView("file:"+dir+"/assets/play.png");
+		_playImage = new ImageView("/play.png");
 		_playImage.setFitHeight(26);
 		_playImage.setFitWidth(26);
 		
-		_pauseImage= new ImageView("file:"+dir+"/assets/pause.png");
+		_pauseImage= new ImageView("/pause.png");
 		_pauseImage.setFitHeight(26);
 		_pauseImage.setFitWidth(26);
 		
