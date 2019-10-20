@@ -151,10 +151,17 @@ protected final String _PATH = "/application/view/";
 	 * Deletes each file in the directory
 	 */
 	
-	protected void clearDirectory(String directory) {
-		List<File> files = listDirectory(directory);
-		for (File file: files) {
-			file.delete();
-		}
+	protected void deleteDirectoryRecursively(File directory) {
+	    File[] allContents = directory.listFiles();
+	    if (allContents != null) { //Keep going if there are files
+	        for (File file : allContents) {
+	            deleteDirectoryRecursively(file);
+	        }
+	    }
+	    String name = directory.getAbsolutePath();
+	    boolean output = directory.delete();
+	    if (output == false) {
+	    	System.out.println(name);
+	    }
 	}
 }

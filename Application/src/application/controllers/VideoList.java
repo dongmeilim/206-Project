@@ -192,10 +192,8 @@ public class VideoList extends Controller implements Initializable{
 								if(file.exists()) {
 									//delete the video
 									file.delete();
-									
 									//Delete quiz folder
-									clearDirectory("quiz/"+fileNameNoExtension);
-									quizDirectory.delete(); //TODO fix delete - has no affect on application currently
+									deleteDirectoryRecursively(quizDirectory);
 																
 									updateFileList();
 								}
@@ -229,9 +227,7 @@ public class VideoList extends Controller implements Initializable{
 
 		public Thumbnail() {
 			setContentDisplay(ContentDisplay.RIGHT);
-			//setText()
 			setAlignment(Pos.CENTER);
-
 		}
 
 		protected void updateItem(String item, boolean empty) { //changes the order
@@ -239,7 +235,6 @@ public class VideoList extends Controller implements Initializable{
 
 			if (empty || item == null) {
 				setGraphic(null);
-
 			} else {
 				String creationNameNoExtension = item.substring(0,item.length()-4);
 				File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
