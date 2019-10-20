@@ -62,7 +62,7 @@
                                     </VBox>
                                  </content>
                               </ScrollPane>
-                              <Label text="4. Select your sound files">
+                              <Label text="4. Check out your saved files">
                                  <font>
                                     <Font size="17.0" />
                                  </font>
