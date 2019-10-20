@@ -63,7 +63,7 @@ import javafx.util.Callback;
 public class TextSelect extends Controller implements Initializable{
 
 	@FXML private AnchorPane _anchor;
-	
+
 	@FXML private Button _menu;
 	@FXML private Button _back;
 	@FXML private Button _next;
@@ -74,7 +74,6 @@ public class TextSelect extends Controller implements Initializable{
 
 	@FXML private VBox _radioButtons;
 	@FXML private VBox _rightVBox;
-	@FXML private HBox _prevAndAudio;
 	@FXML private TextArea _text;
 	@FXML private ProgressBar _pb;
 
@@ -84,8 +83,6 @@ public class TextSelect extends Controller implements Initializable{
 	@FXML private TableColumn<File, Void> _deleteCol;
 	private final ObservableList<File> _fileList= FXCollections.observableArrayList();;
 
-	private Button _stop;
-	private Button _play;
 	private Media _sound; 
 	private MediaPlayer _mediaPlayer;
 	private MediaPlayer _savedPlayer; 
@@ -93,7 +90,7 @@ public class TextSelect extends Controller implements Initializable{
 	private ArrayList<Button> _delBtns = new ArrayList<Button>();
 
 	private boolean _nextButtonIsEnabled = false;
-	
+
 	private Label _errorLabel = new Label("Sorry, this text contains a word that can't be pronounced.");
 	private Label _overflowLabel = new Label();
 
@@ -105,7 +102,7 @@ public class TextSelect extends Controller implements Initializable{
 	private String _blueBar = "-fx-accent: #5c91b0";
 	private String _saveBar = "-fx-accent: #eb7900";
 	private String _pausedText = "";
-	
+
 	private final double _MAXDURATION = 300;
 
 	@Override
@@ -140,44 +137,7 @@ public class TextSelect extends Controller implements Initializable{
 		if (filesAreValid() == true) {
 			_next.setDisable(false); //You may progress
 		}
-
-		//set up the preview / audio controls area (initialize to just preview button)
-
-		_prevAndAudio.getChildren().clear();
-		_prevAndAudio.getChildren().add(_preview);
-
-		_stop = new Button("Stop");
-		_stop.setPrefWidth(80);
-		_stop.setPrefHeight(40);
-		_play = new Button ("Play");
-		_play.setPrefWidth(80);
-		_play.setPrefHeight(40);
-
-		_stop.setOnAction(new EventHandler<ActionEvent>() {
-			@Override 
-			public void handle(ActionEvent e) {
-				_mediaPlayer.stop();
-				//switch back to just preview button
-				_prevAndAudio.getChildren().clear();
-				_prevAndAudio.getChildren().add(_preview);
-			}
-		});
-
-		_play.setOnAction(new EventHandler<ActionEvent>() {
-			@Override 
-			public void handle(ActionEvent e) {
-
-				if(_mediaPlayer.getStatus()==MediaPlayer.Status.PLAYING) {
-					_mediaPlayer.pause();
-					_play.setText("play");
-				}else {
-
-					_mediaPlayer.play();
-					_play.setText("||");
-
-				}
-			}
-		});
+		
 		updateFileList();
 		_table.setSelectionModel(null);
 		_table.setItems(_fileList);
@@ -226,7 +186,7 @@ public class TextSelect extends Controller implements Initializable{
 		}
 
 		boolean isAudioTooLong = isAudioTooLong();
-		
+
 		if (isAudioTooLong == true) {
 			_errorLabel.setText("Combined audio is too long, please delete some audio clips");
 			if (_rightVBox.getChildren().contains(_errorLabel) == false) {
@@ -239,7 +199,7 @@ public class TextSelect extends Controller implements Initializable{
 			switchTo(_next.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));
 		}
 	}
-	
+
 	private boolean isAudioTooLong() {
 		List<File> files = listDirectory("tmp/audio");
 		ArrayList<File> toRemove = new ArrayList<File>();
@@ -250,7 +210,7 @@ public class TextSelect extends Controller implements Initializable{
 			}
 		}
 		files.removeAll(toRemove);
-		
+
 		float durationInSeconds = 0;
 		for (File file: files) {
 			try {
@@ -317,10 +277,10 @@ public class TextSelect extends Controller implements Initializable{
 		if (_anchor.isVisible()==false) { //AnchorPane is invisible on startup
 			_pausedText = _text.getText();
 			_text.clear();
-			
+
 			_menu.setDisable(true);
 			_back.setDisable(true);
-			_prevAndAudio.setDisable(true);
+			_preview.setDisable(true);
 			_reset.setDisable(true);
 			_save.setDisable(true);
 			if (_nextButtonIsEnabled == true) {
@@ -329,14 +289,13 @@ public class TextSelect extends Controller implements Initializable{
 			_radioButtons.setDisable(true);
 			_text.setDisable(true);
 			_table.setDisable(true);
-			
+
 			_anchor.setVisible(true);
 		} else {
 			_text.setText(_pausedText);
-			
+			_preview.setDisable(false);
 			_menu.setDisable(false);
 			_back.setDisable(false);
-			_prevAndAudio.setDisable(false);
 			_reset.setDisable(false);
 			_save.setDisable(false);
 			if (_nextButtonIsEnabled == true) {
@@ -345,7 +304,7 @@ public class TextSelect extends Controller implements Initializable{
 			_radioButtons.setDisable(false);
 			_text.setDisable(false);
 			_table.setDisable(false);
-			
+
 			_anchor.setVisible(false);
 		}
 	}
@@ -353,59 +312,71 @@ public class TextSelect extends Controller implements Initializable{
 	@FXML
 	private void preview() {
 
-		_rightVBox.getChildren().remove(_errorLabel);
-		_rightVBox.getChildren().remove(_overflowLabel);
-		String text = _text.getSelectedText();
-		if (text.trim().length() > 0) {
-			//get the user's desired inputs
-
-			RadioButton rb = (RadioButton)_rbGroup.getSelectedToggle();
-			String voice = getVoiceName(rb.getText());
-
-			// Check that the text is within the word limit
-			boolean hasunderOrOverflow = underOverflow(text.trim());
-			if (hasunderOrOverflow == true) {
-				return;
+		if(_mediaPlayer != null && _mediaPlayer.getStatus()==MediaPlayer.Status.PLAYING) {
+			_mediaPlayer.stop();
+			_preview.setText("Preview");
+			// enable other play buttons
+			for (Button button : _playBtns) {
+				button.setDisable(false);
 			}
+		}else {
 
-			//create preview.wav in bg thread
-			TextToAudio previewBG = new TextToAudio(text,voice,"preview");
-			Thread thread = new Thread(previewBG);
-			thread.start();
+			_rightVBox.getChildren().remove(_errorLabel);
+			_rightVBox.getChildren().remove(_overflowLabel);
+			String text = _text.getSelectedText();
+			if (text.trim().length() > 0) {
+				//get the user's desired inputs
 
-			previewBG.setOnRunning(running -> {
-				_prevAndAudio.getChildren().clear();
-				_pb.progressProperty().bind(previewBG.progressProperty());
-				_pb.setStyle(_blueBar);
-			});
-			previewBG.setOnSucceeded(succeed -> {
-				_pb.progressProperty().unbind();
-				//replace preview button with audio controls
-				_play.setText("Play");
-				try {
-					_prevAndAudio.getChildren().addAll(_stop, _play);
-					_sound = new Media(new File(_dir+"/tmp/audio/preview/preview.wav").toURI().toString());
-					_mediaPlayer = new MediaPlayer(_sound);
-					_mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-					_mediaPlayer.setOnEndOfMedia(() -> {
-						_mediaPlayer.stop();
-						_play.setText("Play");
-					});
+				RadioButton rb = (RadioButton)_rbGroup.getSelectedToggle();
+				String voice = getVoiceName(rb.getText());
 
-				}catch(MediaException e) {
-					//switch back to preview button
-					_prevAndAudio.getChildren().clear();
-					_prevAndAudio.getChildren().addAll(_preview);
-					_rightVBox.getChildren().add(_errorLabel);
+				// Check that the text is within the word limit
+				boolean hasunderOrOverflow = underOverflow(text.trim());
+				if (hasunderOrOverflow == true) {
+					return;
 				}
 
-			});
+				//create preview.wav in bg thread
+				TextToAudio previewBG = new TextToAudio(text,voice,"preview");
+				Thread thread = new Thread(previewBG);
+				thread.start();
+
+				previewBG.setOnRunning(running -> {
+					_pb.progressProperty().bind(previewBG.progressProperty());
+					_pb.setStyle(_blueBar);
+				});
+				previewBG.setOnSucceeded(succeed -> {
+					_pb.progressProperty().unbind();
+					// Change preview button to stop button
+					_preview.setText("Stop");
+					try {
+						//_prevAndAudio.getChildren().addAll(_stop, _play);
+						_sound = new Media(new File(_dir+"/tmp/audio/preview/preview.wav").toURI().toString());
+						_mediaPlayer = new MediaPlayer(_sound);
+						_mediaPlayer.setOnEndOfMedia(() -> {
+							_mediaPlayer.stop();
+							_preview.setText("Preview");
+						});
+						_mediaPlayer.play();
+						// disable other play buttons
+						for (Button button : _playBtns) {
+							button.setDisable(true);
+						}
+
+					}catch(MediaException e) {
+						//switch back to preview button
+						_preview.setText("Preview");
+						_rightVBox.getChildren().add(_errorLabel);
+					}
+
+				});
 
 
 
-		} else {
-			_overflowLabel.setText("Please select a chunk of text.");
-			_rightVBox.getChildren().add(_overflowLabel);
+			} else {
+				_overflowLabel.setText("Please select a chunk of text.");
+				_rightVBox.getChildren().add(_overflowLabel);
+			}
 		}
 
 	}
@@ -504,10 +475,10 @@ public class TextSelect extends Controller implements Initializable{
 				whiteSpaceCheck[i] = '_';
 			}
 		}
-		
+
 		String name = new String(whiteSpaceCheck);
 		name = name+fileNum; 
-		
+
 		br.close();
 
 		saveInBG(name);
@@ -560,7 +531,7 @@ public class TextSelect extends Controller implements Initializable{
 					_rightVBox.getChildren().add(_errorLabel);
 					file.delete();
 					new File(_dir+"/tmp/audio/censored/"+name+".wav").delete(); //delete censored audio
-					
+
 					if (!filesAreValid()) {
 						_next.setDisable(true);
 					}
@@ -620,7 +591,8 @@ public class TextSelect extends Controller implements Initializable{
 							// Get the Audio in the same row as the button
 							File audio = getTableView().getItems().get(getIndex());
 							Media media = new Media(audio.toURI().toString());
-							//Play or top the selected audio
+							
+							//Play or stop the selected audio
 							if(_savedPlayer == null || !(_savedPlayer.getStatus()== MediaPlayer.Status.PLAYING)) {
 
 								//set up a new media player
@@ -637,6 +609,7 @@ public class TextSelect extends Controller implements Initializable{
 									for (Button button: _delBtns) {
 										button.setDisable(false);
 									}
+									_preview.setDisable(false);
 								});
 								_savedPlayer.play();
 								playBtn.setText("Stop");
@@ -650,6 +623,7 @@ public class TextSelect extends Controller implements Initializable{
 								for (Button button: _delBtns) {
 									button.setDisable(true);
 								}
+								_preview.setDisable(true);
 
 							}else {
 								//stop playing
@@ -664,6 +638,7 @@ public class TextSelect extends Controller implements Initializable{
 								for (Button button: _delBtns) {
 									button.setDisable(false);
 								}
+								_preview.setDisable(false);
 							}
 						});
 					}

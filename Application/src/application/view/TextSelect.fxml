@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.TextSelect">
+<HBox prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.TextSelect">
    <children>
       <StackPane prefHeight="550.0" prefWidth="750.0">
          <children>
@@ -106,27 +106,19 @@
                         </Button>
                         <HBox alignment="TOP_RIGHT" spacing="5.0">
                            <children>
-                              <HBox fx:id="_prevAndAudio" prefHeight="50.0" prefWidth="172.0" spacing="5.0">
-                                 <children>
-                                    <Button fx:id="_preview" mnemonicParsing="false" onAction="#preview" prefHeight="40.0" prefWidth="189.0" text="Preview" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="TOP_RIGHT" prefHeight="50.0" prefWidth="513.0" spacing="10.0">
-                                 <children>
-                                    <Button fx:id="_reset" mnemonicParsing="false" onAction="#resetText" prefHeight="40.0" prefWidth="90.0" text="Reset Text" />
-                                    <Button fx:id="_save" mnemonicParsing="false" onAction="#saveAudio" prefHeight="40.0" prefWidth="90.0" text="Save" />
-                                    <ProgressBar fx:id="_pb" prefHeight="20.0" prefWidth="245.0" progress="0.0" />
-                                    <Button fx:id="_next" disable="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="50.0" prefWidth="50.0">
-                                       <graphic>
-                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@/next.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Button>
-                                 </children>
-                              </HBox>
+                              <Button fx:id="_preview" mnemonicParsing="false" onAction="#preview" prefHeight="40.0" prefWidth="189.0" text="Preview" />
+                              <Button fx:id="_reset" mnemonicParsing="false" onAction="#resetText" prefHeight="40.0" prefWidth="90.0" text="Reset Text" />
+                              <Button fx:id="_save" mnemonicParsing="false" onAction="#saveAudio" prefHeight="40.0" prefWidth="90.0" text="Save" />
+                              <ProgressBar fx:id="_pb" prefHeight="20.0" prefWidth="266.0" progress="0.0" />
+                              <Button fx:id="_next" disable="true" mnemonicParsing="false" onAction="#handleNext" prefHeight="50.0" prefWidth="50.0">
+                                 <graphic>
+                                    <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@/next.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
                            </children>
                         </HBox>
                      </children>
