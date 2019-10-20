@@ -93,16 +93,7 @@ public class VideoList extends Controller implements Initializable{
 
 		} else {
 
-			Arrays.sort(arrayOfFiles, new Comparator<File>(){
-				public int compare(File f1, File f2) {
-
-					if (Long.compare(f1.lastModified(), f2.lastModified()) == 1) {
-						return -1;
-					}
-
-					return Long.compare(f1.lastModified(), f2.lastModified());
-				}
-			});
+			Arrays.sort(arrayOfFiles, Comparator.comparingLong(File::lastModified));
 		}
 		_fileList.clear();
 		_fileList.addAll(arrayOfFiles);
