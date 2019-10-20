@@ -70,6 +70,13 @@
   -fx-shape: null;
 }
 
+/* Format the vertical scrollbar*/
+.scroll-bar:vertical *.increment-arrow,
+.scroll-bar:vertical *.decrement-arrow,
+.scroll-bar:vertical .thumb {
+  -fx-background-color: #eb7900;
+}
+
 /*Display black for placeholders in the TableView*/
 #_blackText {
 	/*Default values */
