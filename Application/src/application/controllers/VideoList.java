@@ -214,7 +214,8 @@ public class VideoList extends Controller implements Initializable{
 	private class Thumbnail extends TableCell<File,String> {
 
 		private final ImageView _imageView = new ImageView();
-
+		private FileInputStream _inputStream;
+		
 		public Thumbnail() {
 			setContentDisplay(ContentDisplay.RIGHT);
 			setAlignment(Pos.CENTER);
@@ -239,8 +240,12 @@ public class VideoList extends Controller implements Initializable{
 					e.printStackTrace();
 				} 
 				try {
-					_imageView.setImage(new Image(new FileInputStream("quiz/"+creationNameNoExtension+"/"+query+".jpg")));
+					_inputStream = new FileInputStream("quiz/"+creationNameNoExtension+"/"+query+".jpg");
+					_imageView.setImage(new Image(_inputStream));
+					_inputStream.close();
 				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 				_imageView.setFitHeight(50);

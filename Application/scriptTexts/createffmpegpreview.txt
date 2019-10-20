@@ -49,9 +49,9 @@ echo "50" #Percentage
 totalDuration=`soxi -D ../tmp/audio/concatenatedAudio.wav` 
 if [ $haveMusicInVideo -eq 1 ]
 then
-	ffmpeg -i ../assets/jlbrock44_-_Staying_Positive.mp3 -ss 0 -t $totalDuration -y ../tmp/audio/truncatedTrack.wav &> /dev/null
-	ffmpeg -i ../tmp/audio/truncatedTrack.wav -filter:a "volume=0.12" -y ../tmp/audio/quietBackground.wav &> /dev/null
-	ffmpeg -i ../tmp/audio/concatenatedAudio.wav -i ../tmp/audio/quietBackground.wav -filter_complex amix=inputs=2:duration=longest -y ../tmp/audio/finalAudio.wav &> /dev/null
+	ffmpeg -i ../tmp/music/jlbrock44_-_Staying_Positive.mp3 -ss 0 -t $totalDuration -y ../tmp/music/truncatedTrack.wav &> /dev/null
+	ffmpeg -i ../tmp/music/truncatedTrack.wav -filter:a "volume=0.12" -y ../tmp/music/quietBackground.wav &> /dev/null
+	ffmpeg -i ../tmp/audio/concatenatedAudio.wav -i ../tmp/music/quietBackground.wav -filter_complex amix=inputs=2:duration=longest -y ../tmp/audio/finalAudio.wav &> /dev/null
 else
 	ffmpeg -i ../tmp/audio/concatenatedAudio.wav -y ../tmp/audio/finalAudio.wav &>/dev/null
 fi

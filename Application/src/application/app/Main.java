@@ -2,9 +2,12 @@ package application.app;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -33,6 +36,7 @@ public class Main extends Application {
 		new File(_DIR+"/quiz").mkdirs();
 		new File(_DIR+"/tmp/text").mkdirs();
 		new File(_DIR+"/tmp/audio").mkdirs();
+		new File(_DIR+"/tmp/music").mkdirs();
 		new File(_DIR+"/tmp/images").mkdirs();
 		new File(_DIR+"/tmp/video").mkdirs();
 		
@@ -44,6 +48,12 @@ public class Main extends Application {
 			generateScript(saveScript,_SAVETEXT);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+		
+		try {
+			exportMP3();
+		} catch (Exception e1) {
+			e1.printStackTrace();
 		}
 		
 		//Delete files upon application exit
@@ -102,5 +112,43 @@ public class Main extends Application {
 	    }
 	    directory.delete();
 	}
+	
+	/**
+	 * Author: Ordiel
+	 * Original: https://stackoverflow.com/questions/10308221/how-to-copy-file-inside-jar-to-outside-the-jar
+	 * Modified by: Mirlington
+	 * 
+	 * 
+     * Export a resource embedded into a Jar file to the local file path.
+     *
+     * @param resourceName ie.: "/SmartLibrary.dll"
+     * @return The path to the exported resource
+     * @throws Exception
+     */
+    private void exportMP3() throws Exception {
+        InputStream stream = null;
+        OutputStream resStreamOut = null;
+        final String mp3 = "/jlbrock44_-_Staying_Positive.mp3";
+        final String tmpPath = "/tmp/music";
+        String jarFolder;
+        try {
+            stream = getClass().getResourceAsStream(mp3);//note that each / is a directory down in the "jar tree" been the jar the root of the tree
+            if(stream == null) {
+                throw new Exception("Cannot get resource \"" + mp3 + "\" from Jar file.");
+            }
+            int readBytes;
+            byte[] buffer = new byte[4096];
+            jarFolder = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getPath().replace('\\', '/');
+            resStreamOut = new FileOutputStream(jarFolder + tmpPath + mp3);
+            while ((readBytes = stream.read(buffer)) > 0) {
+                resStreamOut.write(buffer, 0, readBytes);
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            stream.close();
+            resStreamOut.close();
+        }
+    }
 }
 
