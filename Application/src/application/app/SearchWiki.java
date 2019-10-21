@@ -24,7 +24,7 @@ public class SearchWiki extends Task<Boolean> {
 
 	@Override
 	protected Boolean call() {
-		if(_searchTerm.matches("(?s)-.+")) {
+		if(_searchTerm.matches("(?s)-.+") || _searchTerm.contains("\"")) {
 			return false;
 		}
 		//call bash and use wikit to get the entry for the user's search term. Return true if there is an entry and false if there isn't

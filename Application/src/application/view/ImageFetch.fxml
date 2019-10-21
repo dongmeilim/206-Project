@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.ImageFetch">
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controllers.ImageFetch">
    <children>
       <StackPane prefHeight="550.0" prefWidth="750.0">
          <children>
@@ -63,7 +63,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Label alignment="CENTER" prefHeight="44.0" prefWidth="657.0" text="Step 3: Fetch Images" textAlignment="CENTER">
+                        <Label alignment="CENTER" prefHeight="44.0" prefWidth="657.0" text="Step 3: Choose Pictures" textAlignment="CENTER">
                            <font>
                               <Font size="36.0" />
                            </font>
