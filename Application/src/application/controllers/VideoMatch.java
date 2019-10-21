@@ -253,12 +253,7 @@ public class VideoMatch extends Controller implements Initializable {
 						_playBtn.setText("Play");
 
 						//enable other buttons
-						for (Button button : _playBtns) {
-							button.setDisable(false);
-						}
-
-						//enable Match button
-						_match.setDisable(false);
+						disableOtherBtns(false, _playBtn);
 
 
 					});
@@ -266,13 +261,7 @@ public class VideoMatch extends Controller implements Initializable {
 					_playBtn.setText("Stop");
 
 					//Disable other buttons
-					for (Button button : _playBtns) {
-						if(button != _playBtn) {
-							button.setDisable(true);
-						}
-					}
-					//Disable Match button
-					_match.setDisable(true);
+					disableOtherBtns(true, _playBtn);
 
 				} else {
 					//stop playing
@@ -281,19 +270,24 @@ public class VideoMatch extends Controller implements Initializable {
 					_playBtn.setText("Play");
 
 					//enable other buttons
-					for (Button button : _playBtns) {
-						button.setDisable(false);
-					}
-
-					//enable Match button
-					_match.setDisable(false);
+					disableOtherBtns(false, _playBtn);
 				}
 
 			});
 
 			setOnMouseClicked(e->clearError());
 		}
-
+		
+		private void disableOtherBtns(boolean disable, Button playBtn) {
+			//Disable other play buttons
+			for (Button button : _playBtns) {
+				if(button != playBtn) {
+					button.setDisable(disable);
+				}
+			}
+			//Disable Match button
+			_match.setDisable(disable);
+		}
 
 
 		@Override

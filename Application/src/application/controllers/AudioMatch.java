@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -89,8 +90,7 @@ public class AudioMatch extends Controller implements Initializable{
 		_audioGuesses = new int[_numQuestions];
 
 		//populate the audio list
-		File[] files = new File("creations").listFiles();
-		_allFiles = new ArrayList<File>(Arrays.asList(files));
+		_allFiles = new ArrayList<File>(listDirectory("creations"));
 		try {
 			generateRandomAudioFiles();
 		} catch (NumberFormatException e) {
@@ -289,36 +289,22 @@ public class AudioMatch extends Controller implements Initializable{
 							_mp.dispose();
 							playBtn.setText("Play");
 
-							//enable other buttons
-							for (Button button : _playBtns) {
-								button.setDisable(false);
-							}
-							//enable Match button
-							_match.setDisable(false);
+							// enable other buttons
+							disableOtherBtns(false, playBtn);
 						});
 						_mp.play();
 						playBtn.setText("Stop");
 
-						//Disable other buttons
-						for (Button button : _playBtns) {
-							if(button != playBtn) {
-								button.setDisable(true);
-							}
-						}
-						//Disable Match button
-						_match.setDisable(true);
+						// Disable other buttons
+						disableOtherBtns(true, playBtn);
 
 					}else {
-						//stop playing
+						// stop playing
 						_mp.stop();
 						playBtn.setText("Play");
 
-						//enable other buttons
-						for (Button button : _playBtns) {
-							button.setDisable(false);
-						}
-						//enable Match button
-						_match.setDisable(false);
+						// enable other buttons
+						disableOtherBtns(false, playBtn);
 					}
 				}
 			});
@@ -340,5 +326,16 @@ public class AudioMatch extends Controller implements Initializable{
 				setGraphic(hbox);
 			}
 		}
-	}	
+	}
+	
+	private void disableOtherBtns(boolean disable, Button playBtn) {
+		//Disable other play buttons
+		for (Button button : _playBtns) {
+			if(button != playBtn) {
+				button.setDisable(disable);
+			}
+		}
+		//Disable Match button
+		_match.setDisable(disable);
+	}
 }
