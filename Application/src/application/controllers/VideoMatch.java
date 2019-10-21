@@ -236,7 +236,7 @@ public class VideoMatch extends Controller implements Initializable {
 			HBox.setHgrow(_pane, Priority.ALWAYS);
 			_hbox.setAlignment(Pos.CENTER);
 			_playBtns.add(_playBtn);
-			//setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+			
 			setAlignment(Pos.CENTER);
 
 			_playBtn.setOnAction(e -> {

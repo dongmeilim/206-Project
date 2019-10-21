@@ -201,7 +201,7 @@ public class AudioMatch extends Controller implements Initializable{
 						rightGuesses.add(filename);
 					}
 				}
-
+				// load the score scene with the scores
 				Scene scene = _match.getScene();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/Score.fxml"));
 				Score controller = new Score(rightGuesses,wrongGuesses);
