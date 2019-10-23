@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 
+import javafx.scene.text.Font;
+
 /**
  * SoftEng 206 Assignment 3: VARpedia
  * Authors: Mirlington and Dong-Mei Lim
@@ -75,6 +77,8 @@ public class Main extends Application {
 			loader.setLocation(getClass().getResource("/application/view/Menu.fxml"));
 			Parent root = loader.load();
 
+			Font.loadFont(getClass().getResource("/Chewy.ttf").toExternalForm(), 10); //Magic number 10 is overriden by FXML font-sizes
+			
 			Scene scene = new Scene(root,750,550);
 			scene.getStylesheets().add("/application/app/application.css");
 			primaryStage.setResizable(false);
