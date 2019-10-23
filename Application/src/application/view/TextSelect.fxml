@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="application.controllers.TextSelect">
+<HBox prefHeight="550.0" prefWidth="750.0" xmlns="http://javafx.com/javafx " xmlns:fx="http://javafx.com/fxml " fx:controller="application.controllers.TextSelect">
    <children>
       <StackPane prefHeight="550.0" prefWidth="750.0">
          <children>
@@ -136,7 +136,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Label alignment="CENTER" prefHeight="44.0" prefWidth="653.0" text="Step 2: Create the sound">
+                        <Label alignment="CENTER" prefHeight="44.0" prefWidth="653.0" text="Step 2: Create the Sound">
                            <font>
                               <Font size="36.0" />
                            </font>
@@ -175,8 +175,8 @@
                         <Font size="16.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="524.0" layoutY="131.0" prefHeight="32.0" prefWidth="207.0" text="Warning this NZ voice isn't&#10;reliable!" textAlignment="CENTER" />
-                  <ImageView fitHeight="71.0" fitWidth="56.0" layoutX="578.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" rotate="-178.8">
+                  <Label alignment="CENTER" contentDisplay="CENTER" layoutX="524.0" layoutY="158.0" prefHeight="32.0" prefWidth="207.0" text="Warning: this NZ voice isn't&#10;reliable!" textAlignment="CENTER" />
+                  <ImageView fitHeight="71.0" fitWidth="56.0" layoutX="571.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true" rotate="-178.8">
                      <image>
                         <Image url="@/arrow.png" />
                      </image>

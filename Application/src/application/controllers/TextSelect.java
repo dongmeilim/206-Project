@@ -601,27 +601,14 @@ public class TextSelect extends Controller implements Initializable{
 									playBtn.setText("Play");
 
 									//enable other buttons
-									for (Button button : _playBtns) {
-										button.setDisable(false);
-									}
-									for (Button button: _delBtns) {
-										button.setDisable(false);
-									}
-									_preview.setDisable(false);
+									disableOtherBtns(false,playBtn);									
 								});
+								
 								_savedPlayer.play();
 								playBtn.setText("Stop");
 
 								//diasble other buttons
-								for (Button button : _playBtns) {
-									if(button != playBtn) {
-										button.setDisable(true);
-									}
-								}
-								for (Button button: _delBtns) {
-									button.setDisable(true);
-								}
-								_preview.setDisable(true);
+								disableOtherBtns(true,playBtn);
 
 							}else {
 								//stop playing
@@ -630,13 +617,7 @@ public class TextSelect extends Controller implements Initializable{
 								playBtn.setText("Play");
 
 								//enable other buttons
-								for (Button button : _playBtns) {
-									button.setDisable(false);
-								}
-								for (Button button: _delBtns) {
-									button.setDisable(false);
-								}
-								_preview.setDisable(false);
+								disableOtherBtns(false,playBtn);
 							}
 						});
 					}
@@ -659,7 +640,20 @@ public class TextSelect extends Controller implements Initializable{
 		_playCol.setCellFactory(cellFactory);
 
 	}
-
+	
+	private void disableOtherBtns(boolean disable, Button playBtn) {
+		//Disable other play buttons
+		for (Button button : _playBtns) {
+			if(button != playBtn) {
+				button.setDisable(disable);
+			}
+		}
+		for (Button button: _delBtns) {
+			button.setDisable(disable);
+		}
+		_preview.setDisable(disable);
+	}
+	
 	/**
 	 * Author: Rip Tutorial
 	 * Original: https://riptutorial.com/javafx/example/27946/add-button-to-tableview

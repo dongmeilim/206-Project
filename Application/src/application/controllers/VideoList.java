@@ -1,13 +1,10 @@
 package application.controllers;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -32,8 +29,9 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.util.Callback;
 
 /**
@@ -79,6 +77,13 @@ public class VideoList extends Controller implements Initializable{
 	 */
 	private void updateFileList() {
 		List<File> files = listDirectory("creations");
+		ArrayList<File> toRemove = new ArrayList<File>();
+		for (File file : files) {
+			if (file.getName().contains(".__")) {
+				toRemove.add(file);
+			}
+		}
+		files.removeAll(toRemove);
 		File[] arrayOfFiles = new File[files.size()];
 		files.toArray(arrayOfFiles);
 
@@ -113,7 +118,8 @@ public class VideoList extends Controller implements Initializable{
 					// set up the play buttons
 					private final Button playBtn = new Button("Play");
 
-					{
+					{	
+						setAlignment(Pos.CENTER);
 						playBtn.setOnAction((ActionEvent event) -> {
 							// Get the video in the same row as the button
 							File video = getTableView().getItems().get(getIndex());
@@ -167,9 +173,11 @@ public class VideoList extends Controller implements Initializable{
 					private final Button delBtn = new Button("Delete");
 
 					{
+						setAlignment(Pos.CENTER);
 						delBtn.setOnAction((ActionEvent event) -> {
 							// get the video in the same row as the button
 							File file = getTableView().getItems().get(getIndex());
+							
 							String fileName = file.getName();
 							String fileNameNoExtension = fileName.substring(0,fileName.length()-4);
 							File quizDirectory = new File("quiz/"+fileNameNoExtension);
@@ -213,44 +221,29 @@ public class VideoList extends Controller implements Initializable{
 
 	private class Thumbnail extends TableCell<File,String> {
 
-		private final ImageView _imageView = new ImageView();
-		private FileInputStream _inputStream;
+		private final MediaView _mediaView = new MediaView();
+		private MediaPlayer _mediaPlayer;
+		private Media _media;
+		private double _MEDIAHEIGHT = 100;
 		
 		public Thumbnail() {
 			setContentDisplay(ContentDisplay.RIGHT);
 			setAlignment(Pos.CENTER);
 		}
 
-		protected void updateItem(String item, boolean empty) { //changes the order
+		protected void updateItem(String item, boolean empty) {
 			super.updateItem(item, empty);
 
 			if (empty || item == null) {
 				setGraphic(null);
 			} else {
-				String creationNameNoExtension = item.substring(0,item.length()-4);
-				File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
-				String query="";
-				BufferedReader bufferedReaderQuery;
-				try {
-					bufferedReaderQuery = new BufferedReader(new FileReader(queryFile));
-					query = bufferedReaderQuery.readLine();
-					bufferedReaderQuery.close();
-
-				} catch (IOException e) {
-					e.printStackTrace();
-				} 
-				try {
-					_inputStream = new FileInputStream("quiz/"+creationNameNoExtension+"/"+query+".jpg");
-					_imageView.setImage(new Image(_inputStream));
-					_inputStream.close();
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				_imageView.setFitHeight(50);
-				_imageView.setPreserveRatio(true);
-				setGraphic(_imageView); 
+				File vid = new File("creations/"+item);
+				_media = new Media(vid.toURI().toString());
+				_mediaPlayer = new MediaPlayer(_media);
+				_mediaView.setMediaPlayer(_mediaPlayer);
+				
+				_mediaView.setFitHeight(_MEDIAHEIGHT);
+				setGraphic(_mediaView);
 			}
 		}
 	}
