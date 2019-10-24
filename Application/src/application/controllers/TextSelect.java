@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -151,6 +152,7 @@ public class TextSelect extends Controller implements Initializable{
 	private void updateFileList() {
 		List<String> fileNamesToStore = new ArrayList<String>();
 		List<File> files = listDirectory("tmp/audio");
+		
 		// Record all the files that are invalid in another list then remove them all at once.
 		// This is to avoid the ConcurrentModificationException when using the for-loop.
 		List<File> toRemove = new ArrayList<File>();		
@@ -161,6 +163,7 @@ public class TextSelect extends Controller implements Initializable{
 			}
 		}
 		files.removeAll(toRemove);
+		Collections.sort(files);
 
 		File[] arrayOfFiles = new File[files.size()];
 		files.toArray(arrayOfFiles);
@@ -168,8 +171,8 @@ public class TextSelect extends Controller implements Initializable{
 		for (int i = 0; i < arrayOfFiles.length; i++) {
 			fileNamesToStore.add(arrayOfFiles[i].getName()); //Storing in file for ffmpeg video
 		}
-		if (fileNamesToStore.isEmpty() == false) {
-			storeFileType("audio",fileNamesToStore); //Null check
+		if (fileNamesToStore.isEmpty() == false) { //Null check
+			storeFileType("audio",fileNamesToStore); 
 		}
 		_fileList.clear();
 		_fileList.addAll(arrayOfFiles);
@@ -182,7 +185,7 @@ public class TextSelect extends Controller implements Initializable{
 			_mediaPlayer.stop();
 			_mediaPlayer.dispose();
 		}
-
+		// prevent user from create videos longer than 5 minutes
 		boolean isAudioTooLong = isAudioTooLong();
 
 		if (isAudioTooLong == true) {
@@ -197,10 +200,15 @@ public class TextSelect extends Controller implements Initializable{
 			switchTo(_next.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));
 		}
 	}
-
+	/**
+	 * Checks that the total length of the audio is less than five minutes
+	 */
 	private boolean isAudioTooLong() {
+		//  list the audio files
 		List<File> files = listDirectory("tmp/audio");
 		ArrayList<File> toRemove = new ArrayList<File>();
+		
+		// remove invalid files from the list
 		for (File file: files) {
 			if (file.getName().contains(".__")|| file.getName().equals("finalAudio.wav") || file.getName().equals("concatenatedAudio.wav")
 					||file.getName().equals("quietBackground.wav")||file.getName().equals("truncatedTrack.wav")) {
@@ -208,8 +216,10 @@ public class TextSelect extends Controller implements Initializable{
 			}
 		}
 		files.removeAll(toRemove);
-
+		
 		float durationInSeconds = 0;
+		
+		// get the total duration of the audio
 		for (File file: files) {
 			try {
 				AudioInputStream audioInputStream;
@@ -227,6 +237,7 @@ public class TextSelect extends Controller implements Initializable{
 				e.printStackTrace();
 			}
 		}
+		
 		if (durationInSeconds > _MAXDURATION) { //Duration of the background music
 			return true;
 		} else {
@@ -309,16 +320,20 @@ public class TextSelect extends Controller implements Initializable{
 
 	@FXML
 	private void preview() {
-
+		
 		if(_mediaPlayer != null && _mediaPlayer.getStatus()==MediaPlayer.Status.PLAYING) {
+			
+			// Stop current preview
 			_mediaPlayer.stop();
 			_preview.setText("Preview");
+			
 			// enable other play buttons
 			for (Button button : _playBtns) {
 				button.setDisable(false);
 			}
 		}else {
-
+			
+			// start a new preview			
 			_rightVBox.getChildren().remove(_errorLabel);
 			_rightVBox.getChildren().remove(_overflowLabel);
 			String text = _text.getSelectedText();
@@ -340,6 +355,7 @@ public class TextSelect extends Controller implements Initializable{
 				thread.start();
 
 				previewBG.setOnRunning(running -> {
+					// bind progress bar
 					_pb.progressProperty().bind(previewBG.progressProperty());
 					_pb.setStyle(_blueBar);
 					_save.setDisable(true);
@@ -351,17 +367,20 @@ public class TextSelect extends Controller implements Initializable{
 					// Change preview button to stop button
 					_preview.setText("Stop");
 					try {
-						//_prevAndAudio.getChildren().addAll(_stop, _play);
+						// play the preview audio
 						_sound = new Media(new File(_dir+"/tmp/audio/preview/preview.wav").toURI().toString());
 						_mediaPlayer = new MediaPlayer(_sound);
+						
 						_mediaPlayer.setOnEndOfMedia(() -> {
 							_mediaPlayer.stop();
 							_preview.setText("Preview");
+							
 							// enable other play buttons
 							for (Button button : _playBtns) {
 								button.setDisable(false);
 							}
 						});
+						
 						_mediaPlayer.play();
 						// disable other play buttons
 						for (Button button : _playBtns) {
@@ -385,7 +404,10 @@ public class TextSelect extends Controller implements Initializable{
 		}
 
 	}
-
+	
+	/**
+	 * Change text in the text area back to the original wikipedia entry
+	 */
 	@FXML
 	private void resetText() {
 		String text = "";
@@ -405,6 +427,9 @@ public class TextSelect extends Controller implements Initializable{
 		_text.setText(text);
 	}
 
+	/**
+	 * Gets the 'real' voice names from the displayed names
+	 */
 	private String getVoiceName(String voice) {
 		if ( voice.equals("Man")) {
 			voice = "kal_diphone";
@@ -413,7 +438,10 @@ public class TextSelect extends Controller implements Initializable{
 		}
 		return voice;
 	}
-
+	
+	/**
+	 * Gets the 'real' voice names from the displayed names
+	 */
 	private boolean underOverflow(String text) {
 		String[] words = text.split("\\s+"); //Split on whitespace
 		boolean hasAWord=false;
@@ -462,9 +490,9 @@ public class TextSelect extends Controller implements Initializable{
 		}
 
 		File file = new File(System.getProperty("user.dir")+"/tmp/text/audioCount"); 
-		BufferedReader br = new BufferedReader(new FileReader(file)); 
-		int fileNum = Integer.parseInt(br.readLine()) + 1 ;
-		br.close();
+		BufferedReader bufferedReader = new BufferedReader(new FileReader(file)); 
+		int fileNum = Integer.parseInt(bufferedReader.readLine()) + 1 ;
+		bufferedReader.close();
 
 		// update the number of audio files that have been created
 
@@ -473,8 +501,8 @@ public class TextSelect extends Controller implements Initializable{
 		writer.close();
 
 		file = new File(System.getProperty("user.dir")+"/tmp/text/query"); 
-		br = new BufferedReader(new FileReader(file));
-		char[] whiteSpaceCheck = br.readLine().toCharArray();
+		bufferedReader = new BufferedReader(new FileReader(file));
+		char[] whiteSpaceCheck = bufferedReader.readLine().toCharArray();
 		for (int i = 0; i < whiteSpaceCheck.length; i++) {
 			if (whiteSpaceCheck[i] == ' ') {
 				whiteSpaceCheck[i] = '_';
@@ -484,7 +512,7 @@ public class TextSelect extends Controller implements Initializable{
 		String name = new String(whiteSpaceCheck);
 		name = name+fileNum; 
 
-		br.close();
+		bufferedReader.close();
 
 		saveInBG(name);
 
@@ -498,8 +526,8 @@ public class TextSelect extends Controller implements Initializable{
 		String text = _text.getSelectedText();
 		if (text.trim().length() > 0) {
 			//get the user's desired inputs
-			RadioButton rb = (RadioButton)_rbGroup.getSelectedToggle();
-			String voice = getVoiceName(rb.getText());
+			RadioButton radioButton = (RadioButton)_rbGroup.getSelectedToggle();
+			String voice = getVoiceName(radioButton.getText());
 
 			//create preview.wav in bg thread
 			TextToAudio saveBG = new TextToAudio(text,voice, name);
@@ -650,6 +678,10 @@ public class TextSelect extends Controller implements Initializable{
 
 	}
 	
+	/**
+	 * disable or enable other play/delete buttons and the preview button
+	 * @param disable true will disable buttons, false will enable them
+	 */
 	private void disableOtherBtns(boolean disable, Button playBtn) {
 		//Disable other play buttons
 		for (Button button : _playBtns) {
@@ -657,9 +689,11 @@ public class TextSelect extends Controller implements Initializable{
 				button.setDisable(disable);
 			}
 		}
+		// disable delete buttons
 		for (Button button: _delBtns) {
 			button.setDisable(disable);
 		}
+		// disable preview button
 		_preview.setDisable(disable);
 	}
 	

@@ -83,18 +83,37 @@ public class VideoMatch extends Controller implements Initializable {
 		}
 
 		// generate random videos for the quiz
+		generateRandomVideos();
+		
+		_videos.setItems(_observableVideoNames);
+		_videos.setCellFactory(param -> new VideoSnippet());
+		Collections.shuffle(_observableTerms);
+		_terms.setItems(_observableTerms);
+
+		_videoGuesses = new int[_numQuestions];
+
+	}
+	
+	/**
+	 * Randomly generate videos for the questions
+	 */
+	private void generateRandomVideos() {
 		List<File> creations = listDirectory("creations");
 		Random rand = new Random();
 		for (int i = 0; i < _numQuestions; i++) {
 			try {
+				// get a random creation
 				int index = rand.nextInt(creations.size());
 
 				String creationName = creations.get(index).getName();
 				creations.remove(index);
+				
+				// get the name of the video
 				String creationNameNoExtension = creationName.substring(0,creationName.length()-4);
 				_observableVideoNames.add(creationNameNoExtension);
 				_videoFileRecord.add(creationNameNoExtension);
-
+				
+				//get the query term for the creation
 				File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
 				BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
 				String query = bufferedReaderQuery.readLine();
@@ -107,13 +126,6 @@ public class VideoMatch extends Controller implements Initializable {
 				eQuery.printStackTrace();
 			}
 		}
-		_videos.setItems(_observableVideoNames);
-		_videos.setCellFactory(param -> new VideoSnippet());
-		Collections.shuffle(_observableTerms);
-		_terms.setItems(_observableTerms);
-
-		_videoGuesses = new int[_numQuestions];
-
 	}
 
 	@FXML 
@@ -172,7 +184,8 @@ public class VideoMatch extends Controller implements Initializable {
 			BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
 			String query = bufferedReaderQuery.readLine();
 			bufferedReaderQuery.close();
-
+			
+			// check that match is correct
 			if(query.equalsIgnoreCase(selQuery)) {
 				_guessedVideo.add(selCreationName);
 
@@ -205,7 +218,8 @@ public class VideoMatch extends Controller implements Initializable {
 						rightGuesses.add(filename);
 					}
 				}
-
+				
+				// pass lists into score scene
 				Scene scene = _match.getScene();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/Score.fxml"));
 				Score controller = new Score(rightGuesses,wrongGuesses);
@@ -300,21 +314,22 @@ public class VideoMatch extends Controller implements Initializable {
 			} else {
 				String name = _observableVideoNames.get(getListView().getItems().indexOf(item));
 				try {
-
+					// get query
 					File queryFile = new File("quiz/"+name+"/query");
 					BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
 					String query = bufferedReaderQuery.readLine();
 					bufferedReaderQuery.close();
-
+					
+					//get the video and make a MediaPlayer for it
 					File updatedVideoFile = new File("quiz/"+name+"/"+query+".mp4");
 					Media updatedVideo = new Media(updatedVideoFile.toURI().toString());
 					_lastItem = updatedVideo;
 					MediaPlayer mediaPlayer = new MediaPlayer(updatedVideo);
 					_mediaView.setMediaPlayer(mediaPlayer);
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
 				_mediaView.setFitHeight(_MEDIAHEIGHT);
 				_mediaView.setFitWidth(_MEDIAWIDTH);
 				_mediaView.setPreserveRatio(true);

@@ -84,6 +84,7 @@ public class Main extends Application {
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -93,6 +94,9 @@ public class Main extends Application {
 		launch(args);
 	}
 	
+	/**
+	 * Generate the script files needed for creation of videos
+	 */
 	private void generateScript(File script, String contentFile) throws IOException {
 		if (!script.exists()) { //test for non-existence
 			BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(contentFile)));
@@ -107,6 +111,9 @@ public class Main extends Application {
 		}
 	}
 	
+	/**
+	 * Delete a directory and everything in it
+	 */
 	private void deleteDirectoryRecursively(File directory) {
 	    File[] allContents = directory.listFiles();
 	    if (allContents != null) { //Keep going if there are files

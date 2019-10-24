@@ -18,7 +18,7 @@ public class TextToAudio extends Task<Void> {
 	private String _text;
 	private String _voice;
 	private String _name;
-	private String _dir;
+	private String _dir; // current directory
 
 	public TextToAudio(String text, String voice, String name) {
 		_text=text;
