@@ -15,6 +15,7 @@ import java.util.List;
 import javafx.fxml.FXMLLoader;
 
 import javafx.scene.Scene;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
@@ -94,15 +95,22 @@ protected final String _PATH = "/application/view/";
 	/**Shortcut method to the Menu**/
 	protected void toMenu(Scene scene) {switchTo(scene, getClass().getResource(_PATH+"Menu.fxml"));};
 
-	protected void setDisposablePreview(Scene scene, URL nextWindowURL) {
+	/**Special method for PreviewSave.fxml so that media is dispoed upon file exit**/
+	protected void loadPreviewSave(Scene scene, URL nextWindowURL) {
 		try {
-			Stage stage = (Stage) scene.getWindow();
-			System.out.println("not null");
-		} catch (NullPointerException e) {
-			System.out.println("itsnull");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(nextWindowURL);
+			scene.setRoot(loader.load());
+			PreviewSave previewSave = loader.getController(); //Safe cast as this method is specific to PreviewSave.fxml
+			previewSave.setDisposableMedia();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		//FXMLLoader loader = new FXMLLoader();
-		//loader.setLocation(nextWindowURL);
+	}
+	
+	/**Super class gives access to stage and scene**/
+	protected Stage getStage(Scene scene) {
+		return (Stage) scene.getWindow(); //Safe cast as we know the window is always Stage
 	}
 	
 	/**

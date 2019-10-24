@@ -263,7 +263,7 @@ public class ImageFetch extends Controller {
 		
 		createPreview.setOnSucceeded(e-> {
 			_imageProgress.progressProperty().unbind();
-			switchTo(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));
+			loadPreviewSave(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));
 			
 		});	
 	}

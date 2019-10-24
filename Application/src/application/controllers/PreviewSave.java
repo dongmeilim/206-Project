@@ -25,6 +25,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -308,6 +309,16 @@ public class PreviewSave extends Controller implements Initializable {
 				return String.format("%02d:%02d",elapsedMinutes, elapsedSeconds);
 			}
 		}
+	}
+	
+	public void setDisposableMedia() {
+		//Stage stage = getStage(_back.getScene());
+		Stage stage = getStage(_back.getScene());
+		System.out.println("got here");
+		stage.setOnHiding(e-> {
+			_player.stop();
+			_player.dispose();
+		});
 	}
 	
 }

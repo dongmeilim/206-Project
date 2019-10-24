@@ -83,7 +83,7 @@ public class VideoPlayer extends Controller implements Initializable{
 		});
 		
 		_mediaPlayer.play();
-
+		
 		/**
 		 * The following code is adapted from Oracle:
 		 * Author: Oracle
