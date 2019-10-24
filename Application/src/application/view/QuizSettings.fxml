@@ -162,6 +162,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Label layoutX="96.0" layoutY="423.0" prefHeight="99.0" prefWidth="376.0" style="-fx-font-size: 17;" text="The quality of the quiz depends on how good your videos are! Make sure your videos are good quality!" textAlignment="CENTER" wrapText="true" />
                </children>
             </AnchorPane>
          </children>

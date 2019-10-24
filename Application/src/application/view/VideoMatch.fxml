@@ -120,6 +120,7 @@
                         <Image url="@/arrow.png" />
                      </image>
                   </ImageView>
+                  <Label layoutX="190.0" layoutY="367.0" prefHeight="99.0" prefWidth="376.0" style="-fx-font-size: 17;" text="The word you're looking for will be pronounced &quot;SOMETHING&quot;, so listen carefully to the rest of the description!" textAlignment="CENTER" wrapText="true" />
                </children>
             </AnchorPane>
          </children>

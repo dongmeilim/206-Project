@@ -342,9 +342,12 @@ public class TextSelect extends Controller implements Initializable{
 				previewBG.setOnRunning(running -> {
 					_pb.progressProperty().bind(previewBG.progressProperty());
 					_pb.setStyle(_blueBar);
+					_save.setDisable(true);
 				});
 				previewBG.setOnSucceeded(succeed -> {
 					_pb.progressProperty().unbind();
+					_save.setDisable(false);
+					
 					// Change preview button to stop button
 					_preview.setText("Stop");
 					try {
@@ -354,6 +357,10 @@ public class TextSelect extends Controller implements Initializable{
 						_mediaPlayer.setOnEndOfMedia(() -> {
 							_mediaPlayer.stop();
 							_preview.setText("Preview");
+							// enable other play buttons
+							for (Button button : _playBtns) {
+								button.setDisable(false);
+							}
 						});
 						_mediaPlayer.play();
 						// disable other play buttons
@@ -502,6 +509,7 @@ public class TextSelect extends Controller implements Initializable{
 			saveBG.setOnRunning(running -> {
 				_save.setDisable(true);
 				_next.setDisable(true);
+				_preview.setDisable(true);
 				// bind the progress bar the the preview task
 				_pb.progressProperty().bind(saveBG.progressProperty());	
 				_pb.setStyle(_saveBar);
@@ -509,6 +517,7 @@ public class TextSelect extends Controller implements Initializable{
 
 			saveBG.setOnSucceeded(succeed -> {
 				_save.setDisable(false);
+				_preview.setDisable(false);
 				_pb.progressProperty().unbind();
 
 				// Check that the audio was created properly

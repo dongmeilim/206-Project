@@ -57,7 +57,7 @@ public class TextToAudio extends Task<Void> {
 			reader.close();
 			
 			// create the censored text for the quiz
-			String censorText = "sed -i 's/"+query+"/----/Ig' "+_dir+"/tmp/text/censored/"+ _name + ".txt";
+			String censorText = "sed -i 's/"+query+"/. SOMETHING. /Ig' "+_dir+"/tmp/text/censored/"+ _name + ".txt";
 			ProcessBuilder censor = new ProcessBuilder("bash", "-c", censorText);
 			Process process = censor.start();
 			process.waitFor();

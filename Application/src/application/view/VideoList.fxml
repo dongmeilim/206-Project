@@ -30,7 +30,7 @@
    <center>
       <ScrollPane hbarPolicy="NEVER" minWidth="600.0" BorderPane.alignment="TOP_CENTER">
          <content>
-            <TableView fx:id="_table" prefHeight="457.0" prefWidth="732.0">
+            <TableView id="_videoTableList" fx:id="_table" prefHeight="457.0" prefWidth="732.0">
             	<placeholder>
             		<Label id="_blackText" text="There are no videos to display" />
             	</placeholder>

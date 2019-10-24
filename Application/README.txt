@@ -8,7 +8,7 @@ This application is to be run on the ESCE lab Linux machines.
 It is not recommended to run this application in the SE206 
 Ubuntu image.
 
-To run the application, please ensure that runnable.jar
+To run the application, please ensure that VARpedia.jar
 is in the same directory as run.sh
 It should already be there when you download it.
 

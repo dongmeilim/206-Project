@@ -120,6 +120,7 @@ public class ImageFetch extends Controller {
 	@FXML private void handleNext() {
 		_warning.setText("");
 		_next.setDisable(true);
+		_backgroundMusic.setDisable(true);
 		_videoProgress.setVisible(true);
 		createPreview();
 	}

@@ -1,5 +1,7 @@
 Application/bin/
 Application/tmp/
+Application/creations
+Application/quiz
 Application/scripts/
 Application/.gitignore
 Application/flickr-api-keys.txt
