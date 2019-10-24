@@ -19,6 +19,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 
+import javafx.stage.Stage;
+
 /**
  * Abstract class from which all other controllers extend.
  * Stores general methods that all other controllers use.
@@ -88,10 +90,20 @@ protected final String _PATH = "/application/view/";
 			e.printStackTrace();
 		}
 	}
+	
 	/**Shortcut method to the Menu**/
 	protected void toMenu(Scene scene) {switchTo(scene, getClass().getResource(_PATH+"Menu.fxml"));};
 
-
+	protected void setDisposablePreview(Scene scene, URL nextWindowURL) {
+		try {
+			Stage stage = (Stage) scene.getWindow();
+			System.out.println("not null");
+		} catch (NullPointerException e) {
+			System.out.println("itsnull");
+		}
+		//FXMLLoader loader = new FXMLLoader();
+		//loader.setLocation(nextWindowURL);
+	}
 	
 	/**
 	 * Stores file order
