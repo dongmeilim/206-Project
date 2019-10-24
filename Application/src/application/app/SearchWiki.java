@@ -15,7 +15,7 @@ import javafx.concurrent.Task;
 public class SearchWiki extends Task<Boolean> {
 	
 	private String _searchTerm;
-	private String _dir;
+	private String _dir; //current directory path
 	
 	public SearchWiki(String term) {
 		_searchTerm = term;

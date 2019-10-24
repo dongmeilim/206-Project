@@ -64,7 +64,7 @@ public class ImageMatch extends Controller implements Initializable {
 	private ObservableList<String> _observableTerms = FXCollections.observableArrayList(); 
 	
 	private ArrayList<String> _guessedImage = new ArrayList<String>();
-	private int[] _imageGuesses; //stores the number of failed attempts per question. The corresponding terms are in _audioFileRecord
+	private int[] _imageGuesses; //stores the number of failed attempts per question. The corresponding terms are in _imageFileRecord
 	private ArrayList<String> _imageFileRecord = new ArrayList<String>(); // index of creation names correspond to _termsRecords 
 	
 	
@@ -83,18 +83,33 @@ public class ImageMatch extends Controller implements Initializable {
 		//Initialize scoring array with zeroes
 		_imageGuesses = new int[_questionAmount];
 		
+		generateRandomCreations();
+		
+		_thumbnails.setItems(_observableImageNames);
+		_thumbnails.setCellFactory(param -> new Thumbnail());
+		Collections.shuffle(_observableTerms);
+		_terms.setItems(_observableTerms);
+	}
+	
+	/**
+	 * Randomly generate images for the questions
+	 */
+	private void generateRandomCreations() {
 		List<File> creations = listDirectory("creations");
 		Random rand = new Random();
 		for (int i = 0; i < _questionAmount; i++) {
 			try {
+				//get a random creation
 				int index = rand.nextInt(creations.size());
-				
 				String creationName = creations.get(index).getName();
 				creations.remove(index);
+				
+				// get the name of the creation
 				String creationNameNoExtension = creationName.substring(0,creationName.length()-4);
 				_observableImageNames.add(creationNameNoExtension);
 				_imageFileRecord.add(creationNameNoExtension);
 				
+				//get the term for the creation
 				File queryFile = new File("quiz/"+creationNameNoExtension+"/query");
 	        	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
 	    		String query = bufferedReaderQuery.readLine();
@@ -107,10 +122,6 @@ public class ImageMatch extends Controller implements Initializable {
 				eQuery.printStackTrace();
 			}
 		}
-		_thumbnails.setItems(_observableImageNames);
-		_thumbnails.setCellFactory(param -> new Thumbnail());
-		Collections.shuffle(_observableTerms);
-		_terms.setItems(_observableTerms);
 	}
 	
 	@FXML 
@@ -151,7 +162,7 @@ public class ImageMatch extends Controller implements Initializable {
 	}
 	
 	@FXML private void handleMatch() throws IOException {
-		//get users selected items
+		//get user's selected items
 		String selCreationName = _thumbnails.getSelectionModel().getSelectedItem();
 		String selQuery = _terms.getSelectionModel().getSelectedItem();
 		
@@ -162,6 +173,7 @@ public class ImageMatch extends Controller implements Initializable {
     		String query = bufferedReaderQuery.readLine();
     		bufferedReaderQuery.close();
 			
+    		// check if the match is correct
 			if(query.equalsIgnoreCase(selQuery)) {
 				_guessedImage.add(selCreationName);
 
@@ -196,7 +208,8 @@ public class ImageMatch extends Controller implements Initializable {
 					rightGuesses.add(creationName);
 				}
 			}
-
+			
+			// pass the lists into the score scene and change scene
 			Scene scene = _match.getScene();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/Score.fxml"));
 			Score controller = new Score(rightGuesses,wrongGuesses);
@@ -237,11 +250,13 @@ public class ImageMatch extends Controller implements Initializable {
 	        } else {
 	        	String name = _observableImageNames.get(getListView().getItems().indexOf(item));
 	        	try {
+	        		// get the query term
 					File queryFile = new File("quiz/"+name+"/query");
 		        	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
 		    		String query = bufferedReaderQuery.readLine();
 		    		bufferedReaderQuery.close();
 		    		
+		    		//get the image
 		    		File updatedImageFile = new File("quiz/"+name+"/"+query+".jpg");
 		    		FileInputStream fileInputStream = new FileInputStream(updatedImageFile);
 		    		Image updatedImage = new Image(fileInputStream);

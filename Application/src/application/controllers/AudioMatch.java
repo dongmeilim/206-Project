@@ -164,7 +164,8 @@ public class AudioMatch extends Controller implements Initializable{
 		if(selAudio!=null && selQuery != null) {
 			String audioName = selAudio.getName();
 			audioName = audioName.substring(0, audioName.length()-4);
-
+			
+			// check if match is correct (ignoring case)
 			if(audioName.equalsIgnoreCase(selQuery)) {
 				_guessedAudio.add(selAudio);
 
@@ -183,8 +184,6 @@ public class AudioMatch extends Controller implements Initializable{
 			// clear selection from listviews
 			_audio.getSelectionModel().clearSelection();
 			_terms.getSelectionModel().clearSelection();
-
-
 
 			if (_audioList.size()==0) {
 				// get the lists of right and wrong creations
@@ -253,6 +252,7 @@ public class AudioMatch extends Controller implements Initializable{
 	}
 
 	/**
+	 * This class adds buttons and labels as graphics to the listview
 	 * This class contains adapted code.
 	 * Source (accessed 2019): https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
 	 * @author Rainer Schwarze
@@ -327,7 +327,9 @@ public class AudioMatch extends Controller implements Initializable{
 			}
 		}
 	}
-	
+	/**
+	 * Disable the other play buttons and the match button
+	 */
 	private void disableOtherBtns(boolean disable, Button playBtn) {
 		//Disable other play buttons
 		for (Button button : _playBtns) {
