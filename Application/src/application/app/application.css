@@ -60,6 +60,11 @@
     -fx-alignment: center;
 }
 
+#_videoTableList .table-cell {
+	-fx-alignment: center;
+}
+
+
 /*Remove the horizontal scroll-bar*/
 .table-view *.scroll-bar:horizontal *.increment-arrow,
 .table-view *.scroll-bar:horizontal *.decrement-arrow {
