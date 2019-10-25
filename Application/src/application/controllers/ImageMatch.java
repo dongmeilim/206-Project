@@ -6,7 +6,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
 import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,10 +17,13 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+
 import javafx.geometry.Pos;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -28,7 +33,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 
 
 /**
@@ -43,17 +47,18 @@ import javafx.scene.layout.BorderPane;
 
 public class ImageMatch extends Controller implements Initializable {
 	
-	@FXML private BorderPane _border;
+	@FXML private AnchorPane _anchor;
+	
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
 	@FXML private Button _anchorHelp;
 	@FXML private Button _match;
+	
 	@FXML private Label _errorLabel;
+	
 	@FXML private ListView<String> _thumbnails;
 	@FXML private ListView<String> _terms;
-	
-	@FXML private AnchorPane _anchor;
 	
 	private int _questionAmount;
 	
@@ -64,27 +69,27 @@ public class ImageMatch extends Controller implements Initializable {
 	private ObservableList<String> _observableTerms = FXCollections.observableArrayList(); 
 	
 	private ArrayList<String> _guessedImage = new ArrayList<String>();
-	private int[] _imageGuesses; //stores the number of failed attempts per question. The corresponding terms are in _imageFileRecord
-	private ArrayList<String> _imageFileRecord = new ArrayList<String>(); // index of creation names correspond to _termsRecords 
-	
+	private int[] _imageGuesses; //stores the number of failed attempts per question.
+	private ArrayList<String> _imageFileRecord = new ArrayList<String>(); //Names of files that corresponds to _imageGuesses
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		//Get the number of questions from a file
 		try {
 			File questionFile = new File(System.getProperty("user.dir")+"/tmp/text/numQuestions.txt");
-	    	BufferedReader bufferedReaderQuestion = new BufferedReader(new FileReader(questionFile)); 
-			String questionAmountString = bufferedReaderQuestion.readLine();
+	    	BufferedReader reader = new BufferedReader(new FileReader(questionFile)); 
+			String questionAmountString = reader.readLine();
 			_questionAmount = Integer.parseInt(questionAmountString);
-			bufferedReaderQuestion.close();
+			reader.close();
 		} catch (IOException eQuestion) {
 			eQuestion.printStackTrace();
 		}
 		
-		//Initialize scoring array with zeroes
+		//Initialise scoring array with zeroes
 		_imageGuesses = new int[_questionAmount];
 		
+		//Setup
 		generateRandomCreations();
-		
 		_thumbnails.setItems(_observableImageNames);
 		_thumbnails.setCellFactory(param -> new Thumbnail());
 		Collections.shuffle(_observableTerms);
@@ -139,7 +144,8 @@ public class ImageMatch extends Controller implements Initializable {
 		}
 	}
 	
-	@FXML private void handleHelp() {
+	@FXML 
+	private void handleHelp() {
 		if (_anchor.isVisible() == false) { //AnchorPane is invisible on startup
 
 			_anchor.setVisible(true);
@@ -161,8 +167,9 @@ public class ImageMatch extends Controller implements Initializable {
 		}
 	}
 	
-	@FXML private void handleMatch() throws IOException {
-		//get user's selected items
+	@FXML 
+	private void handleMatch() throws IOException {
+		//Get user's selected items
 		String selCreationName = _thumbnails.getSelectionModel().getSelectedItem();
 		String selQuery = _terms.getSelectionModel().getSelectedItem();
 		
@@ -173,7 +180,7 @@ public class ImageMatch extends Controller implements Initializable {
     		String query = bufferedReaderQuery.readLine();
     		bufferedReaderQuery.close();
 			
-    		// check if the match is correct
+    		//Check if match is correct (Ignore Case)
 			if(query.equalsIgnoreCase(selQuery)) {
 				_guessedImage.add(selCreationName);
 
@@ -183,7 +190,7 @@ public class ImageMatch extends Controller implements Initializable {
 			} else {
 				_errorLabel.setText("Uh-oh! Try again!");
 				
-				//record failed attempt
+				//Record failed attempt
 				int index = _imageFileRecord.indexOf(selCreationName);
 				_imageGuesses[index] ++;
 			}
@@ -192,10 +199,8 @@ public class ImageMatch extends Controller implements Initializable {
 			_terms.getSelectionModel().clearSelection();
 		}
 		
-
-
 		if (_observableImageNames.isEmpty() == true && _observableTerms.isEmpty() == true) {
-			// get the lists of right and wrong creations
+			//Get the lists of right and wrong creations
 			ArrayList<String> wrongGuesses = new ArrayList<String>();
 			ArrayList<String> rightGuesses = new ArrayList<String>();
 
@@ -209,27 +214,25 @@ public class ImageMatch extends Controller implements Initializable {
 				}
 			}
 			
-			// pass the lists into the score scene and change scene
+			//Load the score scene with the scores
 			Scene scene = _match.getScene();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/Score.fxml"));
 			Score controller = new Score(rightGuesses,wrongGuesses);
 			loader.setController(controller);
 			scene.setRoot(loader.load());
-
 		}
 		
 	}
 	
-	//Accessed by both the query ListView and the Thumbnail ListView
-	@FXML private void clearError() {
+	/**Method accessed by onClick events from the FXML.*/	
+	@FXML 
+	private void clearError() {
 		_errorLabel.setText("");
 	}
-
 	
 	/**
-	 * Private inner class to render images from strings in the ListView
+	 * Private inner class to render images from strings in the ListView.
 	 */
-	
 	private class Thumbnail extends ListCell<String> {
 			
 		private final ImageView _imageView = new ImageView();
@@ -250,13 +253,13 @@ public class ImageMatch extends Controller implements Initializable {
 	        } else {
 	        	String name = _observableImageNames.get(getListView().getItems().indexOf(item));
 	        	try {
-	        		// get the query term
+	        		//Get the query term
 					File queryFile = new File("quiz/"+name+"/query");
 		        	BufferedReader bufferedReaderQuery = new BufferedReader(new FileReader(queryFile)); 
 		    		String query = bufferedReaderQuery.readLine();
 		    		bufferedReaderQuery.close();
 		    		
-		    		//get the image
+		    		//Get the image
 		    		File updatedImageFile = new File("quiz/"+name+"/"+query+".jpg");
 		    		FileInputStream fileInputStream = new FileInputStream(updatedImageFile);
 		    		Image updatedImage = new Image(fileInputStream);

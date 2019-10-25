@@ -19,7 +19,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+
 import javafx.geometry.Pos;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -32,6 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+
 import javafx.util.Callback;
 
 /**
@@ -73,7 +76,7 @@ public class VideoList extends Controller implements Initializable{
 	@FXML private void goBack(){ switchTo(_back.getScene(), getClass().getResource(_PATH+"Menu.fxml")); }
 
 	/**
-	 * Refreshes the list of files and sorts them appropriately
+	 * Refreshes the list of files and sorts them appropriately.
 	 */
 	private void updateFileList() {
 		List<File> files = listDirectory("creations");
@@ -106,8 +109,7 @@ public class VideoList extends Controller implements Initializable{
 	/**
 	 * Author: Rip Tutorial
 	 * Original: https://riptutorial.com/javafx/example/27946/add-button-to-tableview
-	 * Modified: dongmeilim
-	 * Comments: dongmeilim
+	 * Modified by: dongmeilim
 	 */
 	private void addPlayButtonToTable() {
 
@@ -115,17 +117,17 @@ public class VideoList extends Controller implements Initializable{
 			@Override
 			public TableCell<File, Void> call(final TableColumn<File, Void> param) {
 				final TableCell<File, Void> cell = new TableCell<File, Void>() {
-					// set up the play buttons
+					//Set up the play buttons.
 					private final Button playBtn = new Button("Play");
 
 					{	
 						setAlignment(Pos.CENTER);
 						playBtn.setOnAction((ActionEvent event) -> {
-							// Get the video in the same row as the button
+							//Get the video in the same row as the button
 							File video = getTableView().getItems().get(getIndex());
-							// Open the video player with the video
+							//Open the video player with the video
 							Scene scene = playBtn.getScene();
-							FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/VideoPlayer.fxml"));
+							FXMLLoader loader = new FXMLLoader(getClass().getResource(_PATH+"VideoPlayer.fxml"));
 							VideoPlayer controller = new VideoPlayer(video);
 							loader.setController(controller);
 
@@ -134,14 +136,12 @@ public class VideoList extends Controller implements Initializable{
 							} catch (IOException e) {
 								e.printStackTrace();
 							}
-
-
 						});
 					}
 
 					@Override
 					public void updateItem(Void item, boolean empty) {
-						// insert the play buttons into the table column
+						//Insert the play buttons into the table column
 						super.updateItem(item, empty);
 						if (empty) {
 							setGraphic(null);
@@ -169,26 +169,26 @@ public class VideoList extends Controller implements Initializable{
 			@Override
 			public TableCell<File, Void> call(final TableColumn<File, Void> param) {
 				final TableCell<File, Void> cell = new TableCell<File, Void>() {
-					// set up the delete button
+					//Set up the delete button
 					private final Button delBtn = new Button("Delete");
 
 					{
 						setAlignment(Pos.CENTER);
 						delBtn.setOnAction((ActionEvent event) -> {
-							// get the video in the same row as the button
+							//Get the video in the same row as the button
 							File file = getTableView().getItems().get(getIndex());
 							
 							String fileName = file.getName();
 							String fileNameNoExtension = fileName.substring(0,fileName.length()-4);
 							File quizDirectory = new File("quiz/"+fileNameNoExtension);
 							
-							// Confirm the user wants to delete the video
+							//Confirm the user wants to delete the video
 							Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 							alert.setHeaderText("Are you sure you want to delete "+ file.getName()+"?");
 							Optional<ButtonType> result = alert.showAndWait();
 							if (result.get() == ButtonType.OK){
 								if(file.exists()) {
-									//delete the video
+									//Delete the video
 									file.delete();
 									//Delete quiz folder
 									deleteDirectoryRecursively(quizDirectory);
@@ -202,7 +202,7 @@ public class VideoList extends Controller implements Initializable{
 
 					@Override
 					public void updateItem(Void item, boolean empty) {
-						// insert delete buttons into the table column
+						//Insert delete buttons into the table column
 						super.updateItem(item, empty);
 						if (empty) {
 							setGraphic(null);
@@ -218,7 +218,22 @@ public class VideoList extends Controller implements Initializable{
 		_delete.setCellFactory(cellFactory);
 
 	}
+	
+	@FXML
+	private void sortABC() {
+		_sortByABC=true;
+		updateFileList();
+	}
 
+	@FXML
+	private void sortDate() {
+		_sortByABC=false;
+		updateFileList();
+	}
+	
+	/**
+	 * Private inner class to render images from strings in the ListView.
+	 */
 	private class Thumbnail extends TableCell<File,String> {
 
 		private final MediaView _mediaView = new MediaView();
@@ -246,17 +261,5 @@ public class VideoList extends Controller implements Initializable{
 				setGraphic(_mediaView);
 			}
 		}
-	}
-
-	@FXML
-	private void sortABC() {
-		_sortByABC=true;
-		updateFileList();
-	}
-
-	@FXML
-	private void sortDate() {
-		_sortByABC=false;
-		updateFileList();
 	}
 }

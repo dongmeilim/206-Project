@@ -27,12 +27,12 @@ public class SaveVideo extends Task<Void> {
 	protected Void call() throws Exception {
 		try {
 			updateProgress(0,100); //ProgressBar listens to this line
-			ProcessBuilder pb = new ProcessBuilder();
-			pb.redirectError(_NULL);
-			pb.directory(new File("scripts/"));
-			pb.command("bash","saveCreation.sh", _fileName);
-			pb.start().waitFor();
-			Process process = pb.start();
+			ProcessBuilder processBuilder = new ProcessBuilder();
+			processBuilder.redirectError(_NULL);
+			processBuilder.directory(new File("scripts/"));
+			processBuilder.command("bash","saveCreation.sh", _fileName);
+			processBuilder.start().waitFor();
+			Process process = processBuilder.start();
 	        InputStream stdout = process.getInputStream();
 	        BufferedReader stdoutBuffered = new BufferedReader(new InputStreamReader(stdout));
 	        String line = null;

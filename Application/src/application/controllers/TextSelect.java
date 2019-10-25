@@ -25,10 +25,12 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -41,11 +43,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
+
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
+
 import javafx.util.Callback;
 
 /**
@@ -63,8 +68,8 @@ public class TextSelect extends Controller implements Initializable{
 
 	@FXML private AnchorPane _anchor;
 
-	@FXML private Button _menu;
 	@FXML private Button _back;
+	@FXML private Button _home;
 	@FXML private Button _next;
 	@FXML private Button _help;
 	@FXML private Button _preview;
@@ -73,18 +78,22 @@ public class TextSelect extends Controller implements Initializable{
 
 	@FXML private VBox _radioButtons;
 	@FXML private VBox _rightVBox;
+	
+	@FXML private ProgressBar _progress;
+	
 	@FXML private TextArea _text;
-	@FXML private ProgressBar _pb;
 
 	@FXML private TableView<File> _table;
 	@FXML private TableColumn<File, String> _audioCol;
 	@FXML private TableColumn<File, Void> _playCol;
 	@FXML private TableColumn<File, Void> _deleteCol;
+	
 	private final ObservableList<File> _fileList= FXCollections.observableArrayList();;
 
 	private Media _sound; 
 	private MediaPlayer _mediaPlayer;
-	private MediaPlayer _savedPlayer; 
+	private MediaPlayer _savedPlayer;
+	
 	private ArrayList<Button> _playBtns = new ArrayList<Button>();
 	private ArrayList<Button> _delBtns = new ArrayList<Button>();
 
@@ -98,10 +107,10 @@ public class TextSelect extends Controller implements Initializable{
 	private ArrayList<RadioButton> _rbList;
 
 	private String _dir;
-	private String _blueBar = "-fx-accent: #5c91b0";
-	private String _saveBar = "-fx-accent: #eb7900";
 	private String _pausedText = "";
-
+	
+	private final String _BLUE = "#5c91b0";
+	private final String _ORANGE = "#eb7900";
 	private final double _MAXDURATION = 300;
 
 	@Override
@@ -109,12 +118,13 @@ public class TextSelect extends Controller implements Initializable{
 		_dir = System.getProperty("user.dir");
 		_errorLabel.setWrapText(true);
 		_overflowLabel.setWrapText(true);
-		//set up radio buttons for voices
+		
+		//Set up radio buttons for voices
 		_rbList = new ArrayList<RadioButton>();
 		_rbGroup = new ToggleGroup();
 		_voices = new File("/usr/share/festival/voices/english").listFiles();
 
-		//make a button for every voice
+		//Make a button for every voice
 		for(File voice:_voices) {
 			String name = voice.getName();
 			if ( name.equals("kal_diphone")) {
@@ -129,10 +139,10 @@ public class TextSelect extends Controller implements Initializable{
 		_radioButtons.getChildren().addAll(_rbList);	
 		_rbList.get(0).setSelected(true);
 
-		//set up text area with text for wikit
+		//Set up text area with text for wikit
 		resetText();
 
-		//prevent users from going to next view if there are no saved files
+		//Prevent users from going to next view if there are no saved files
 		if (filesAreValid() == true) {
 			_next.setDisable(false); //You may progress
 		}
@@ -147,14 +157,14 @@ public class TextSelect extends Controller implements Initializable{
 	}
 
 	/**
-	 * Refreshes the list of files
+	 * Refreshes the list of files.
 	 */
 	private void updateFileList() {
 		List<String> fileNamesToStore = new ArrayList<String>();
 		List<File> files = listDirectory("tmp/audio");
 		
-		// Record all the files that are invalid in another list then remove them all at once.
-		// This is to avoid the ConcurrentModificationException when using the for-loop.
+		//Record all the files that are invalid in another list then remove them all at once.
+		//This is to avoid the ConcurrentModificationException when using the for-loop.
 		List<File> toRemove = new ArrayList<File>();		
 		for (File file : files) {
 			if (file.getName().contains(".__")||file.getName().equals("finalAudio.wav") || file.getName().equals("concatenatedAudio.wav")
@@ -180,12 +190,12 @@ public class TextSelect extends Controller implements Initializable{
 
 	@FXML
 	private void handleNext() {
-		//stop the sound from playing
+		//Stop the sound from playing
 		if(_mediaPlayer != null) {
 			_mediaPlayer.stop();
 			_mediaPlayer.dispose();
 		}
-		// prevent user from create videos longer than 5 minutes
+		//Prevent user from create videos longer than 5 minutes
 		boolean isAudioTooLong = isAudioTooLong();
 
 		if (isAudioTooLong == true) {
@@ -200,15 +210,16 @@ public class TextSelect extends Controller implements Initializable{
 			switchTo(_next.getScene(), getClass().getResource(_PATH+"ImageFetch.fxml"));
 		}
 	}
+	
 	/**
 	 * Checks that the total length of the audio is less than five minutes
 	 */
 	private boolean isAudioTooLong() {
-		//  list the audio files
+		//List the audio files
 		List<File> files = listDirectory("tmp/audio");
 		ArrayList<File> toRemove = new ArrayList<File>();
 		
-		// remove invalid files from the list
+		//Remove invalid files from the list
 		for (File file: files) {
 			if (file.getName().contains(".__")|| file.getName().equals("finalAudio.wav") || file.getName().equals("concatenatedAudio.wav")
 					||file.getName().equals("quietBackground.wav")||file.getName().equals("truncatedTrack.wav")) {
@@ -219,7 +230,7 @@ public class TextSelect extends Controller implements Initializable{
 		
 		float durationInSeconds = 0;
 		
-		// get the total duration of the audio
+		//Get the total duration of the audio
 		for (File file: files) {
 			try {
 				AudioInputStream audioInputStream;
@@ -247,7 +258,7 @@ public class TextSelect extends Controller implements Initializable{
 
 	@FXML
 	private void handleHome() {
-		//stop the sound from playing
+		//Stop the sound from playing
 		if(_mediaPlayer != null) {
 			_mediaPlayer.stop();
 		}
@@ -265,7 +276,7 @@ public class TextSelect extends Controller implements Initializable{
 
 	@FXML
 	private void handleBack() {
-		//stop the sound from playing
+		//Stop the sound from playing
 		if(_mediaPlayer != null) {
 			_mediaPlayer.stop();
 		}
@@ -287,7 +298,7 @@ public class TextSelect extends Controller implements Initializable{
 			_pausedText = _text.getText();
 			_text.clear();
 
-			_menu.setDisable(true);
+			_home.setDisable(true);
 			_back.setDisable(true);
 			_preview.setDisable(true);
 			_reset.setDisable(true);
@@ -303,7 +314,7 @@ public class TextSelect extends Controller implements Initializable{
 		} else {
 			_text.setText(_pausedText);
 			_preview.setDisable(false);
-			_menu.setDisable(false);
+			_home.setDisable(false);
 			_back.setDisable(false);
 			_reset.setDisable(false);
 			_save.setDisable(false);
@@ -323,51 +334,51 @@ public class TextSelect extends Controller implements Initializable{
 		
 		if(_mediaPlayer != null && _mediaPlayer.getStatus()==MediaPlayer.Status.PLAYING) {
 			
-			// Stop current preview
+			//Stop current preview
 			_mediaPlayer.stop();
 			_preview.setText("Preview");
 			
-			// enable other play buttons
+			//Enable other play buttons
 			for (Button button : _playBtns) {
 				button.setDisable(false);
 			}
 		}else {
 			
-			// start a new preview			
+			//Start a new preview			
 			_rightVBox.getChildren().remove(_errorLabel);
 			_rightVBox.getChildren().remove(_overflowLabel);
 			String text = _text.getSelectedText();
 			if (text.trim().length() > 0) {
-				//get the user's desired inputs
-
+				
+				//Get the user's desired inputs
 				RadioButton rb = (RadioButton)_rbGroup.getSelectedToggle();
 				String voice = getVoiceName(rb.getText());
 
-				// Check that the text is within the word limit
+				//Check that the text is within the word limit
 				boolean hasunderOrOverflow = underOverflow(text.trim());
 				if (hasunderOrOverflow == true) {
 					return;
 				}
 
-				//create preview.wav in bg thread
+				//Create preview.wav in bg thread
 				TextToAudio previewBG = new TextToAudio(text,voice,"preview");
 				Thread thread = new Thread(previewBG);
 				thread.start();
 
 				previewBG.setOnRunning(running -> {
-					// bind progress bar
-					_pb.progressProperty().bind(previewBG.progressProperty());
-					_pb.setStyle(_blueBar);
+					//Bind progress bar
+					_progress.progressProperty().bind(previewBG.progressProperty());
+					_progress.setStyle(	"-fx-accent: " + _BLUE);
 					_save.setDisable(true);
 				});
 				previewBG.setOnSucceeded(succeed -> {
-					_pb.progressProperty().unbind();
+					_progress.progressProperty().unbind();
 					_save.setDisable(false);
 					
-					// Change preview button to stop button
+					//Change preview button to stop button
 					_preview.setText("Stop");
 					try {
-						// play the preview audio
+						//Play the preview audio
 						_sound = new Media(new File(_dir+"/tmp/audio/preview/preview.wav").toURI().toString());
 						_mediaPlayer = new MediaPlayer(_sound);
 						
@@ -375,7 +386,7 @@ public class TextSelect extends Controller implements Initializable{
 							_mediaPlayer.stop();
 							_preview.setText("Preview");
 							
-							// enable other play buttons
+							//Enable other play buttons
 							for (Button button : _playBtns) {
 								button.setDisable(false);
 							}
@@ -406,7 +417,7 @@ public class TextSelect extends Controller implements Initializable{
 	}
 	
 	/**
-	 * Change text in the text area back to the original wikipedia entry
+	 * Change text in the text area back to the original wikipedia entry.
 	 */
 	@FXML
 	private void resetText() {
@@ -428,7 +439,7 @@ public class TextSelect extends Controller implements Initializable{
 	}
 
 	/**
-	 * Gets the 'real' voice names from the displayed names
+	 * Gets the 'real' voice names from the displayed names.
 	 */
 	private String getVoiceName(String voice) {
 		if ( voice.equals("Man")) {
@@ -440,7 +451,7 @@ public class TextSelect extends Controller implements Initializable{
 	}
 	
 	/**
-	 * Gets the 'real' voice names from the displayed names
+	 * Gets the 'real' voice names from the displayed names.
 	 */
 	private boolean underOverflow(String text) {
 		String[] words = text.split("\\s+"); //Split on whitespace
@@ -490,19 +501,19 @@ public class TextSelect extends Controller implements Initializable{
 		}
 
 		File file = new File(System.getProperty("user.dir")+"/tmp/text/audioCount"); 
-		BufferedReader bufferedReader = new BufferedReader(new FileReader(file)); 
-		int fileNum = Integer.parseInt(bufferedReader.readLine()) + 1 ;
-		bufferedReader.close();
+		BufferedReader reader = new BufferedReader(new FileReader(file)); 
+		int fileNum = Integer.parseInt(reader.readLine()) + 1 ;
+		reader.close();
 
-		// update the number of audio files that have been created
+		//Update the number of audio files that have been created
 
 		BufferedWriter writer = new BufferedWriter(new FileWriter(_dir + "/tmp/text/audioCount"));
 		writer.write(fileNum+"");	
 		writer.close();
 
 		file = new File(System.getProperty("user.dir")+"/tmp/text/query"); 
-		bufferedReader = new BufferedReader(new FileReader(file));
-		char[] whiteSpaceCheck = bufferedReader.readLine().toCharArray();
+		reader = new BufferedReader(new FileReader(file));
+		char[] whiteSpaceCheck = reader.readLine().toCharArray();
 		for (int i = 0; i < whiteSpaceCheck.length; i++) {
 			if (whiteSpaceCheck[i] == ' ') {
 				whiteSpaceCheck[i] = '_';
@@ -512,20 +523,20 @@ public class TextSelect extends Controller implements Initializable{
 		String name = new String(whiteSpaceCheck);
 		name = name+fileNum; 
 
-		bufferedReader.close();
+		reader.close();
 
 		saveInBG(name);
 
 	}
 
 	/**
-	 * Save the selected text as an audio file
+	 * Save the selected text as an audio file.
 	 * */
 	private void saveInBG( String name ) {
 
 		String text = _text.getSelectedText();
 		if (text.trim().length() > 0) {
-			//get the user's desired inputs
+			//Get the user's desired inputs
 			RadioButton radioButton = (RadioButton)_rbGroup.getSelectedToggle();
 			String voice = getVoiceName(radioButton.getText());
 
@@ -539,25 +550,28 @@ public class TextSelect extends Controller implements Initializable{
 				_next.setDisable(true);
 				_preview.setDisable(true);
 				// bind the progress bar the the preview task
-				_pb.progressProperty().bind(saveBG.progressProperty());	
-				_pb.setStyle(_saveBar);
+				_progress.progressProperty().bind(saveBG.progressProperty());	
+				_progress.setStyle(	"-fx-accent: " + _ORANGE);
 			});
 
 			saveBG.setOnSucceeded(succeed -> {
 				_save.setDisable(false);
 				_preview.setDisable(false);
-				_pb.progressProperty().unbind();
+				_progress.progressProperty().unbind();
 
 				// Check that the audio was created properly
 				File file = new File(_dir+"/tmp/audio/"+name+".wav");
 				try {
-					/* 	Notes: certain Festival voices will create empty wav files if certain words are used.
+					
+					/* 	
+					Notes: certain Festival voices will create empty wav files if certain words are used.
 					The bash command will still finish without error, but the wav file cannot be used.
 					To check if this has happened, a Media object has been made with the said wav file.
 					If the wav file has no errors, the Media object is created, otherwise it will throw a
 					MediaException.
 					The Media object itself is not important as we only want to know if it throws an exception 
-					or not, hence it is never used. */
+					or not, hence it is never used. 
+					*/
 
 					@SuppressWarnings("unused")
 					Media testForError = new Media(file.toURI().toString());
@@ -583,12 +597,11 @@ public class TextSelect extends Controller implements Initializable{
 				}
 			});	
 		}
-
 	}
 
 	/**
-	 * Returns true if there is at least one valid wav file in tmp/audio, false otherwise
-	 * */
+	 * Returns true if there is at least one valid wav file in tmp/audio, false otherwise.
+	 */
 	private boolean filesAreValid() {
 		String[] existingFiles = new File (_dir+"/tmp/audio").list();
 
@@ -607,8 +620,7 @@ public class TextSelect extends Controller implements Initializable{
 	/**
 	 * Author: Rip Tutorial
 	 * Original: https://riptutorial.com/javafx/example/27946/add-button-to-tableview
-	 * Modified: dongmeilim
-	 * Comments: dongmeilim
+	 * Modified by: dongmeilim
 	 */
 	private void addPlayButtonToTable() {
 
@@ -616,44 +628,44 @@ public class TextSelect extends Controller implements Initializable{
 			@Override
 			public TableCell<File, Void> call(final TableColumn<File, Void> param) {
 				final TableCell<File, Void> cell = new TableCell<File, Void>() {
-					// set up the play buttons
+					//Set up the play buttons
 					private final Button playBtn = new Button("Play");
 
 
 					{
 						_playBtns.add(playBtn);
 						playBtn.setOnAction((ActionEvent event) -> {
-							// Get the Audio in the same row as the button
+							//Get the Audio in the same row as the button
 							File audio = getTableView().getItems().get(getIndex());
 							Media media = new Media(audio.toURI().toString());
 							
 							//Play or stop the selected audio
 							if(_savedPlayer == null || !(_savedPlayer.getStatus()== MediaPlayer.Status.PLAYING)) {
 
-								//set up a new media player
+								//Set up a new media player
 								_savedPlayer = new MediaPlayer(media);
 								_savedPlayer.setOnEndOfMedia(() -> {
 									_savedPlayer.stop();
 									_savedPlayer.dispose();
 									playBtn.setText("Play");
 
-									//enable other buttons
+									//Enable other buttons
 									disableOtherBtns(false,playBtn);									
 								});
 								
 								_savedPlayer.play();
 								playBtn.setText("Stop");
 
-								//diasble other buttons
+								//Diasble other buttons
 								disableOtherBtns(true,playBtn);
 
 							}else {
-								//stop playing
+								//Stop playing
 								_savedPlayer.stop();
 								_savedPlayer.dispose();
 								playBtn.setText("Play");
 
-								//enable other buttons
+								//Enable other buttons
 								disableOtherBtns(false,playBtn);
 							}
 						});
@@ -661,7 +673,7 @@ public class TextSelect extends Controller implements Initializable{
 
 					@Override
 					public void updateItem(Void item, boolean empty) {
-						// insert the play buttons into the table column
+						//Insert the play buttons into the table column
 						super.updateItem(item, empty);
 						if (empty) {
 							setGraphic(null);
@@ -673,14 +685,13 @@ public class TextSelect extends Controller implements Initializable{
 				return cell;
 			}
 		};
-
 		_playCol.setCellFactory(cellFactory);
-
 	}
 	
 	/**
-	 * disable or enable other play/delete buttons and the preview button
-	 * @param disable true will disable buttons, false will enable them
+	 * Disable or enable other play/delete buttons and the preview button.
+	 * @param disable
+	 * @param playBtn
 	 */
 	private void disableOtherBtns(boolean disable, Button playBtn) {
 		//Disable other play buttons
@@ -689,45 +700,44 @@ public class TextSelect extends Controller implements Initializable{
 				button.setDisable(disable);
 			}
 		}
-		// disable delete buttons
+		//Disable delete buttons
 		for (Button button: _delBtns) {
 			button.setDisable(disable);
 		}
-		// disable preview button
+		//Disable preview button
 		_preview.setDisable(disable);
 	}
 	
 	/**
 	 * Author: Rip Tutorial
 	 * Original: https://riptutorial.com/javafx/example/27946/add-button-to-tableview
-	 * Modified: dongmeilim
-	 * Comments: dongmeilim
+	 * Modified by: dongmeilim
 	 */
 	private void addDeleteButtonToTable() {
 		Callback<TableColumn<File, Void>, TableCell<File, Void>> cellFactory = new Callback<TableColumn<File, Void>, TableCell<File, Void>>() {
 			@Override
 			public TableCell<File, Void> call(final TableColumn<File, Void> param) {
 				final TableCell<File, Void> cell = new TableCell<File, Void>() {
-					// set up the delete button
+					//Set up the delete button
 					private final Button delBtn = new Button("Delete");
 
 					{
 						_delBtns.add(delBtn);
 						delBtn.setOnAction((ActionEvent event) -> {
-							// get the file in the same row as the button
+							//Get the file in the same row as the button
 							File file = getTableView().getItems().get(getIndex());
 
-							// Confirm the user wants to delete the file
+							//Confirm the user wants to delete the file
 							Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 							alert.setHeaderText("Are you sure you want to delete "+ file.getName()+"?");
 							Optional<ButtonType> result = alert.showAndWait();
 							if (result.get() == ButtonType.OK){
 								if(file.exists()) {
-									//delete the video
+									//Delete the video
 									file.delete();
 									updateFileList();
 								}
-								//delete the censored audio file
+								//Delete the censored audio file
 								new File("tmp/audio/censored/"+file.getName()).delete();
 
 							}
@@ -737,7 +747,7 @@ public class TextSelect extends Controller implements Initializable{
 
 					@Override
 					public void updateItem(Void item, boolean empty) {
-						// insert delete buttons into the table column
+						//Insert delete buttons into the table column
 						super.updateItem(item, empty);
 						if (empty) {
 							setGraphic(null);
@@ -749,9 +759,7 @@ public class TextSelect extends Controller implements Initializable{
 				return cell;
 			}
 		};
-
 		_deleteCol.setCellFactory(cellFactory);
-
 	}
 
 }

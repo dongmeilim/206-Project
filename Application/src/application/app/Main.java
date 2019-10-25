@@ -11,11 +11,12 @@ import java.io.OutputStream;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+
 import javafx.fxml.FXMLLoader;
+
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
-
 import javafx.scene.text.Font;
 
 /**
@@ -30,10 +31,18 @@ public class Main extends Application {
 	private final String _SAVETEXT = "/saveCreation.txt";
 	private final String _DIR = System.getProperty("user.dir");
 	
+	public static void main(String[] args) {
+		launch(args); //Calls start method
+	}
+	
+	/**
+	 * Load the Application GUI
+	 * @param primaryStage
+	 */
 	@Override	
 	public void start(Stage primaryStage) {
 		
-		// initialize the directories needed for making creations
+		//Initialise the directories needed for making creations
 		new File(_DIR+"/creations/query").mkdirs();
 		new File(_DIR+"/quiz").mkdirs();
 		new File(_DIR+"/tmp/text").mkdirs();
@@ -42,6 +51,7 @@ public class Main extends Application {
 		new File(_DIR+"/tmp/images").mkdirs();
 		new File(_DIR+"/tmp/video").mkdirs();
 		
+		//Generate script.sh files from .txt files inside the JAR
 		new File(_DIR+"/scripts/").mkdirs();
 		File previewScript = new File(_DIR+"/scripts/"+_PREVIEWSCRIPT);
 		File saveScript = new File(_DIR+"/scripts/"+_SAVESCRIPT);
@@ -69,15 +79,16 @@ public class Main extends Application {
 			Platform.exit();
 		});
 
-		
+		//Finally load the Menu.fxml window
 		try {
 			primaryStage.setTitle("VARpedia");
-			//load the menu on startup
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/application/view/Menu.fxml"));
 			Parent root = loader.load();
 
-			Font.loadFont(getClass().getResource("/Chewy.ttf").toExternalForm(), 10); //Magic number 10 is overriden by FXML font-sizes
+			//Set Custom Font
+			//Magic number 10 is overriden by FXML font-sizes
+			Font.loadFont(getClass().getResource("/Chewy.ttf").toExternalForm(), 10); 
 			
 			Scene scene = new Scene(root,750,550);
 			scene.getStylesheets().add("/application/app/application.css");
@@ -90,12 +101,11 @@ public class Main extends Application {
 		}
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
-	}
-	
 	/**
 	 * Generate the script files needed for creation of videos
+	 * @param script
+	 * @param contentFile
+	 * @throws IOException
 	 */
 	private void generateScript(File script, String contentFile) throws IOException {
 		if (!script.exists()) { //test for non-existence
@@ -113,6 +123,7 @@ public class Main extends Application {
 	
 	/**
 	 * Delete a directory and everything in it
+	 * @param directory
 	 */
 	private void deleteDirectoryRecursively(File directory) {
 	    File[] allContents = directory.listFiles();
@@ -125,16 +136,15 @@ public class Main extends Application {
 	}
 	
 	/**
-	 * Author: Ordiel
-	 * Original: https://stackoverflow.com/questions/10308221/how-to-copy-file-inside-jar-to-outside-the-jar
-	 * Modified by: Mirlington
-	 * 
-	 * 
      * Export a resource embedded into a Jar file to the local file path.
      *
      * @param resourceName ie.: "/SmartLibrary.dll"
      * @return The path to the exported resource
      * @throws Exception
+     * 
+     * @author: Ordiel
+	 * Original: https://stackoverflow.com/questions/10308221/how-to-copy-file-inside-jar-to-outside-the-jar
+	 * Modified by: Mirlington
      */
     private void exportMP3() throws Exception {
         InputStream stream = null;

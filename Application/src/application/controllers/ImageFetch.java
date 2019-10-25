@@ -35,9 +35,10 @@ import javafx.scene.layout.VBox;
 
 public class ImageFetch extends Controller {
 	
-	private final double _WINDOWWIDTH = 750;
-	private final int _SPACING = 10;
+	private final String _BLUE = "#5c91b0";
 	private final String _IMAGEDIRECTORY = "tmp/images/";
+	private final int _SPACING = 10;
+	private final double _WINDOWWIDTH = 750;
 	
 	private List<CheckBox> _checkBoxes = new ArrayList<CheckBox>();
 	private String _currentAmount = "";
@@ -45,22 +46,28 @@ public class ImageFetch extends Controller {
 	private boolean _fetchButtonIsEnabled = true;
 	private boolean _nextButtonIsEnabled = false;
 	
-	@FXML private AnchorPane _anchor;
-	@FXML private AnchorPane _cursorAnchor;
+	@FXML private AnchorPane _anchor;       //Help Window PRE-IMAGE_LOADING
+	@FXML private AnchorPane _cursorAnchor; //Help Window POST-IMAGE_LOADING
+	
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
 	@FXML private Button _next;
 	@FXML private Button _fetch;
+	
 	@FXML private CheckBox _backgroundMusic;
+	
 	@FXML private Label _imageAmountDisplay;
 	@FXML private Label _warning;
+	
 	@FXML private ProgressBar _imageProgress;
 	@FXML private ProgressIndicator _videoProgress;
+	
 	@FXML private VBox _imageContent;
 	@FXML private Slider _slider;
 	
 	@FXML private void handleBack() {switchTo(_back.getScene(), getClass().getResource(_PATH+"TextSelect.fxml"));}
+	
 	@FXML 
 	public void handleHome() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");
@@ -69,8 +76,8 @@ public class ImageFetch extends Controller {
 		}
 	}
 	
-	@FXML private void handleHelp() {
-		
+	@FXML 
+	private void handleHelp() {
 		if (_anchor.isVisible()==false) { //AnchorPane is invisible on startup
 			_currentAmount = _imageAmountDisplay.getText();
 			_imageAmountDisplay.setText("");
@@ -87,11 +94,9 @@ public class ImageFetch extends Controller {
 			if (_nextButtonIsEnabled == true) {
 				_next.setDisable(true);
 			}
-			
 			for (CheckBox checkBox: _checkBoxes) {
 				checkBox.setDisable(true);
 			}
-			
 			_anchor.setVisible(true);
 		} else {
 			_imageAmountDisplay.setText(_currentAmount);
@@ -108,19 +113,19 @@ public class ImageFetch extends Controller {
 			if (_nextButtonIsEnabled == true) {
 				_next.setDisable(false);
 			}
-			
 			for (CheckBox checkBox: _checkBoxes) {
 				checkBox.setDisable(false);
 			}
-			
 			_anchor.setVisible(false);
 		}
 	}
 	
-	@FXML private void handleNext() {
+	@FXML 
+	private void handleNext() {
 		_warning.setText("");
-		_next.setDisable(true);
 		_backgroundMusic.setDisable(true);
+		_next.setDisable(true);
+		_imageContent.setDisable(true);
 		_videoProgress.setVisible(true);
 		createPreview();
 	}
@@ -145,21 +150,24 @@ public class ImageFetch extends Controller {
 		//Trim off the .0
 		stringValue = stringValue.substring(0,stringValue.length()-2);
 		if (value == 1) {
-			_imageAmountDisplay.setText(stringValue + " image");  // 1 image
+			_imageAmountDisplay.setText(stringValue + " image");  //1 image
 		} else {
-			_imageAmountDisplay.setText(stringValue + " images"); // N images
+			_imageAmountDisplay.setText(stringValue + " images"); //N images
 		}
 	}
 	
-	private void downloadImages(int imageAmount) {
-		
+	/**
+	 * Fetch the images using the Flickr API.
+	 * @param imageAmount
+	 */
+	private void downloadImages(int imageAmount) {	
 		clearImages();
 		DownloadImages downloadImages = new DownloadImages(imageAmount);
 		Thread thread = new Thread(downloadImages);
 		thread.start();
 		
 		_imageProgress.progressProperty().bind(downloadImages.progressProperty());
-		_imageProgress.setStyle("-fx-accent: #5c91b0;");
+		_imageProgress.setStyle("-fx-accent: " + _BLUE);
 		
 		downloadImages.setOnSucceeded(e-> {
 			_imageProgress.progressProperty().unbind();
@@ -168,6 +176,21 @@ public class ImageFetch extends Controller {
 		});
 	}
 	
+	/**
+	 * Clean the image directory.
+	 */
+	private void clearImages() {
+		List<File> files = listDirectory(_IMAGEDIRECTORY);
+		for (File file: files) {
+			file.delete();
+		}
+	}
+	
+	/**
+	 * Images have been fetched.
+	 * Load the images into _imageContent.
+	 * @param imageAmount
+	 */
 	private void loadImages(int imageAmount) {		
 		HBox firstRow = new HBox(_SPACING);
 		firstRow.setPrefWidth(_WINDOWWIDTH);
@@ -177,12 +200,13 @@ public class ImageFetch extends Controller {
 		thirdRow.setPrefWidth(_WINDOWWIDTH);
 		
 		//Height is not final as it is dependent on Row
-		final double IMAGEWIDTH = (_WINDOWWIDTH/4) - 40; // -40 because space taken up by padding and literal checkBoxes
+		final double IMAGEWIDTH = (_WINDOWWIDTH/4) - 40; // -40 because of the space taken up by padding and literal checkBoxes
 		List<File> imageFiles = listDirectory("tmp/images/");
 		_checkBoxes.clear();
 		
 		for (int i=0; i<= imageAmount-1; i++) {
 			try {
+				//Get the Image
 				File imageFile = imageFiles.get(i);
 				FileInputStream inputstream = new FileInputStream(imageFile);
 				Image image = new Image(inputstream); 
@@ -191,6 +215,7 @@ public class ImageFetch extends Controller {
 	        	imageView.setPreserveRatio(true);
 				inputstream.close();
 				
+				//Make the CheckBox
 				CheckBox checkBox = new CheckBox();
 				checkBox.setText(imageFile.getName());
 				checkBox.setGraphic(imageView);
@@ -219,6 +244,10 @@ public class ImageFetch extends Controller {
 		_imageContent.getChildren().addAll(firstRow,secondRow,thirdRow);
 	}
 	
+	/**
+	 * This event is fired whenever a CheckBox is clicked.
+	 * The method checks if at least one CheckBox is selected.
+	 */
 	private void checkClickedImages() {
 		List<String> savedImageNames = new ArrayList<String>();
 		boolean canProgress = false;
@@ -229,7 +258,7 @@ public class ImageFetch extends Controller {
 				savedImageNames.add(individualBox.getText());
 			}
 		}
-		if (canProgress == true) { //at least one image is selected
+		if (canProgress == true) { //At least one image is selected
 			storeFileType("image", savedImageNames);
 			_warning.setText("");
 			_next.setDisable(false);
@@ -242,6 +271,10 @@ public class ImageFetch extends Controller {
 		}
 	}
 	
+	/**
+	 * Tell the CreatePreview task to create a video.
+	 * Transition to PreviewSave.fxml.
+	 */
 	private void createPreview() {
 		boolean haveMusicInVideo;
 		if (_backgroundMusic.isSelected() == true) {
@@ -255,23 +288,12 @@ public class ImageFetch extends Controller {
 		thread.start();
 		
 		_videoProgress.progressProperty().bind(createPreview.progressProperty());
-		_videoProgress.setStyle("-fx-accent: #5c91b0;");
-		
-		createPreview.setOnRunning(running -> {
-			_imageContent.setDisable(true);
-		});
+		_videoProgress.setStyle("-fx-accent: " + _BLUE);
 		
 		createPreview.setOnSucceeded(e-> {
 			_imageProgress.progressProperty().unbind();
-			loadPreviewSave(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));
-			
+			loadPreviewSave(_next.getScene(), getClass().getResource(_PATH+"PreviewSave.fxml"));	
 		});	
 	}
 	
-	private void clearImages() {
-		List<File> files = listDirectory(_IMAGEDIRECTORY);
-		for (File file: files) {
-			file.delete();
-		}
-	}
 }

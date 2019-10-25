@@ -45,20 +45,21 @@ import javafx.util.Callback;
 
 public class AudioMatch extends Controller implements Initializable{
 
+	@FXML private AnchorPane _anchor;
+	
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
 	@FXML private Button _anchorHelp;
 	@FXML private Button _match;
-	@FXML private Label _errorLabel;
 	
-	@FXML private AnchorPane _anchor;
+	@FXML private Label _errorLabel;
 	
 	@FXML private ListView<File> _audio;
 	@FXML private ListView <String> _terms;
 
 	private int _numQuestions;
-	private  MediaPlayer _mp;
+	private  MediaPlayer _player;
 	private ArrayList<Button> _playBtns = new ArrayList<Button>();
 
 	private ArrayList<File> _allFiles;
@@ -66,28 +67,28 @@ public class AudioMatch extends Controller implements Initializable{
 	private ObservableList<String> _queryList = FXCollections.observableArrayList();
 
 	private ArrayList<File> _guessedAudio = new ArrayList<File>();
-	private int[] _audioGuesses; //stores the number of failed attempts per question. The corresponding terms are in _audioFileRecord
-	private ArrayList<File> _audioFileRecord = new ArrayList<File>(); // index of creation names correspond to _termsRecords 	
+	private int[] _audioGuesses; //Stores the number of failed attempts per question.
+	private ArrayList<File> _audioFileRecord = new ArrayList<File>(); //Names of files that corresponds to _audioGuesses	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// Get the number of questions from a file
+		//Get the number of questions from a file
 		File file = new File(System.getProperty("user.dir")+"/tmp/text/numQuestions.txt"); 
-		BufferedReader br;
+		BufferedReader reader;
 		try {
-			br = new BufferedReader(new FileReader(file));
-			_numQuestions = Integer.parseInt(br.readLine()) ;
-			br.close();
+			reader = new BufferedReader(new FileReader(file));
+			_numQuestions = Integer.parseInt(reader.readLine()) ;
+			reader.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		//Initialize scoring array with zeroes
+		//Initialise scoring array with zeroes
 		_audioGuesses = new int[_numQuestions];
 
-		//populate the audio list
+		//Populate the audio list
 		_allFiles = new ArrayList<File>(listDirectory("creations"));
 		try {
 			generateRandomAudioFiles();
@@ -100,7 +101,7 @@ public class AudioMatch extends Controller implements Initializable{
 		Collections.shuffle(_queryList);
 		_terms.setItems(_queryList);
 
-		//add buttons to the audio list
+		//Add buttons to the audio list
 		_audio.setCellFactory(new Callback<ListView<File>, ListCell<File>>() {
 			public ListCell<File> call(ListView<File> param) {
 				return new ButtonCell();
@@ -113,9 +114,9 @@ public class AudioMatch extends Controller implements Initializable{
 	private void handleBack() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you go back");
 		if (decision == true) {
-			if (_mp!=null) {
-				_mp.stop();
-				_mp.dispose(); // release the video
+			if (_player!=null) {
+				_player.stop();
+				_player.dispose(); //Release the video
 			}
 			switchTo(_back.getScene(),getClass().getResource(_PATH+"QuizSettings.fxml"));
 		}
@@ -124,17 +125,17 @@ public class AudioMatch extends Controller implements Initializable{
 	public void handleHome() {
 		boolean decision = displayAlert("Are you leaving?", "Progress will not be saved if you quit to home");
 		if (decision == true) {
-			if (_mp!=null) {
-				_mp.stop();
-				_mp.dispose(); // release the video
+			if (_player!=null) {
+				_player.stop();
+				_player.dispose(); //Release the video
 			}
 			toMenu(_home.getScene());
 		}
 	}
 
-	@FXML private void handleHelp() {
+	@FXML 
+	private void handleHelp() {
 		if (_anchor.isVisible() == false) { //AnchorPane is invisible on startup
-
 			_anchor.setVisible(true);
 			
 			_audio.setDisable(true);
@@ -150,12 +151,12 @@ public class AudioMatch extends Controller implements Initializable{
 			_back.setDisable(false);
 			_home.setDisable(false);
 			_match.setDisable(false);
-
 		}
 	}
 
-	@FXML private void handleMatch() throws IOException {
-		// get user's selected items
+	@FXML 
+	private void handleMatch() throws IOException {
+		//Get user's selected items
 		File selAudio = _audio.getSelectionModel().getSelectedItem();
 		String selQuery = _terms.getSelectionModel().getSelectedItem();
 
@@ -163,7 +164,7 @@ public class AudioMatch extends Controller implements Initializable{
 			String audioName = selAudio.getName();
 			audioName = audioName.substring(0, audioName.length()-4);
 			
-			// check if match is correct (ignoring case)
+			//Check if match is correct (Ignore Case)
 			if(audioName.equalsIgnoreCase(selQuery)) {
 				_guessedAudio.add(selAudio);
 
@@ -173,18 +174,18 @@ public class AudioMatch extends Controller implements Initializable{
 			}else {
 				_errorLabel.setText("Uh-oh! Try again!");
 
-				//record failed attempt
+				//Record failed attempt
 				int index = _audioFileRecord.indexOf(selAudio);
 				_audioGuesses[index] ++;
 
 			}
 
-			// clear selection from listviews
+			//Clear selection from listviews
 			_audio.getSelectionModel().clearSelection();
 			_terms.getSelectionModel().clearSelection();
 
 			if (_audioList.size()==0) {
-				// get the lists of right and wrong creations
+				//Get the lists of right and wrong creations
 				ArrayList<String> wrongGuesses = new ArrayList<String>();
 				ArrayList<String> rightGuesses = new ArrayList<String>();
 
@@ -198,13 +199,12 @@ public class AudioMatch extends Controller implements Initializable{
 						rightGuesses.add(filename);
 					}
 				}
-				// load the score scene with the scores
+				//Load the score scene with the scores
 				Scene scene = _match.getScene();
 				FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/view/Score.fxml"));
 				Score controller = new Score(rightGuesses,wrongGuesses);
 				loader.setController(controller);
 				scene.setRoot(loader.load());
-
 			}
 		}
 	}
@@ -220,43 +220,45 @@ public class AudioMatch extends Controller implements Initializable{
 		File queryFile;
 		String query;
 		for (int i = 0; i < _numQuestions; i++) { 
-			//generate random file from list of files
+			//Generate random file from list of files
 			int index = rand.nextInt(_allFiles.size()); 
 			String creationName = _allFiles.get(index).getName();
 			creationName = creationName.substring(0,creationName.length()-4);
 
 			queryFile = new File("quiz/"+creationName+"/query");
 
-			//get the term for that file
-			BufferedReader br = new BufferedReader(new FileReader(queryFile)); 
-			query = br.readLine();
-			br.close();
+			//Get the term for that file
+			BufferedReader reader = new BufferedReader(new FileReader(queryFile)); 
+			query = reader.readLine();
+			reader.close();
 
-			//get the audio for that file
+			//Get the audio for that file
 			audio = new File("quiz/"+creationName+"/"+query+".wav");
 
-			//store audio and query in lists
+			//Store audio and query in lists
 			_audioList.add(audio); 
 			_queryList.add(query);
 			_audioFileRecord.add(audio);
 
 			_allFiles.remove(index); 
 		} 
-
 	}
 
-	@FXML private void clearError() {
+	/**Method accessed by onClick events from the FXML.*/
+	@FXML 
+	private void clearError() {
 		_errorLabel.setText("");
 	}
 
 	/**
-	 * This class adds buttons and labels as graphics to the listview
-	 * This class contains adapted code.
-	 * Source (accessed 2019): https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
+	 * This private inner class adds buttons and labels as graphics to the listview.
+	 * The fields do not begin with a hyphen to distinguish from outer-class fields.
+	 * 
 	 * @author Rainer Schwarze
-	 * Modification and comments: dongmeilim
+	 * Original: https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
+	 * Modified by: dongmeilim
 	 */
-	public class ButtonCell extends ListCell<File> {
+	private class ButtonCell extends ListCell<File> {
 		HBox hbox = new HBox();
 		Label label = new Label("(empty)");
 		Pane pane = new Pane();
@@ -274,34 +276,34 @@ public class AudioMatch extends Controller implements Initializable{
 				@Override
 				public void handle(ActionEvent event) {
 
-					// Get the Audio in the same row as the button
+					//Get the Audio in the same row as the button
 					File audio = lastItem;
 					Media media = new Media(audio.toURI().toString());
 					//Play or top the selected audio
-					if(_mp == null || !(_mp.getStatus()== MediaPlayer.Status.PLAYING)) {
+					if(_player == null || !(_player.getStatus()== MediaPlayer.Status.PLAYING)) {
 
-						//set up a new media player
-						_mp = new MediaPlayer(media);
-						_mp.setOnEndOfMedia(() -> {
-							_mp.stop();
-							_mp.dispose();
+						//Set up a new media player
+						_player = new MediaPlayer(media);
+						_player.setOnEndOfMedia(() -> {
+							_player.stop();
+							_player.dispose();
 							playBtn.setText("Play");
 
-							// enable other buttons
+							//Enable other buttons
 							disableOtherBtns(false, playBtn);
 						});
-						_mp.play();
+						_player.play();
 						playBtn.setText("Stop");
 
-						// Disable other buttons
+						//Disable other buttons
 						disableOtherBtns(true, playBtn);
 
 					}else {
-						// stop playing
-						_mp.stop();
+						//Stop playing
+						_player.stop();
 						playBtn.setText("Play");
 
-						// enable other buttons
+						//Enable other buttons
 						disableOtherBtns(false, playBtn);
 					}
 				}
@@ -312,7 +314,7 @@ public class AudioMatch extends Controller implements Initializable{
 		@Override
 		protected void updateItem(File item, boolean empty) {
 			super.updateItem(item, empty);
-			setText(null);  // No text in label of super class
+			setText(null); //No text in label of super class
 			if (empty) {
 				lastItem = null;
 				setGraphic(null);
@@ -325,8 +327,11 @@ public class AudioMatch extends Controller implements Initializable{
 			}
 		}
 	}
+	
 	/**
 	 * Disable the other play buttons and the match button
+	 * @param disable
+	 * @param playBtn
 	 */
 	private void disableOtherBtns(boolean disable, Button playBtn) {
 		//Disable other play buttons

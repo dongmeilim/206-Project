@@ -39,7 +39,6 @@ protected final String _PATH = "/application/view/";
 	 * @param message
 	 * @param decision
 	 */
-	
 	protected boolean displayAlert(String header, String body) {//Pop-up box
 		_decision = false; //Remains false if user presses Cancel
 		
@@ -59,7 +58,6 @@ protected final String _PATH = "/application/view/";
 	 * Lists all files (not directories) using the file.listFiles() method
 	 * @param directory
 	 */
-	
 	protected List<File> listDirectory(String directory) {
 		
 		String applicationPath;
@@ -81,7 +79,6 @@ protected final String _PATH = "/application/view/";
 	 * @param button
 	 * @param nextWindow
 	 */
-	
 	protected void switchTo(Scene scene, URL nextWindowURL) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -92,10 +89,17 @@ protected final String _PATH = "/application/view/";
 		}
 	}
 	
-	/**Shortcut method to the Menu**/
+	/**
+	 * Shortcut method to the Menu
+	 * @param scene
+	 */
 	protected void toMenu(Scene scene) {switchTo(scene, getClass().getResource(_PATH+"Menu.fxml"));};
 
-	/**Special method for PreviewSave.fxml so that media is dispoed upon file exit**/
+	/**
+	 * Special method for PreviewSave.fxml so that media is dispoed upon file exit
+	 * @param scene
+	 * @param nextWindowURL
+	 */
 	protected void loadPreviewSave(Scene scene, URL nextWindowURL) {
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -108,16 +112,18 @@ protected final String _PATH = "/application/view/";
 		}
 	}
 	
-	/**Super class gives access to stage and scene**/
+	/**Super class gives access to stage and scene
+	 * @param scene
+	 */
 	protected Stage getStage(Scene scene) {
 		return (Stage) scene.getWindow(); //Safe cast as we know the window is always Stage
 	}
 	
 	/**
 	 * Stores file order
-	 * @param type, savedItems
+	 * @param type
+	 * @param savedItems
 	 */
-	
 	protected void storeFileType(String type, List<String> savedItems) {
 		//File location
 		File storedOrder = new File("tmp/text/"+type+"FilesForVideo");
@@ -142,7 +148,6 @@ protected final String _PATH = "/application/view/";
 	 * Retrieves file of stored order (remembers the order of files and remembers when to skip)
 	 * @param type
 	 */
-	
 	protected List<String> retrieveFileType(String type) {
 		try {
 			File file = new File("tmp/text/"+type+"Order");
@@ -168,7 +173,6 @@ protected final String _PATH = "/application/view/";
 	 * Deletes directories
 	 * @param directory
 	 */
-	
 	protected void deleteDirectoryRecursively(File directory) {
 	    File[] allContents = directory.listFiles();
 	    if (allContents != null) { //Keep going if there are files

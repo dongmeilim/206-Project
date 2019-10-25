@@ -36,22 +36,20 @@ public class DownloadImages extends Task<Void> {
 	
 	public DownloadImages(int imageAmount) {
 		_imageAmount = imageAmount;
-		_increment = 100/_imageAmount; //Using float so that progressBar reaches 100
+		_increment = 100/_imageAmount; //Using float so that progressBar reaches 100 on unclean divisions
 	}
 	
 	@Override
 	protected Void call() throws Exception {
 		try {
-
-			updateProgress(_counter,100);
+			updateProgress(_counter,100); //ProgressBar listens to this line
 			_counter = _counter+_increment;
 			File file = new File("tmp/text/query");
 			BufferedReader reader = new BufferedReader(new FileReader(file));
 			String query = reader.readLine();
 			reader.close();
 			FlickrAPI flickr = new FlickrAPI();
-			flickr.downloadImages("tmp/images/", _imageAmount, query);
-			
+			flickr.downloadImages("tmp/images/", _imageAmount, query);	
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();	
 		} catch (IOException e) {
@@ -67,25 +65,12 @@ public class DownloadImages extends Task<Void> {
 	
 	private class FlickrAPI {
 		
-		private String getAPIKey(String key) throws Exception {
-
-			String config = "/flickr-api-keys.txt"; //Retrieve API
-			
-			
-			InputStream inputstream = getClass().getResourceAsStream(config); 
-			BufferedReader br = new BufferedReader(new InputStreamReader(inputstream)); 
-			
-			String line;
-			while ( (line = br.readLine()) != null ) {
-				if (line.trim().startsWith(key)) {
-					br.close();
-					return line.substring(line.indexOf("=")+1).trim();
-				}
-			}
-			br.close();
-			throw new RuntimeException("Couldn't find " + key +" in config file "+config);
-		}
-
+		/**
+		 * Main function for fetching images
+		 * @param tmp
+		 * @param imageAmount
+		 * @param query
+		 */
 		private void downloadImages(String tmp, int imageAmount, String query) {
 			try {
 				String apiKey = getAPIKey("apiKey");
@@ -110,16 +95,36 @@ public class DownloadImages extends Task<Void> {
 			        	String filename = query.trim().replace(' ', '-')+"-"+System.currentTimeMillis()+"-"+photo.getId()+".jpg";
 			        	File outputfile = new File(tmp,filename);
 			        	ImageIO.write(image, "jpg", outputfile);
-			        	updateProgress(_counter,100);
+			        	updateProgress(_counter,100); //ProgressBar listens to this line
 			        	_counter = _counter + _increment;
 		        	} catch (FlickrException fe) {
 		        		fe.printStackTrace();
 					}
 		        }
-		        updateProgress(100,100);
+		        updateProgress(100,100); //ProgressBar listens to this line
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}
+		
+		/**
+		 * Helper function for downloadImages
+		 * @param key
+		 */
+		private String getAPIKey(String key) throws Exception {
+			String config = "/flickr-api-keys.txt"; //Retrieve API
+			InputStream inputstream = getClass().getResourceAsStream(config); 
+			BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputstream)); 
+			
+			String line;
+			while ( (line = bufferedReader.readLine()) != null ) {
+				if (line.trim().startsWith(key)) {
+					bufferedReader.close();
+					return line.substring(line.indexOf("=")+1).trim();
+				}
+			}
+			bufferedReader.close();
+			throw new RuntimeException("Couldn't find " + key +" in config file "+config);
 		}
 	}
 }

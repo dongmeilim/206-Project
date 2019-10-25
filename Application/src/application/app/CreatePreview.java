@@ -31,19 +31,19 @@ public class CreatePreview extends Task<Void> {
 	protected Void call() throws Exception {
 		try {
 			updateProgress(0,100); //ProgressBar listens to this line
-			ProcessBuilder pb = new ProcessBuilder();
-			pb.redirectError(_NULL);
+			ProcessBuilder processBuilder = new ProcessBuilder();
+			processBuilder.redirectError(_NULL);
 			updateProgress(5,100); //ProgressBar listens to this line
-			pb.directory(new File("scripts/"));
-			pb.command("bash","createffmpegpreview.sh",_isBackgroundMusicSelected);
-			pb.start().waitFor();
-			Process process = pb.start();
+			processBuilder.directory(new File("scripts/"));
+			processBuilder.command("bash","createffmpegpreview.sh",_isBackgroundMusicSelected);
+			processBuilder.start().waitFor();
+			Process process = processBuilder.start();
 	        InputStream stdout = process.getInputStream();
 	        BufferedReader stdoutBuffered = new BufferedReader(new InputStreamReader(stdout));
 	        String line = null;
 	        double percentage;
 	        while ((line = stdoutBuffered.readLine()) != null ) {
-	        	percentage = Double.parseDouble(line);
+	        	percentage = Double.parseDouble(line); //Double is parsed to account of unclean divisions of 100
 	        	updateProgress(percentage,100); //ProgressBar listens to this line
 	        }
 	        stdoutBuffered.close();

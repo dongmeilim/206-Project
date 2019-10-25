@@ -4,9 +4,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 
 import java.io.FileWriter;
-
 import java.io.IOException;
+
 import java.net.URL;
+
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -33,52 +34,80 @@ import javafx.scene.layout.AnchorPane;
 
 public class QuizSettings extends Controller implements Initializable {
 	
+	@FXML private AnchorPane _anchor;
+	
 	@FXML private Button _back;
 	@FXML private Button _home;
 	@FXML private Button _help;
 	@FXML private Button _anchorHelp;
 	@FXML private Button _next;
+	
 	@FXML private Label _questionAmountDisplay;
 	@FXML private Label _warning;
+	
 	@FXML private RadioButton _audioRadio;
 	@FXML private RadioButton _imageRadio;
 	@FXML private RadioButton _bothRadio;
+	
 	@FXML private Slider _slider;
+	
 	@FXML private ToggleGroup _mode;
 	
-	@FXML private AnchorPane _anchor;
+	private boolean _sliderIsDisabled = false;
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		List<File> creations = listDirectory("creations");
+		int creationAmount = creations.size();
+		if (creationAmount == 2) {
+			_slider.setDisable(true); //Only one question is present
+			_sliderIsDisabled = true;
+		} else {
+			_slider.setDisable(false);
+			_sliderIsDisabled = false;
+			_slider.setMax(creationAmount); //Max value is max amount of questions
+		}
+	}
 	
 	@FXML private void handleBack() {handleHome();}
 	@FXML public void handleHome() {toMenu(_home.getScene());}
 	
-	@FXML private void handleHelp() {
+	@FXML 
+	private void handleHelp() {
 		if (_anchor.isVisible() == false) { //AnchorPane is invisible on startup
 			
 			_anchor.setVisible(true);
 			_audioRadio.setDisable(true);
 			_imageRadio.setDisable(true);
 			_bothRadio.setDisable(true);
-			_slider.setDisable(true);
 			_back.setDisable(true);
 			_home.setDisable(true);
 			_next.setDisable(true);
+			
+			if (_sliderIsDisabled == false) {
+				_slider.setDisable(true);
+			}
+			
 		} else {			
 			_anchor.setVisible(false);
 
 			_audioRadio.setDisable(false);
 			_imageRadio.setDisable(false);
 			_bothRadio.setDisable(false);
-			_slider.setDisable(false);
 			_back.setDisable(false);
 			_home.setDisable(false);
 			_next.setDisable(false);
-			
+			//Only re-enable the slider if there are more than two creations.
+			if (_sliderIsDisabled == false) {
+				_slider.setDisable(false);
+			}
 		}
 	}
 
-	@FXML private void handleNext() throws IOException {
+	@FXML 
+	private void handleNext() throws IOException {
 		
-		//get the number of questions
+		//Get the number of questions
 		int numQuestions = (int)_slider.getValue();
 		String dir = System.getProperty("user.dir");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(dir + "/tmp/text/numQuestions.txt"));
@@ -104,20 +133,9 @@ public class QuizSettings extends Controller implements Initializable {
 		//Trim off the .0
 		stringValue = stringValue.substring(0,stringValue.length()-2);
 		if (value == 1) {
-			_questionAmountDisplay.setText(stringValue + " question");  // 1 question
+			_questionAmountDisplay.setText(stringValue + " question");  //1 question
 		} else {
-			_questionAmountDisplay.setText(stringValue + " questions"); // N questions
-		}
-	}
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		List<File> creations = listDirectory("creations");
-		int creationAmount = creations.size();
-		if (creationAmount == 2) {
-			_slider.setDisable(true); //Only one question is present
-		} else {
-			_slider.setDisable(false);
-			_slider.setMax(creationAmount); //Max value is max amount of questions
+			_questionAmountDisplay.setText(stringValue + " questions"); //N questions
 		}
 	}
 }

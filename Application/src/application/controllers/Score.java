@@ -36,6 +36,8 @@ public class Score extends Controller implements Initializable {
 	private ArrayList<String> _correct;
 	private ArrayList<String> _wrong;
 
+	private final String _FONTSIZE = "20";
+	
 	public Score(ArrayList<String> correct, ArrayList<String> wrong) {
 		_correct=correct;
 		_wrong=wrong;
@@ -44,33 +46,31 @@ public class Score extends Controller implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		// set up correct creations Text
+		//Set up correct creations Text
 		String correct = "";
 		for(String creation: _correct) {
 			correct = creation;
 			Label label = new Label(correct);
-			label.styleProperty().set("-fx-font-size: 20;");
+			label.styleProperty().set("-fx-font-size: " + _FONTSIZE + ";");
 			_correctText.getChildren().add(label);
 		}
 
-		// set up incorrect creations Text
+		//Set up incorrect creations Text
 		String wrong = "";
 		for(String creation: _wrong) {
 			wrong = creation;
 			Label label = new Label(wrong);
-			label.styleProperty().set("-fx-font-size: 20;");
+			label.styleProperty().set("-fx-font-size: " + _FONTSIZE + ";");
 			_wrongText.getChildren().add(label);
-
 		}
-
 	}
 
 	@FXML private void handleHome() { switchTo(_home.getScene(), getClass().getResource(_PATH+"Menu.fxml"));}
 	@FXML private void handleNewGame() { switchTo(_home.getScene(), getClass().getResource(_PATH+"QuizSettings.fxml"));}
 
-	@FXML private void handleHelp() {
+	@FXML 
+	private void handleHelp() {
 		if (_anchor.isVisible() == false) { //AnchorPane is invisible on startup
-
 			_anchor.setVisible(true);
 			
 			_newGame.setDisable(true);
@@ -84,9 +84,6 @@ public class Score extends Controller implements Initializable {
 			_correctText.setDisable(false);
 			_wrongText.setDisable(false);
 			_home.setDisable(false);
-
 		}
 	}
-
-
 }

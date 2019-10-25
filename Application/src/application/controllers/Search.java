@@ -20,9 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 
 /**
  * Controller that handles the Search.fxml view.
@@ -35,44 +33,38 @@ import javafx.scene.layout.BorderPane;
  */
 
 public class Search extends Controller implements Initializable{
-	@FXML private Button _menu;
+	
+	@FXML private AnchorPane _anchor;
+	
 	@FXML private Button _back;
+	@FXML private Button _home;
 	@FXML private Button _search;
 
 	@FXML private Label _lastSearchedTerm;
 	@FXML private Label _term;
 	@FXML private Label _errorMessage;
+	
 	@FXML private TextField _searchbar;
 
 	private String _dir = System.getProperty("user.dir");
 	private SearchWiki _wikitBG;
 	
-	@FXML private BorderPane _border;
-	@FXML private AnchorPane _anchor;
-	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		//clean the directory to prepare for a new creation
-
-		//delete all files in tmp/audio
+		
+		//Clean directories using helper function
 		clearDir("/tmp/audio");
-		
-		//create and clear preview folder
 		clearDir("/tmp/audio/preview");
-		
-		//create and clear text/censored
 		clearDir("/tmp/text/censored");
-		
-		//create and clear audio/censored
 		clearDir("/tmp/audio/censored");
 		
-		// create a file to keep track of the number of audio files created by the user
+		//Create a file to keep track of the number of audio files created by the user
 		try {	
 			BufferedWriter writer = new BufferedWriter(new FileWriter(_dir + "/tmp/text/audioCount"));
 			writer.write("0");	
 			writer.close();
-		} catch (IOException e2) {
-			e2.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		readQueryText();
 	}
@@ -100,10 +92,9 @@ public class Search extends Controller implements Initializable{
 		_term.setText(query);
 	}
 	
-	
 	/**
-	 * This method is bound to both the back and menu buttons
-	 * */
+	 * This is bound to both the back and home button.
+	 */
 	@FXML
 	private void handleBack() {
 		if (_wikitBG !=null &&_wikitBG.isRunning()) {
@@ -115,7 +106,7 @@ public class Search extends Controller implements Initializable{
 	@FXML
 	private void handleHelp() { //AnchorPane is invisible on startup
 		if (_anchor.isVisible()==false) {
-			_menu.setDisable(true);
+			_home.setDisable(true);
 			_back.setDisable(true);
 			_searchbar.setDisable(true);
 			_search.setDisable(true);
@@ -125,7 +116,7 @@ public class Search extends Controller implements Initializable{
 			
 			_anchor.setVisible(true);
 		} else {
-			_menu.setDisable(false);
+			_home.setDisable(false);
 			_back.setDisable(false);
 			_searchbar.setDisable(false);
 			_search.setDisable(false);
@@ -142,11 +133,11 @@ public class Search extends Controller implements Initializable{
 		String input = _searchbar.getText();
 		_term.setText(input);
 
-		//display message if empty input
+		//Display message if empty input
 		if (input.equals("")) {
 			_errorMessage.setText("Please enter something to search");
 		}else {
-			//prevent user from spamming
+			//Prevent user from spamming
 			_search.setDisable(true);
 			_searchbar.setDisable(true);
 
@@ -158,29 +149,26 @@ public class Search extends Controller implements Initializable{
 			lastTermSearched.write(input);
 			lastTermSearched.close();
 
-			//search the term in bg thread
+			//Search the term in the background thread
 			_wikitBG = new SearchWiki(input);
 			Thread thread = new Thread(_wikitBG);
 			thread.start();
 
-			//display wait message to reader
+			//Display wait message to reader
 			_wikitBG.setOnRunning(running -> {
 				_errorMessage.setText("Please wait...");
 			});
 
-			//update the GUI once the process is finished
+			//Update the GUI once the process is finished
 			_wikitBG.setOnSucceeded(succeed -> {
 				if (_wikitBG.getValue()) {
-					//move on to the next step
-
 					switchTo(_search.getScene(), getClass().getResource(_PATH+"TextSelect.fxml"));
-
 				} else {
-					//let the user enter another term if there is no entry for the previous one on wikit
+					//Let the user enter another term if there is no entry for the previous one on wikit
 					_errorMessage.setText("Sorry, there is no entry for this term. Please enter a new term");
 					_search.setDisable(false);
 					_searchbar.setDisable(false);
-					_menu.setDisable(false);
+					_home.setDisable(false);
 					_back.setDisable(false);
 					_searchbar.clear();
 				}
@@ -188,12 +176,17 @@ public class Search extends Controller implements Initializable{
 		}
 	}
 	
+	/**
+	 * Helper function that clears directories.
+	 * Directories are created if they don't already exist.
+	 * @param dirName
+	 */
 	private void clearDir(String dirName) {
-		//create folder if it does not exist
+		//Create folder if it does not exist
 		File dir = new File (_dir+dirName);
 		dir.mkdir();
 
-		//clear the folder
+		//Clear the folder
 		File[] files = dir.listFiles();
 		if(files!=null) { 
 			for(File file: files) {

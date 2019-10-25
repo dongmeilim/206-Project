@@ -48,8 +48,8 @@ public class VideoPlayer extends Controller implements Initializable{
 	
 	/**
 	 * VideoPlayer must be initialised before being set as a controller to an fxml file
-	 * so that the video to be played can be passed in from another controller
-	 * @param vid the video to play
+	 * so that the video to be played can be passed in from another controller.
+	 * @param vid
 	 */
 	public VideoPlayer(File vid) {
 		_mediaPlayer = new MediaPlayer(new Media(vid.toURI().toString()));
@@ -60,12 +60,12 @@ public class VideoPlayer extends Controller implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		_title.setText(_vidTitle);
 		
-		//set up the play icon
+		//Set up the play icon
 		_playImage = new ImageView("/play.png");
 		_playImage.setFitHeight(26);
 		_playImage.setFitWidth(26);
 		
-		// set up the pause icon
+		//Set up the pause icon
 		_pauseImage= new ImageView("/pause.png");
 		_pauseImage.setFitHeight(26);
 		_pauseImage.setFitWidth(26);
@@ -73,11 +73,11 @@ public class VideoPlayer extends Controller implements Initializable{
 		// play button starts with pause icon
 		_play.setGraphic(_pauseImage);
 		
-		//set up the media player
+		//Set up the media player
 		_player.setMediaPlayer(_mediaPlayer);
 		_mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		_mediaPlayer.setOnEndOfMedia(() -> {
-			// Return to start of video when video ends, and stop
+			//Return to start of video when video ends, and stop
 			_mediaPlayer.stop();
 			_play.setGraphic(_playImage);
 		});
@@ -85,7 +85,6 @@ public class VideoPlayer extends Controller implements Initializable{
 		_mediaPlayer.play();
 		
 		/**
-		 * The following code is adapted from Oracle:
 		 * Author: Oracle
 		 * Original: https://docs.oracle.com/javase/8/javafx/media-tutorial/playercontrol.htm
 		 * Modified by: dongmeilim
@@ -94,7 +93,7 @@ public class VideoPlayer extends Controller implements Initializable{
 			@Override
 			public void invalidated(Observable ov) {
 				if (_timeSlider.isValueChanging()) {
-					// multiply duration by percentage calculated by slider position
+					//Multiply duration by percentage calculated by slider position
 					_mediaPlayer.seek(_mediaPlayer.getMedia().getDuration().multiply(_timeSlider.getValue() / 100.0));
 				}
 				updateValues();
@@ -121,7 +120,7 @@ public class VideoPlayer extends Controller implements Initializable{
 	@FXML
 	private void handleBack(){
 		_mediaPlayer.stop();
-		_mediaPlayer.dispose(); // release the video
+		_mediaPlayer.dispose(); //Release the video
 		switchTo(_back.getScene(), getClass().getResource(_PATH+"VideoList.fxml"));
 	}
 	
@@ -167,7 +166,7 @@ public class VideoPlayer extends Controller implements Initializable{
 	/**
 	 * Author: Oracle
 	 * Original: https://docs.oracle.com/javase/8/javafx/media-tutorial/playercontrol.htm
-	 * */
+	 */
 	private static String formatTime(Duration elapsed, Duration duration) {
 		int intElapsed = (int)Math.floor(elapsed.toSeconds());
 		int elapsedHours = intElapsed / (60 * 60);
