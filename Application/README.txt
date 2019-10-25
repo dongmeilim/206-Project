@@ -4,7 +4,8 @@ Authors: Dong-Mei Lim and Benjamin Piper (dlim654 & bpip078)
 =============================================================
 
 ========================Installation=========================
-This application is to be run on the ESCE lab Linux machines.
+This application is to be run on the ESCE lab Beta teaching
+Linux machines.
 It is not recommended to run this application in the SE206 
 Ubuntu image.
 
@@ -14,7 +15,7 @@ It should already be there when you download it.
 
 Then open the terminal and run the jar file using:
 
-bash ./run.sh
+bash run.sh
 
 ==========================VARpedia===========================
 
@@ -26,7 +27,7 @@ From the main menu, you can choose to create a video, watch a
 video or play the quiz.
 
 At any point in the application where there is a "?" button in
-the top left corner, you can click it to get clear instructions
+the top-right corner, you can click it to get clear instructions
 for that window!
 
 Use the back and next buttons in the bottom corners to navigate
@@ -45,6 +46,6 @@ Under CC BY license https://creativecommons.org/licenses/by-nc/4.0/
 Font: 
 "Chewy"
 Licensed under the Apache License, Version 2.0 (the "License");
-You may obtain a copy of the License at
+You may obtain a copy of the License at:
 
-    http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
