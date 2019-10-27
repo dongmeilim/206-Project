@@ -4,7 +4,7 @@
 
 ### 20/10/2019 @ 2134 - Falcon's Wings
 
-The bugs have been fixed. The JAR works and everything is ready for submission, including the [manual](Misc/User_Manual_Varpedia.pdf). Here's what the cover page looks like:
+The bugs have been fixed. The JAR works and everything is ready for submission, including the manual. Here's what the cover page looks like:
 
 ![coverpage](Misc/manualcover.PNG)
 
